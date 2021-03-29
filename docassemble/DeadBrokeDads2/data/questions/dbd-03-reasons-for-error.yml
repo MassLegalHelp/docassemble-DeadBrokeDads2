@@ -1,4 +1,5 @@
 code: |
+  printout_looks_right
   if cause_missed_hearing:
     missed_hearing_text = 'missed'
     missed_hearing_notice
@@ -23,6 +24,19 @@ code: |
   pay_parent
 
   possibilities_complete = True
+---
+question: |
+  Look at the printout you got from DOR
+subquestion: |
+  Look at the printout you got from DOR/CSE.
+  
+  Does this look right to you? 
+  
+  One of the most common reasons for people to fall behind in child support is that the order changed and either:	
+  
+  * You did not know the order changed,  or 
+  * DOR/CSE did not know the order changed.
+yesnomaybe: printout_looks_right
 ---
 id: dbd 03 - possible causes
 question: |
@@ -166,12 +180,16 @@ fields:
      - Pay DOR directly: directly
      - Pay DOR directly until wage assignment takes effect.: until
 ---
-id: dbd 03 -  court modified order
+id: dbd 03 - court modified order
 question: |
   Has the court changed your child support order since ${cs_order_date}? 
+subquestion: |
+  Look at the copies of the child support orders you got from the court. 
+  
+  Is the date on any of these orders **after** ${cs_order_date}? 
 fields:
   - no label: order_modified
-    datatype: yesnomaybe
+    datatype: yesnoradio
   - How many times has the court changed your child support order since ${cs_order_date}?: order_modified_number 
     datatype: integer
     show if:

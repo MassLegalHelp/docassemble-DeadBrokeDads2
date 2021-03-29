@@ -19,12 +19,15 @@ code: |
   else:
     problemsSentences = "No problems"
   
-  if hardships.any_true():
-    for hardship in hardships.true_values():
-      hardshipsSentences += hardshipsToSentences[hardship] + "\n"
-    sentences = problemsSentences + "\n" + hardshipsSentences
+  if help_needed.any_true('cant-afford', 'cant-sustain'):
+    if hardships.any_true():
+      for hardship in hardships.true_values():
+        hardshipsSentences += hardshipsToSentences[hardship] + "\n"
+      sentences = problemsSentences + "\n" + hardshipsSentences
+    else:
+      sentences = "No hardships"
   else:
-    sentences = "No hardships"
+    sentences = problemsSentences
 
   if problems.any_true('driver-license', 'car-reg'):
     sentences += comment_car

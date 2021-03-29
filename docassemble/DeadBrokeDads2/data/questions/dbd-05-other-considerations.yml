@@ -1,86 +1,32 @@
 ---
 code: |
-  equit_adjust_b = False
-  past_disabled = False
-  past_unemployed = False
-  unemployed_te = ''
-  no_ui = False
-  past_incarcerated = False
-  modification = False
-  modification_explanation = ''
   if other_considerations['disabled']:
-    past_disabled = True
-    if disabled_still:
-      disabled_end = today()
     if disabled_start <= cs_arrears_date <= disabled_end:
-      equit_adjust_b = True
-      admin_review_disability = 'I was disabled'
-      if disability_mod:
-        modification = True
-      modification_explanation += mod_dis_reason
+      disability_mod
       ssdi_past
       
-      
-      
-  if other_considerations['lost_job']:
-    unemployed_te = 'lose your job'
-    past_unemployed = True
-    if unemployed_still:
-      unemployed_end = today()
+  if other_considerations.any_true('lost_job', 'stopped_working'):
     if unemployed_start <= cs_arrears_date <= unemployed_end:
-      admin_review_unemployment = 'I was unemployed'
-      if not unemployment_insurance:
-        no_ui = True
-        equit_adjust_b = True
-    if unemploy_mod:
-      modification = True
-      modification_explanation += mod_unemploy_reason
-    else:
-      modification_explanation += mod_unemploy_reason
-  
-  if other_considerations['stopped_working']:
-    unemployed_te = 'stop working '
-    past_unemployed = True
-    if unemployed_still:
-      unemployed_end = today()
-    if unemployed_start <= cs_arrears_date <= unemployed_end:
-      admin_review_unemployment = 'I stopped working because' 
-      if not unemployment_insurance:
-        no_ui = True
-        equit_adjust_b = True
-    if unemploy_mod:
-      modification = True
-    modification_explanation += mod_unemploy_reason
+      unemployment_insurance
+      unemploy_mod
 
   if other_considerations['incarcerated']:
-    past_incarcerated = True
-    if incarcerated_still:
-      jail_out = today()
-      if jail_date <= cs_arrears_date <= jail_out:
-        jail_house
-        if jail_mod:
-          modification = True
-        modification_explanation += mod_jail_reason
-        admin_review_incarceration = 'I was incarcerated'
-        equit_adjust_b = True
+    incarcerated_still
+    jail_mod
   
   if child_lives_w_obligor:
     child_with_obligor_order
 
   if reconcile:
-    if reconciliation['together']:
-      reconciliation_action = 'move back in together'
-    if reconciliation['married']:
-      reconciliation_action = 'get married'
     reconcile_date
-  
-  if assigned_is_zero:
+ 
+  other_need
+
+  if assigned_amount > 0:
+    is_not_zero  
+  else:    
     is_zero
-    equit_adjust = False
-  else:
-    is_not_zero
-    equit_adjust = True
-    
+ 
   other_considerations_complete = True
 ---
 comment: |
@@ -101,11 +47,16 @@ subquestion: |
   Under **Total Arrears** Look at the amount next to "Assigned."
   
   Is the amount **more** than $0.00?
- 
-  Note to CR: why not ask how much is written next to the word assigned? - duh, we can evaluate if it's greater than zero! double duh.
-  
-  
-yesno: assigned_is_zero
+
+fields:
+  - What is the amount?: assigned_amount
+    datatype: currency
+---
+# code: |
+#   if assigned_amount > 0:
+#     equit_adjust = True
+#   else:
+#     equit_adjust = False
 ---
 id: dbd 05 money not assigned owed to other parent.
 question: | 
@@ -195,13 +146,6 @@ fields:
     js show if: 
       val('disability_mod') === false
 ---
-code: |
-  disabled_start_te = format_date(disabled_start, format='short')
-  if disabled_still:
-    disabled_end_te = 'present'
-  else:
-    disabled_end_te = format_date(disabled_end, format='short')
----
 id: dbd 05 ssdi
 question: |
   SSDI
@@ -230,6 +174,20 @@ fields:
     datatype: date
     js show if: 
       val('unemployed_still') === false
+---
+code: |
+  if other_considerations['lost_job']:
+    unemployed_te = 'lose your job'
+  if other_considerations['stopped_working']:
+    unemployed_te = 'stop working '
+---
+code: |
+  if other_considerations.any_true('lost_job','stopped_working'):
+    past_unemployed = True
+    if unemployed_still:
+      unemployed_end = today()
+  else: 
+    past_unemployed = False
 ---
 code: |
   unemployed_start_te = format_date(unemployed_start, format='short')
@@ -288,13 +246,6 @@ fields:
     datatype: date
     js show if: | 
       val('incarcerated_still') == false
----
-code: |
-  jail_date_te = format_date(jail_date, format='short')
-  if incarcerated_still:
-    jail_out_te = 'present'
-  else:
-    jail_out_te = format_date(jail_out, format='short')
 ---
 id: dbd 05 modify for incarceration
 question: |
@@ -356,6 +307,12 @@ fields:
       - We are married now.: married
     none of the above: False
 ---
+code: |
+  if reconciliation['together']:
+    reconciliation_action = 'move back in together'
+  if reconciliation['married']:
+    reconciliation_action = 'get married'
+---
 id: dbd 05 reconcile date
 question: |
   Getting back together with ${other_parent.name.first}
@@ -367,3 +324,13 @@ fields:
   - Do you have a court order that ends child support?: reconcile_end_orderdate
     datatype: yesnoradio
 ---
+code: |
+  # 1st few lines initializing variables
+  # equit_adjust_b = False
+  # past_disabled = False
+  # past_unemployed = False
+  # unemployed_te = ''
+  # no_ui = False
+  # past_incarcerated = False
+  # modification = False
+  # modification_explanation = ''

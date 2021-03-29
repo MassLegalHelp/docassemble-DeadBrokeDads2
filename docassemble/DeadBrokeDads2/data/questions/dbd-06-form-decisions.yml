@@ -1,5 +1,5 @@
 code: |
-  if do_not_owe_any or (dor_cse_notice_arrears_wrong and (arrears_correct > 0)) or benefits_w_ssi_kid or guardian or other_need:
+  if do_not_owe_any or (dor_cse_notice_arrears_wrong and (arrears_correct != 0 or arrears_correct != '' )) or benefits_w_ssi_kid or appointed_guardian or appointed_conservator or rep_payee:# or problem_other: # or other_need
     admin_review = True
   # if twenty_five_percent:    
   #   admin_review = True
@@ -25,14 +25,130 @@ code: |
   else:
     levy_too_much = False
   if problems.any_true('froze-account', 'account', 'too-much', 'shared-account'):
-    levy_hardship = hardships.any_true()
     if levy_hardship:
-      levy_comments = hardshipsSentences
-
+      levy_comments
+    
+  form_decisions_complete = True 
+---
+code: |
+  levy_hardship = hardships.any_true()
+---
+code: |
+    levy_comments = hardshipsSentences
+---
+code: |
+  if assigned_amount > 0:
+    equit_adjust = True
+  else:
+    equit_adjust = False
+---
+code: |
+  if len(arrears_during_benefits) > 0:
+    equit_adjust_a = True
+  else:
+    equit_adjust_a = False
+---
+code: |
+  if (past_disabled and (disabled_start <= cs_arrears_date <= disabled_end)) or (past_unemployed and (unemployed_start <= cs_arrears_date <= unemployed_end)) or (past_incarcerated and (jail_date <= cs_arrears_date <= jail_out)) or other_need:
+    equit_adjust_b = True
+    modification
+    modification_explanation
+  else:
+    equit_adjust_b = False
+---
+depends on: other_considerations
+comment: |
+  Code to complete Equity Adjustment section B for disability 
+code: |
+  # template variable only
+  if other_considerations['disabled']:
+    # TODO: If you're in past arrears then what should be the outcome?
+    if disabled_start <= cs_arrears_date <= disabled_end:
+      past_disabled = True
+    else:
+      past_disabled = False
+  else:
+    past_disabled = False
+---
+#code: |
+#  if disabled_start <= cs_arrears_date <= disabled_end:
+#    admin_review_disability = 'I was disabled'
+#  else:
+#    admin_review_disability = 'TODO: What should this equal?'
+--- 
+code: |
+  disabled_start_te = format_date(disabled_start, format='short')
+  if disabled_still:
+    disabled_end_te = 'present'
+    disabled_end = today() 
+  else:
+    disabled_end_te = format_date(disabled_end, format='short')
+---
+# comment: |
+#   Code to complete Equity Adjustment section B unemployment   
+# code: |
+#   if unemployed_start <= cs_arrears_date <= unemployed_end:
+#     admin_review_unemployment = 'I was unemployed'
+# ---
+code: |
+  if past_unemployed and not unemployment_insurance:
+    no_ui = True
+  else:
+    no_ui = False
+  
+---
+# TODO: Add `depends on:` where these intermediate vars are defined like this
+comment: |
+  Code to complete Equity Adjustment section B incarceration   
+code: |
+  if other_considerations['incarcerated']:
+    past_incarcerated = True
+  else:
+    past_incarcerated = False
+  
+---
+code: |
+  jail_date_te = format_date(jail_date, format='short')
+  if incarcerated_still:
+    jail_out_te = 'present'
+  else:
+    jail_out_te = format_date(jail_out, format='short')
+---
+# code: |
+#   if jail_date <= cs_arrears_date <= jail_out:
+#     admin_review_incarceration = 'I was incarcerated'
+#   else: 
+#     admin_review_incarceration = ''
+# ---
+depends on:
+  - mod_dis_reason
+  - mod_jail_reason
+  - mod_unemploy_reason
+code: |
+    temp_modification_explanation = ''
       
-  
-    
-  form_decisions_complete = True  
-    
-  
-  
+    if defined('mod_dis_reason'):
+        temp_modification_explanation += mod_dis_reason
+
+    if defined('mod_jail_reason'):
+        temp_modification_explanation += '. ' + mod_jail_reason
+        
+    if defined('mod_unemploy_reason'):
+        temp_modification_explanation += '. ' + mod_unemploy_reason
+
+    modification_explanation = temp_modification_explanation
+---
+depends on:
+  - unemploy_mod
+  - jail_mod
+  - disability_mod
+code: |
+    if defined('unemploy_mod') and unemploy_mod:
+        modification = True
+    elif defined('jail_mod') and jail_mod:
+        modification = True
+    elif defined('disability_mod') and disability_mod:
+        modification = True
+    else:
+    	modification = False
+---
