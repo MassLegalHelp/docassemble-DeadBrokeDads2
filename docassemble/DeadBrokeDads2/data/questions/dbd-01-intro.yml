@@ -16,7 +16,7 @@ code: |
   #  kick_out
   if problems.any_true('other'):
     prob_other
-  if help_needed.any_true('cant-afford', 'cant-sustain'):
+  if help_needed.any_true('cantafford', 'cantsustain'):
     hardships  
   # if help_needed.any_true('needplan'):
     # need_offer
@@ -202,8 +202,8 @@ fields:
     datatype: checkboxes
     choices:
       - DOR is wrong about the amount of child support I owe.: disagreement
-      - I cannot pay all the back child support I owe.: cant-afford
-      - I cannot keep up with the payments that the Court ordered.: cant-sustain
+      - I cannot pay all the back child support I owe.: cantafford
+      - I cannot keep up with the payments that the Court ordered.: cantsustain
       - I need help like a payment plan to pay the back child support I owe.: needplan
   - no label: extra_help_needed
     datatype: checkboxes

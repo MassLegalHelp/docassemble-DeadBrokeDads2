@@ -19,7 +19,7 @@ code: |
   else:
     problemsSentences = "No problems"
   
-  if help_needed.any_true('cant-afford', 'cant-sustain'):
+  if help_needed.any_true('cantafford', 'cantsustain'):
     if hardships.any_true():
       for hardship in hardships.true_values():
         hardshipsSentences += hardshipsToSentences[hardship] + "\n"
