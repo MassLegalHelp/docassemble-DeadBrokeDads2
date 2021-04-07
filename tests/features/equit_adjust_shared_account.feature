@@ -7,19 +7,8 @@ Scenario: Equity adjustment with a shared account
     | var | choice | value |
     | account_same | True | true |
     | admin_review | True | true |
-    | admin_review_comments | | DOR took money out of my bank account.\r\nDOR took my driver's license.\r\n\r\nI cannot afford to leave an abusive relationship.\r\nI cannot pay for groceries.\r\nI cannot pick up my child, I cannot get to work so I cannot earn money for basic needs and child support. |
-    | administrative_review.docx.number | | 12341 |
-    | administrative_review.docx.ok | True | true |
-    | administrative_review.info.attachment.name | | Question_127 |
-    | administrative_review.info.attachment.number | | 0 |
-    | administrative_review.info.description | | |
-    | administrative_review.info.formats[0] | | docx |
-    | administrative_review.info.formats[1] | | pdf |
-    | administrative_review.info.name | | Administrative Review |
-    | administrative_review.info.orig_variable_name | | administrative_review |
-    | administrative_review.info.raw | False | false |
-    | administrative_review.pdf.number | | 12342 |
-    | administrative_review.pdf.ok | True | true |
+    | prob_other |  | how did this get in the interview? I didn't see it before... |
+    | admin_review_comments | | DOR took money out of my bank account.\nDOR took my driver's license.\n\nI cannot afford to leave an abusive relationship.\nI cannot pay for groceries.\nI cannot pick up my child, I cannot get to work so I cannot earn money for basic needs and child support. |
     | appointed_conservator | False | false |
     | appointed_guardian | True | true |
     | arrears_during_benefits.revisit | True | true |
@@ -27,18 +16,6 @@ Scenario: Equity adjustment with a shared account
     | arrears_federal | | 13 |
     | arrears_state | | 26 |
     | assigned_amount | | 45 |
-    | bank_levy.docx.number | | 12337 |
-    | bank_levy.docx.ok | True | true |
-    | bank_levy.info.attachment.name | | Question_128 |
-    | bank_levy.info.attachment.number | | 0 |
-    | bank_levy.info.description | | |
-    | bank_levy.info.formats[0] | | docx |
-    | bank_levy.info.formats[1] | | pdf |
-    | bank_levy.info.name | | Bank Levy |
-    | bank_levy.info.orig_variable_name | | bank_levy |
-    | bank_levy.info.raw | False | false |
-    | bank_levy.pdf.number | | 12338 |
-    | bank_levy.pdf.ok | True | true |
     | your_past_benefits['State Veterans Benefits'].end | | 03/29/2021 |
     | your_past_benefits['State Veterans Benefits'].start_date | | 04/05/1987 |
     | your_past_benefits['State Veterans Benefits'].still_receiving | True | true |
@@ -65,19 +42,8 @@ Scenario: Equity adjustment with a shared account
     | client.ssn | | 123-45-6789 |
     | client.workphone | | |
     | comment_car | | I cannot pick up my child, I cannot get to work so I cannot earn money for basic needs and child support. |
+    | comment_license | | Not sure why license appeared here either |
     | comparison_complete | True | true |
-    | cover_page.docx.number | | 12339 |
-    | cover_page.docx.ok | True | true |
-    | cover_page.info.attachment.name | | Question_126 |
-    | cover_page.info.attachment.number | | 0 |
-    | cover_page.info.description | | |
-    | cover_page.info.formats[0] | | docx |
-    | cover_page.info.formats[1] | | pdf |
-    | cover_page.info.name | | Help for Obligors |
-    | cover_page.info.orig_variable_name | | cover_page |
-    | cover_page.info.raw | False | false |
-    | cover_page.pdf.number | | 12340 |
-    | cover_page.pdf.ok | True | true |
     | cs_arrears_catch_up | False | false |
     | cs_arrears_date | | 06/07/2020 |
     | cs_arrears_mc | | Yes |
@@ -91,7 +57,7 @@ Scenario: Equity adjustment with a shared account
     | dor_cse_notice_arrears | | 4567 |
     | dor_cse_notice_arrears_true | True | true |
     | dor_cse_notice_arrears_wrong | False | false |
-    | dor_cse_notice_court | | Suffolk Probate and Family Court |
+    | dor_cse_notice_court | | Barnstable Probate and Family Court |
     | dor_cse_notice_court_wrong | False | false |
     | dor_cse_notice_frequency | | 52 |
     | dor_cse_notice_frequency_wrong | False | false |
@@ -100,56 +66,12 @@ Scenario: Equity adjustment with a shared account
     | equit_adjust | True | true |
     | equit_adjust_a | False | false |
     | equit_adjust_b | False | false |
-    | equitable_adjustment.docx.number | | 12343 |
-    | equitable_adjustment.docx.ok | True | true |
-    | equitable_adjustment.info.attachment.name | | Question_129 |
-    | equitable_adjustment.info.attachment.number | | 0 |
-    | equitable_adjustment.info.description | | |
-    | equitable_adjustment.info.formats[0] | | docx |
-    | equitable_adjustment.info.formats[1] | | pdf |
-    | equitable_adjustment.info.name | | Equitable Adjustment |
-    | equitable_adjustment.info.orig_variable_name | | equitable_adjustment |
-    | equitable_adjustment.info.raw | False | false |
-    | equitable_adjustment.pdf.number | | 12344 |
-    | equitable_adjustment.pdf.ok | True | true |
     | extra_help_needed | apple | false |
     | extra_help_needed | license | true |
     | extra_help_needed | orange | false |
     | extra_help_needed | registration | false |
     | append.number | | 12345 |
     | append.ok | True | true |
-    | file_bundle_temp[0].info.attachment.name | | Question_126 |
-    | file_bundle_temp[0].info.attachment.number | | 0 |
-    | file_bundle_temp[0].info.description | | |
-    | file_bundle_temp[0].info.formats[0] | | docx |
-    | file_bundle_temp[0].info.formats[1] | | pdf |
-    | file_bundle_temp[0].info.name | | Help for Obligors |
-    | file_bundle_temp[0].info.orig_variable_name | | cover_page |
-    | file_bundle_temp[0].info.raw | False | false |
-    | file_bundle_temp[1].info.attachment.name | | Question_127 |
-    | file_bundle_temp[1].info.attachment.number | | 0 |
-    | file_bundle_temp[1].info.description | | |
-    | file_bundle_temp[1].info.formats[0] | | docx |
-    | file_bundle_temp[1].info.formats[1] | | pdf |
-    | file_bundle_temp[1].info.name | | Administrative Review |
-    | file_bundle_temp[1].info.orig_variable_name | | administrative_review |
-    | file_bundle_temp[1].info.raw | False | false |
-    | file_bundle_temp[2].info.attachment.name | | Question_128 |
-    | file_bundle_temp[2].info.attachment.number | | 0 |
-    | file_bundle_temp[2].info.description | | |
-    | file_bundle_temp[2].info.formats[0] | | docx |
-    | file_bundle_temp[2].info.formats[1] | | pdf |
-    | file_bundle_temp[2].info.name | | Bank Levy |
-    | file_bundle_temp[2].info.orig_variable_name | | bank_levy |
-    | file_bundle_temp[2].info.raw | False | false |
-    | file_bundle_temp[3].info.attachment.name | | Question_129 |
-    | file_bundle_temp[3].info.attachment.number | | 0 |
-    | file_bundle_temp[3].info.description | | |
-    | file_bundle_temp[3].info.formats[0] | | docx |
-    | file_bundle_temp[3].info.formats[1] | | pdf |
-    | file_bundle_temp[3].info.name | | Equitable Adjustment |
-    | file_bundle_temp[3].info.orig_variable_name | | equitable_adjustment |
-    | file_bundle_temp[3].info.raw | False | false |
     | append.number | | 12346 |
     | fin_statement | True | true |
     | form_decisions_complete | True | true |
@@ -292,7 +214,7 @@ Scenario: Equity adjustment with a shared account
     | your_children_benefit_list | EAEDC | false |
     | your_children_benefit_list | SSI | false |
     | your_children_benefit_list | TAFDC | false |
-    | your_children_benefit_list | true | None |
+    | your_children_benefit_list | None | true |
     | your_children_past_benefits.revisit | True | true |
     | your_children_past_benefits.there_are_any | False | false |
     | _sorted_items.revisit | True | true |
@@ -305,4 +227,6 @@ Scenario: Equity adjustment with a shared account
     | your_past_benefits.there_is_another | False | false |
     | _sorted_items[0] | | State Veterans Benefits |
     | _sorted_items.there_are_any | True | true |
+    | ssdi_past | False | false |
+    | work_injury | True | true |
     | | | /sign |
