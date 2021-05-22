@@ -74,13 +74,13 @@ code: |
       reconciliation_action = 'get married'
     reconcile_date
   
-  if assigned_is_zero:
+  if assigned_value > 0:
     is_zero
     equit_adjust = False
   else:
     is_not_zero
     equit_adjust = True
-    
+
   other_considerations_complete = True
 ---
 comment: |
@@ -100,18 +100,17 @@ subquestion: |
 
   Under **Total Arrears** Look at the amount next to "Assigned."
   
-  Is the amount **more** than $0.00?
- 
-  Note to CR: why not ask how much is written next to the word assigned? - duh, we can evaluate if it's greater than zero! double duh.
-  
-  
-yesno: assigned_is_zero
+fields:
+  - What is the amount written?: assigned_value
+    datatype: currency
 ---
 id: dbd 05 money not assigned owed to other parent.
 question: | 
   You still owe ${other_parent.name.first}
 subquestion: |
-  But you can ask DOR for help to restore your license, unfreeze your bank account, set up a payment plan etc. dictionary values from problem keys.
+  But you can ask DOR for help to restore your license, unfreeze your bank account, set up a payment plan etc. 
+comment: |
+  dictionary values from problem keys.
 field: is_zero
 ---
 id: dbd 05 equitable adjustment
@@ -179,6 +178,7 @@ fields:
     datatype: area
   - When did your disability start?: disabled_start
     datatype: date
+    max: ${ today() }
   - Are you still disabled?: disabled_still
     datatype: yesnoradio
   - When did your disability end?: disabled_end
@@ -194,6 +194,9 @@ fields:
     datatype: area
     js show if: 
       val('disability_mod') === false
+validation code: |
+      if disabled_end < disabled_start:
+        validation_error("Your disability cannot have ended before it started")
 ---
 code: |
   disabled_start_te = format_date(disabled_start, format='short')
@@ -267,7 +270,8 @@ subquestion: |
   
   When was that and where were you incarcerated? 
 
-  CR: if our user is incarcerated right now would they be able to do this? Or would someone else possibly be taking this interview for them and then getting them to sign? 
+comment: |
+  TODO(CR): if our user is incarcerated right now would they be able to do this? Or would someone else possibly be taking this interview for them and then getting them to sign? 
 fields: 
   - note: "Check all that apply:"
   - House of Corrections: jail_house
@@ -360,10 +364,11 @@ id: dbd 05 reconcile date
 question: |
   Getting back together with ${other_parent.name.first}
 subquestion: |
-  When did you you ${ reconciliation_action }?
+  When did you ${ reconciliation_action }?
 fields:
   - no label: reconcile_date
     datatype: date
+    max: ${ today() }
   - Do you have a court order that ends child support?: reconcile_end_orderdate
     datatype: yesnoradio
 ---

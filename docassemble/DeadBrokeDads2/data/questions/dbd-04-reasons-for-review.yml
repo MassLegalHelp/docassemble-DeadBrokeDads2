@@ -11,7 +11,6 @@ code: |
     else:
       unprotected
 
-
   benefits_dor_took_money.initializeAttribute("yours", DAList.using(there_are_any=False))
   benefits_dor_took_money.initializeAttribute("childrens", DAList.using(there_are_any=False))
     
@@ -125,6 +124,8 @@ code: |
 
   if len(arrears_during_benefits) > 0:
     equit_adjust_a = True
+  else:
+    equit_adjust_a = False
 ---
 id: dbd 04 first fell behind date
 question: |
@@ -267,11 +268,10 @@ validation code: |
 id: dbd 04 benefits account
 comment: |
   CR had asked, How can our users actually answer this question? And what if the answer is no?, Barb says 10/07/2020 Ask instead, Is most of the money in this account from your benefits? And also, Do have any income other than your benefits?
-question: |
-  DOR is taking money from your bank account
-subquestion: |
-  Did DOR take money from the **same account** your ${ your_past_benefits } benefits are deposited into?
-
+  
+  TODO(brycew): this was displayed as written below the subquestion.
+  Does the user need this info to fill out this question?
+  
   cs_arrears_date is ${ cs_arrears_date }
 
   dor_took_money_date is ${ dor_took_money_date }
@@ -283,6 +283,10 @@ subquestion: |
   % endfor
 
   And what is the value of benefits_w_ssi_kid? ${ benefits_w_ssi_kid }
+question: |
+  DOR is taking money from your bank account
+subquestion: |
+  Did DOR take money from the **same account** your ${ your_past_benefits } benefits are deposited into?
 fields:
   - no label: account_same
     datatype: radio

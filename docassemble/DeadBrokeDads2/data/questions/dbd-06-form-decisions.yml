@@ -13,26 +13,26 @@ code: |
       levy_exempt = False
   else:
     levy_exempt = False
+
   if problems['shared-account']:
     if levy_not_mine:
       admin_review
       bank_levy = True
   else:
     levy_not_mine = False
+
   if problems['too-much']:
     bank_levy = True
     levy_too_much = True
   else:
     levy_too_much = False
+
   if problems.any_true('froze-account', 'account', 'too-much', 'shared-account'):
     levy_hardship = hardships.any_true()
     if levy_hardship:
       levy_comments = hardshipsSentences
-
+  else:
+    levy_hardship = False
       
-  
-    
+
   form_decisions_complete = True  
-    
-  
-  

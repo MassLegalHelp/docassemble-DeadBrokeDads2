@@ -149,11 +149,6 @@ code: |
   # the pdf/docx versions of the file, respectively
   file_bundle_zip = zip_file([item.docx for item in file_bundle_temp], filename="help_for_obligor_parents.zip") 
   
- 
-  
-  
-    
-
 ---
 id: base yml download screen
 comment: |
