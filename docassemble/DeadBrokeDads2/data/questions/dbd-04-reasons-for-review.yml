@@ -133,6 +133,7 @@ question: |
 fields:
   - no label: cs_arrears_date
     datatype: date
+    max: ${ today() }
 ---
 id: dbd 04 levy date
 question: |

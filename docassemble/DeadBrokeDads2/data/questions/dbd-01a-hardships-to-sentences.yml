@@ -27,9 +27,9 @@ code: |
     sentences = "No hardships"
 
   if problems.any_true('driver-license', 'car-reg'):
-    sentences += comment_car
+    sentences = ', '.join([sentences, comment_car])
   if problems.any_true('business-license', 'professional-license', 'trade-license'):
-    sentences += comment_license
+    sentences = ', '.join([sentences, comment_license])
   
   admin_review_comments
   open_text_paragraph_one_complete = True

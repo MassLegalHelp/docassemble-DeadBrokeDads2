@@ -13,9 +13,6 @@ code: |
   client.name.first
   # else:
   #  kick_out
-  if problems.any_true('other'):
-    prob_other
-    other_need = True
   if help_needed.any_true('cant-afford', 'cant-sustain'):
     hardships  
   # if help_needed.any_true('needplan'):
@@ -36,8 +33,15 @@ code: |
     comment_car
   if problems.any_true('business-license', 'professional-license', 'trade-license'):
     comment_license
+  if problems.any_true('other'):
+    prob_other
+    other_need = True
+    other_needed_info
   open_text_paragraph_one_complete
   intro_complete = True
+---
+objects:
+  - notice_of_arrears_img: DAStaticFile.using(filename="Notice_of_Arrears.png")
 ---
 section: Introduction
 id: 01 Welcome
@@ -45,19 +49,19 @@ field: welcome
 question: | 
   Welcome!
 subquestion: |
-  We can help you fill out the forms you need if:  
+  We can help you fill out the forms you need if the Department of Revenue Child Support Enforcement (DOR/CSE) has done any of the following:  
   
-  * The Department of Revenue Child Support Enforcement (DOR/CSE) sent you a notice that says that you are behind in child support payments. That notice is called a [Notice of Child Support Delinquency](https://drive.google.com/file/d/1eFI1jrzWLGSMA094sveue-TOFswCnMcG/view?usp=sharing). 
-  * DOR/CSE  took your tax refund.
-  * DOR/CSE started taking money out of your pay or is taking more money out of your pay than they should.  
-  * DOR/CSE told you or your employer the amount of child support you need to pay is going up by 25%.
-  * DOR/CSE froze your bank account so you cannot use the money in your bank.
-  * DOR/CSE took money out of your bank account .
-  * DOR/CSE took your driver's license or suspended your car registration.
-  * DOR/CSE took your business license, your trade license or your professional license.
-  * You have another problem with DOR/CSE related to child support.
+  * Sent you a notice that says that you are behind in child support payments. That notice is called a [Notice of Child Support Delinquency](${ notice_of_arrears_img.url_for() }). 
+  * Took your tax refund.
+  * Started taking money out of your pay or is taking more money out of your pay than they should.  
+  * Told you or your employer the amount of child support you need to pay is going up by 25%.
+  * Froze your bank account so you cannot use the money in your bank.
+  * Took money out of your bank account.
+  * Took your driver's license or suspended your car registration.
+  * Took your business license, your trade license or your professional license.
+  
+  Or if you have another problem with DOR/CSE related to child support.
 
- 
 ---
 id: 01 Important
 question: |
@@ -217,16 +221,10 @@ fields:
 id: dbd 01 levy date
 question: |
   % if problems.any_true('account', 'too-much', 'shared-account'):
-  When did they take it?
-  % else:
-  When did they freeze it?
-  % endif  
-subquestion: |
-  % if problems.any_true('account', 'too-much', 'shared-account'):
   When did DOR take the money of your account?
   % else:
   When did DOR freeze your bank account?
-  % endif
+  % endif 
 fields:
   - Date: dor_took_money_date
     datatype: date
@@ -239,20 +237,20 @@ question: |
   I cannot drive!
 subquestion: |
   Explain to DOR why being unable to drive is causing you a problem.
+  
+  For example, "I cannot pick up my ${ child_te }.  I cannot get to work so I cannot earn money for basic needs and child support."
 fields:
     - no label: comment_car
-under: |
-  For example, "I cannot pick up my ${ child_te }.  I cannot get to work so I cannot earn money for basic needs and child support."
 ---
 id: 01 hardship need license
 question: |
   I need my license!
 subquestion: |
   Explain to DOR why taking your license is causing you a problem.
+  
+  For example, "I need my license to work so I can earn money to pay for my basic needs and child support."
 fields:
     - no label: comment_license
-under: |
-  For example, "I need my license to work so I can earn money to pay for my basic needs and child support."
 ---
 id: 01 offer in settlement
 question: |

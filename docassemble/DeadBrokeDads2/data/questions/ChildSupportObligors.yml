@@ -19,12 +19,6 @@ default screen parts:
     `Page id: ${ user_info().question_id }`
     % endif
 ---
-# default screen parts:
-#   pre: |
-#     % if get_config('debug') and user_info().question_id:
-#     `${ user_info().question_id }`
-#     % endif
-# ---
 sections:
   - Introduction
   - Notice of Child Support Delinquency
@@ -167,6 +161,7 @@ attachment:
     valid formats:
       - pdf
     tagged pdf: True
+include download tab: False
 always include editable files: False
 event: get_forms
 ---

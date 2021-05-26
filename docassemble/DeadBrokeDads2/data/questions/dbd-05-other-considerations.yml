@@ -83,6 +83,9 @@ code: |
 
   other_considerations_complete = True
 ---
+objects:
+  - account_summary_orig: DAStaticFile.using(filename='account_summary_orig.png')
+---
 comment: |
   if any arrears are assigned = owed to DOR/CSE, user can ask for equitable adjustment. Money that is not assigned is owed to custodial parent.
 id: dbd 05 assigned
@@ -96,7 +99,7 @@ subquestion: |
 
   Look at the Child Support Enforcement System Financial Summary Report.
   
-  [[FILE DBD_AccountSummary.png]](https://da-dev.masslegalhelp.org/playgroundstatic/DeadBrokeDads/4/account_summary_orig.png)
+  [[FILE DBD_AccountSummary.png, 100%]](${ account_summary_orig.url_for() })
 
   Under **Total Arrears** Look at the amount next to "Assigned."
   
@@ -207,7 +210,7 @@ code: |
 ---
 id: dbd 05 ssdi
 question: |
-  SSDI
+  Social Security Disability Insurance (SSDI)
 fields: 
   - Did you get SSDI?: ssdi_past
     datatype: yesnoradio
@@ -250,7 +253,7 @@ id: dbd 05 modify for unemployment
 question: |
   Did you ask the court to change the child support order?
 subquestion: |
- Did you ask the court to change your child support order because you stopped working or lost your job?: 
+ Did you ask the court to change your child support order because you stopped working or lost your job?
 fields: 
   - no label: unemploy_mod
     datatype: yesnoradio
@@ -271,7 +274,8 @@ subquestion: |
   When was that and where were you incarcerated? 
 
 comment: |
-  TODO(CR): if our user is incarcerated right now would they be able to do this? Or would someone else possibly be taking this interview for them and then getting them to sign? 
+  TODO(CR): if our user is incarcerated right now would they be able to do this? Or would someone else possibly be taking this interview for them and then getting them to sign?
+  TODO(CR): if user checks more than one of the above, (for correctional facilities) - which name do we want them to give?
 fields: 
   - note: "Check all that apply:"
   - House of Corrections: jail_house
@@ -283,7 +287,6 @@ fields:
   - What type of correctional facility was it?: jail_type
     show if: jail_other
   - What is the name of the correctional facility where you are or were incarcerated?: jail_name
-  - note: "CR: if user checks more than one of the above - which name do we want them to give?"
   - After the court ordered child support, when did you first go to jail or prison?: jail_date
     datatype: date
   - Are you still in jail or prison?: incarcerated_still

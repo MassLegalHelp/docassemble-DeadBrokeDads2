@@ -66,18 +66,21 @@ subquestion: |
   
   What does DOR/CSE say these are?
   The notice should look something like this:
-  [FILE DBD_NoticeTop.png]
+  
+  [FILE DBD_NoticeTop.png, 100%]
 fields:
   - 1. What is the date?: notice_date_delinquency
     datatype: date 
   - 2. Is the custodial parent's name **${other_parent.name}**?: other_parent_wrong
     datatype: noyesradio
-  - 2. What is custodial parent's first name?: dor_other_parent.name.first
+  - note: "What is the custodial parent's name?"
     show if: other_parent_wrong
-  - 2. What is custodial parent's middle name?: dor_other_parent.name.middle
+  - 2. Their first name?: dor_other_parent.name.first
+    show if: other_parent_wrong
+  - 2. Their middle name?: dor_other_parent.name.middle
     required: False
     show if: other_parent_wrong
-  - 2. What is custodial parent's last name?: dor_other_parent.name.last
+  - 2. Their last name?: dor_other_parent.name.last
     show if: other_parent_wrong
   - What name does it give for the court?: dor_cse_notice_court
     datatype: dropdown
@@ -114,8 +117,10 @@ subquestion: |
 fields:
   - What is the State Amount?: arrears_state
     datatype: currency 
+    min: 0
   - What is the Federal Amount?: arrears_federal
     datatype: currency 
+    min: 0
 ---
 id: dbd 02 - is notice right
 question: |
@@ -137,7 +142,6 @@ fields:
   - Does the court order say you must pay  ${dbd_period_string(dor_cse_notice_frequency)} : dor_cse_notice_frequency_wrong
     datatype: noyesradio   
   - How often does your order say you must pay child support?: cs_frequency
-    datatype: number
     code: |
       period_list()
     show if: dor_cse_notice_frequency_wrong
@@ -204,6 +208,7 @@ question: |
 fields:
   - no label: cs_arrears_date
     datatype: date
+    max: ${ today() }
 ---
 id: dbd 02 - catch up
 question: |

@@ -83,11 +83,12 @@ question: |
 fields: 
   - Date of Birth: client.birthdate
     datatype: date
+    max: ${ today() }
 ---
 id: client drivers license
 question: |
   What is your Drivers license number?
-fields: 
+fields:
   - Drivers license number: client.dl
     required: false
 ---
