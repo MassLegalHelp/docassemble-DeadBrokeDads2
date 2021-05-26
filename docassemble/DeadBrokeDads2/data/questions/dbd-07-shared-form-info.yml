@@ -5,7 +5,6 @@
 # modules:
 #   - docassemble.ssa.ssa
 ---
-# mandatory: True
 code: |
   # admin_review
   client.address.address

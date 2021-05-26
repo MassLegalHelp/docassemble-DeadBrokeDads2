@@ -268,7 +268,7 @@ validation code: |
 # ---
 id: dbd 04 benefits account
 comment: |
-  CR had asked, How can our users actually answer this question? And what if the answer is no?, Barb says 10/07/2020 Ask instead, Is most of the money in this account from your benefits? And also, Do have any income other than your benefits?
+  TODO(CR) had asked, How can our users actually answer this question? And what if the answer is no?, Barb says 10/07/2020 Ask instead, Is most of the money in this account from your benefits? And also, Do have any income other than your benefits?
   
   TODO(brycew): this was displayed as written below the subquestion.
   Does the user need this info to fill out this question?

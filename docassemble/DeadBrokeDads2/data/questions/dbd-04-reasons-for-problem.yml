@@ -191,6 +191,10 @@ validation code: |
   if dor_took_money_date > today():
     validation_error("This date cannot be in the future.")
 ---
+comment: |
+  TODO(CR) -How can our users actually answer this question? And what if the answer is no?
+  show if: account_same
+  
 question: | 
   DOR is taking money from your bank account
 subquestion: |
@@ -206,8 +210,6 @@ fields:
   - Did the money DOR took come from the benefits?: benefits_used
     show if: account_same
     datatype: yesnoradio
-  - note: CR -How can our users actually answer this question? And what if the answer is no?
-    show if: account_same
 ---
 question: |
   DOR took money out of a different bank account

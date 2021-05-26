@@ -191,12 +191,14 @@ validation code: |
   if dor_took_money_date > today():
     validation_error("This date cannot be in the future.")
 ---
+comment: |
+  TODO(CR):  How can our users actually answer this question (Did the money DOR took come from the benefits)? 
+  And what if the answer is no?
+  show if: account_same
 question: | 
   DOR is taking money from your bank account
 subquestion: |
   Is the bank account DOR took money from the **same account** your ${ your_past_benefits } benefits are deposited into?
-  
-  And what is the value of benefits_w_ssi_kid? ${ benefits_w_ssi_kid }
 fields:
   - no label: account_same
     datatype: radio
@@ -206,8 +208,6 @@ fields:
   - Did the money DOR took come from the benefits?: benefits_used
     show if: account_same
     datatype: yesnoradio
-  - note: CR -How can our users actually answer this question? And what if the answer is no?
-    show if: account_same
 ---
 question: |
   DOR took money out of a different bank account
