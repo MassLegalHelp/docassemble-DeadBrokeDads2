@@ -198,7 +198,7 @@ fields:
     js show if: 
       val('disability_mod') === false
 validation code: |
-      if disabled_end < disabled_start:
+      if not disabled_still and disabled_end < disabled_start:
         validation_error("Your disability cannot have ended before it started")
 ---
 code: |

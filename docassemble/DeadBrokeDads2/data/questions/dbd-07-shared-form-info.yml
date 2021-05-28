@@ -73,8 +73,9 @@ subquestion: |
 fields: 
   - SSN: client.ssn
     datatype: ssn
-    validate: is_valid_ssn
     required: False
+    validate: |
+      lambda y: len(y) == 0 or is_valid_ssn(y)
 ---
 id: client birthdate
 question: |
@@ -100,7 +101,7 @@ subquestion: |
   We automatically date all the forms with today's date. But you can change it here, or delete the date in the box below and write in the date later, after you print your forms.
   
 fields: 
-  - date: signature_date
+  - I will sign these forms on: signature_date
     datatype: date
     default: ${today().format("yyyy-MM-dd")}
     required: False

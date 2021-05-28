@@ -143,10 +143,13 @@ section: Current child support order
 ---
 id: dbd 03 - beginning of order
 question: |
-  When did the court **first** order you to pay child support to ${other_parent.name.first}? What is the date on that order?
+  When did the court **first** order you to pay child support to ${other_parent.name.first}? 
+subquestion: |
+  What is the date on that order?
 fields:
-  - date on 1st child support order: cs_order_date
+  - Date on 1st child support order: cs_order_date
     datatype: date
+    max: ${ today() }
 ---
 id: dbd 03 - court order direct pay?
 question: |

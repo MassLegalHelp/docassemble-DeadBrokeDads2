@@ -7,7 +7,7 @@ code: |
   do_not_owe_any = False
   if dor_cse_notice_arrears_wrong or dor_cse_notice_arrears_wrong == None:
     if cs_arrears_mc =='Yes':
-      cs_arrears_situ
+      cs_arrears_situation
       cs_arrears_date
       cs_arrears_catch_up
       court_ordered_cs
@@ -196,7 +196,7 @@ question: |
 subquestion: |
   I fell behind because ...
 fields:
-  - no label: cs_arrears_situ
+  - no label: cs_arrears_situation
     input type: radio
     choices:
       - I only made partial payments: partial
@@ -236,11 +236,14 @@ fields:
 ---
 code: |
   if not cs_arrears_catch_up:
-    if cs_arrears_situ == 'nothing':
-    
-    # calculate the number of weeks between date client fell behind and today. Then multiply their weekly child support order by the number of weeks they are behind.
-      weekly_cs_amount = (court_ordered_cs * court_ordered_frequency)/52
-      arrears_correct_value = round((int(date_difference(starting=cs_arrears_date, ending=today()).weeks))*(weekly_cs_amount),2)
+    if cs_arrears_situation == 'nothing':
+      # calculate number of weeks b/t date client fell behind and today.
+      # Then multiply their weekly child support order by the number 
+      # of weeks they are behind.
+      weekly_cs_amount = (court_ordered_cs * court_ordered_frequency) / 52
+      arrears_correct_value = round(
+          (int(date_difference(starting=cs_arrears_date, ending=today()).weeks)
+          * weekly_cs_amount), ndigits=2)
 
   if arrears_correct_value > 0:
     arrears_correct = '$' + str(arrears_correct_value)

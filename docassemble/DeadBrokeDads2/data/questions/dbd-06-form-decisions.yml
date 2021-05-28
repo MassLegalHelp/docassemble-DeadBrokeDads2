@@ -1,5 +1,8 @@
 code: |
-  if do_not_owe_any or (dor_cse_notice_arrears_wrong and (arrears_correct > 0)) or benefits_w_ssi_kid or guardian or other_need:
+  # TODO(brycew): what should we do if correct value isn't defined (because of partial payments)?
+  if do_not_owe_any or \
+      (dor_cse_notice_arrears_wrong and defined('arrears_correct_value') and (arrears_correct_value > 0)) or \
+      benefits_w_ssi_kid or guardian or other_need:
     admin_review = True
   # if twenty_five_percent:    
   #   admin_review = True
