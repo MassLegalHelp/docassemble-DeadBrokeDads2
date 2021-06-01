@@ -69,7 +69,7 @@ question: |
 subquestion: |  
   **We cannot help you change the amount of child support you owe your child’s other parent**. 
   
-  If you need to change the amount of the child support order, you will need to go to court. See [Changing a Child Support Order](https://www.masslegalhelp.org/children-and-families/child-support-changing-it) on MassLegalHelp.
+  If you need to change the amount of the child support order, you will need to go to court. See MassLegalHelp's [article on Changing a Child Support Order](https://www.masslegalhelp.org/children-and-families/child-support-changing-it) for more information.
   
   We can only help you with one child support order at a time. 
   
@@ -80,7 +80,6 @@ action buttons:
   - label: Exit
     action:  https://masslegalhelp.org/children-and-families/child-support-enforcing2/dor
     color: danger
-
 ---
 id: 01 call dor cse
 question: | 
@@ -88,9 +87,11 @@ question: |
 subquestion: |
   You will need your child support payment history. 
   
-  If you do not have it, find out how to get it. See [Get your child support payment history](https://www.mass.gov/how-to/get-your-child-support-payment-history) on DOR/CSE's website.
+  If you do not have the payment history, follow the instructions on DOR/CSE's page about [getting your child support payment history](https://www.mass.gov/how-to/get-your-child-support-payment-history).
   
-  DOR may be able to help you with your back child support informally….they have a number of ways to help before you have to send in forms.    
+  DOR may be able to help you with your back child support informally. They have a number of ways to help before you have to send in forms.
+
+  ----------
 
   Do want to try to fix the problem informally before you fill out forms?
   
@@ -104,19 +105,16 @@ subquestion: |
   Contact DOR: 
   
   * Over the phone:
-  
-       * (800) 332-2733, or
-       * (617) 660-1234 for local callers in the Boston area,
-   
-  * Use [their online form](https://ecse.cse.state.ma.us/ECSE/ContactUs), or
-  
+       * [(800)-332-2733](tel:+1-800-332-2733), or
+       * [(617)-660-1234](tel:+1-617-600-1234) for local callers in the Boston area,
+  * Use [their online form](https://ecse.cse.state.ma.us/uwps/wps/portal/), or
   * [Your case manager account](https://ecse.cse.state.ma.us/ECSE/Login/login.asp)
   
   Come back if you cannot solve your problem informally with DOR/CSE.
 field: contact_dor
 action buttons:
   - label: Exit
-    action: https://www.google.com/search?q=contact+dor+cse+mass.gov&oq=contact+dor+cse+mass.gov&aqs=chrome..69i57j33i22i29i30.8678j0j7&sourceid=chrome&ie=UTF-8
+    action: https://www.mass.gov/info-details/contact-dor
     color: danger
 ---
 id: 01 modify
@@ -136,14 +134,18 @@ event: kick_out
 ---
 id: 01 your name
 question: |
- Your name
+  What is your name?
 subquestion: |
-  What is your name? We need to put your name on the forms you send to DOR/CSE. 
+  We need to put your name on the forms you send to DOR/CSE. 
 fields:
   - First: client.name.first
   - Middle: client.name.middle
     required: False
   - Last: client.name.last
+  - Suffix: client.name.suffix
+    code: |
+      name_suffix()
+    required: False
 section: About you
 ---
 id: 01 what actions did DOR take?

@@ -235,7 +235,7 @@ fields:
       period_list() 
 ---
 code: |
-  if not cs_arrears_catch_up:
+  if defined('cs_arrears_catch_up') and not cs_arrears_catch_up:
     if cs_arrears_situation == 'nothing':
       # calculate number of weeks b/t date client fell behind and today.
       # Then multiply their weekly child support order by the number 
@@ -245,7 +245,7 @@ code: |
           (int(date_difference(starting=cs_arrears_date, ending=today()).weeks)
           * weekly_cs_amount), ndigits=2)
 
-  if arrears_correct_value > 0:
+  if defined('arrears_correct_value') and arrears_correct_value > 0:
     arrears_correct = '$' + str(arrears_correct_value)
   else:
     arrears_correct = 'I am not sure'

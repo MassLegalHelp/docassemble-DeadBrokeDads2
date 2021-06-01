@@ -186,6 +186,7 @@ fields:
     datatype: yesnoradio
   - When did your disability end?: disabled_end
     datatype: date
+    max: ${ today() }
     js show if: 
       val('disabled_still') === false
   - While you were disabled, did you ask the court to change the child support order?: disability_mod
@@ -230,12 +231,17 @@ fields:
     input type: area
   - When did you ${ unemployed_te }?: unemployed_start
     datatype: date
+    max: ${ today() }
   - Are you still unemployed?: unemployed_still
     datatype: yesnoradio
   - When did you go back to work?: unemployed_end
     datatype: date
+    max: ${ today() }
     js show if: 
       val('unemployed_still') === false
+validation code: |
+      if not unemployed_still and unemployed_end < unemployed_start:
+        validation_error("Your unemployment cannot have ended before it started")
 ---
 code: |
   unemployed_start_te = format_date(unemployed_start, format='short')
@@ -289,12 +295,17 @@ fields:
   - What is the name of the correctional facility where you are or were incarcerated?: jail_name
   - After the court ordered child support, when did you first go to jail or prison?: jail_date
     datatype: date
+    max: ${ today() }
   - Are you still in jail or prison?: incarcerated_still
     datatype: yesnoradio
   - When did you get out?: jail_out
     datatype: date
+    max: ${ today() }
     js show if: | 
       val('incarcerated_still') == false
+validation code: |
+  if not incarcerated_still and jail_out < jail_date:
+    validation_error("You cannot have gotten out of jail before first going")
 ---
 code: |
   jail_date_te = format_date(jail_date, format='short')
@@ -321,14 +332,14 @@ fields:
 ---
 id: dbd 05 child move in
 question: |
-  Did any of the children you pay child support for live with you since the court ordered you to pay child support?
+  Since the court ordered you to pay child support, have any of the children you pay child support for lived with you?
 yesno: child_lives_w_obligor
 ---
 id: dbd 05 child live with you now
 question: |
-  My ${ child_te } live or lives with me now
+  My ${ child_te } ${ verb_present('live', 'pl' if child_number > 1 else '3sg') } with me now
 subquestion: |
-   Do you have an order from the Court that says the ${ child_te } lives with you now?
+   Do you have an order from the Court that says the ${ child_te } ${ verb_present('live', 'pl' if child_number > 1 else '3sg') } with you now?
 fields: 
   - no label: child_with_obligor_order
     datatype: yesnoradio

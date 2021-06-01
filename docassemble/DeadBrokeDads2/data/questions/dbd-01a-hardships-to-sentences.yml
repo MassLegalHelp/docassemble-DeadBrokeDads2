@@ -24,14 +24,14 @@ code: |
       hardshipsSentences += hardshipsToSentences[hardship] + "\n"
     sentences = problemsSentences + "\n" + hardshipsSentences
   else:
-    sentences = "No hardships"
+    sentences = problemsSentences + '\n' + 'No hardships'
 
   if problems.any_true('driver-license', 'car-reg'):
     sentences = ', '.join([sentences, comment_car])
   if problems.any_true('business-license', 'professional-license', 'trade-license'):
     sentences = ', '.join([sentences, comment_license])
   
-  admin_review_comments
+  # admin_review_comments
   open_text_paragraph_one_complete = True
 
 ---
@@ -39,9 +39,9 @@ id: dbd-01a review and allow to edit actions and hardships comments
 question: |
   Actions DOR has taken and consequences
 subquestion: |
-  ${ sentences }
+  Edit this paragraph to explain how DOR's actions have affected you.
 fields:
-  - Edit this paragraph: admin_review_comments
+  - no label: admin_review_comments
     input type: area
     default: ${ sentences }
 ---
