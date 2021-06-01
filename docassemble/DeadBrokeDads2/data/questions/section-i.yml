@@ -1,7 +1,7 @@
 code: |
   client.address.type
   client.address.month
-  client marital status
+  client.marital_status
   section_i_complete = True
 
 ---

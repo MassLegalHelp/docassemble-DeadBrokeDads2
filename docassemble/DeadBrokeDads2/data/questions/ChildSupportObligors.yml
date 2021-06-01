@@ -73,7 +73,7 @@ include:
   - dbd-05-other-considerations.yml
   - dbd-06-form-decisions.yml
   - dbd-07-shared-form-info.yml
-  #  - dbdx.yml
+  - dbdx.yml
 ---
 mandatory: True
 code: |
@@ -111,6 +111,12 @@ attachment:
   variable name: equitable_adjustment
   filename: equitable-adjustment
 ---
+attachment:
+  name: Statement of Financial Condition
+  docx template file: sofc8.docx
+  variable name: sofc
+  filename: statement-of-financial-condition
+---
 # Maybe need to switch to reconsider
 # if this triggers unneeded screens. Experiment
 reconsider:
@@ -119,6 +125,7 @@ reconsider:
 #   - equitable_adjustment
   - admin_review
   - equit_adjust
+  - finance_statement
 
 code: |
   file_bundle_temp = [cover_page]
@@ -127,6 +134,8 @@ code: |
     file_bundle_temp.append(administrative_review)  
   if equit_adjust:
     file_bundle_temp.append(equitable_adjustment)
+  if finance_statement:
+    file_bundle_temp.append(sofc)
 
   file_bundle_pdf = pdf_concatenate( file_bundle_temp, filename="help_for_obligor_parents.pdf")
   # Each attachment variable has an attribute .pdf/.docx representing
