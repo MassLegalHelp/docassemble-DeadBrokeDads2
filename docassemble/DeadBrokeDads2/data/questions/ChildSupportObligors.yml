@@ -106,12 +106,6 @@ attachment:
   filename: administrative_review
 ---
 attachment:
-  name: Bank Levy
-  docx template file: bank-levy.docx
-  variable name: bank_levy
-  filename: bank_levy
----
-attachment:
   name: Equitable Adjustment
   docx template file: equitable-adjustment.docx
   variable name: equitable_adjustment
@@ -123,9 +117,7 @@ reconsider:
 #   - cover_page
 #   - administrative_review
 #   - equitable_adjustment
-#   - bank_levy
   - admin_review
-  - bank_levy
   - equit_adjust
 
 code: |
@@ -133,8 +125,6 @@ code: |
   
   if admin_review:
     file_bundle_temp.append(administrative_review)  
-  if bank_levy:
-    file_bundle_temp.append(bank_levy)
   if equit_adjust:
     file_bundle_temp.append(equitable_adjustment)
 

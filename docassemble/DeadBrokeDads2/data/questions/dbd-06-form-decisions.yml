@@ -10,7 +10,6 @@ code: |
   if problems.any_true('account', 'froze-account'):
     if account_same and benefits_used:    
       admin_review = True
-      bank_levy = True
       levy_exempt = True
     else:
       levy_exempt = False
@@ -20,12 +19,10 @@ code: |
   if problems['shared-account']:
     if levy_not_mine:
       admin_review
-      bank_levy = True
   else:
     levy_not_mine = False
 
   if problems['too-much']:
-    bank_levy = True
     levy_too_much = True
   else:
     levy_too_much = False

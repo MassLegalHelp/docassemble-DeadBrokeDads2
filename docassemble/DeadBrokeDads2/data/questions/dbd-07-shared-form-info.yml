@@ -29,8 +29,6 @@ code: |
 # fields:
 #   - admin review: admin_review
 #     datatype: yesnowide
-#   - bank levy: bank_levy
-#     datatype: yesnowide
 #   - equit  adjust: equit_adjust
 #     datatype: yesnowide
 # ---
@@ -55,7 +53,6 @@ fields:
     # show if: equit_adjust
   - Work Phone: client.workphone
     required: False
-    # show if: bank_levy
 ---
 id: client email
 question: |
