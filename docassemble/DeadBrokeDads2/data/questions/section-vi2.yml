@@ -21,14 +21,6 @@ fields:
       - Every two weeks: bi_weekly
       - Every week: weekly
 ---
-id: employer withhold other
-if:
-  withhold_items_list['Other'] == True
-question: 
-  What other item does your employer withhold?
-fields:
-  - no label: other_ded_monthly_name
----
 id: first pay stub
 if: |
   client_is_employed == True
@@ -299,20 +291,6 @@ fields:
     datatype: currency
   - Amount 3: tips_amt_3
     datatype: currency
-
----
-id: tax pay employer
-if: |
-  pay_tax_yn == True
-question: |
-  Let's talk about the federal taxes you pay on your income. 
-subquestion: |
-  If you have your most recent _____, it's helpful to have it. 
-fields: 
-  - Do you pay federal taxes monthly or quarterly?: fec_tax_pay_freq
-    choices: 
-      - Quarterly: fedtax_quart
-      - Monthly: fedtax_month
 ---
 id: income type select list
 question: |

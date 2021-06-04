@@ -478,7 +478,7 @@ fields:
 ---
 id: bankruptcy
 question: |
-  Do you have a pending bankruptcy case in U.S. Bankruptcy Court??
+  Do you have a pending bankruptcy case in U.S. Bankruptcy Court?
 fields: 
   - no label: bankruptcy_case_pending
     choices: 

@@ -85,7 +85,7 @@ fields:
 ---
 id: spouse employment
 if: |
-  client.marital_status == "Yes"
+  client.marital_status == "Married"
 question: |
   Is your spouse employed?
 fields: 
@@ -127,7 +127,7 @@ fields:
 ---
 id: spouse other income
 if: |
-  client.marital_status == "Yes"
+  client.marital_status == "Married"
 question : |
   Does your spouse have a monthly income source 
   % if is_spouse_employed == True:
@@ -151,7 +151,7 @@ code: |
 ---
 id: spouse income total
 if: |
-  client.marital_status == "Yes"
+  client.marital_status == "Married"
 question: |
   What is your spouse's monthly income from all sources
   % if is_spouse_employed == True and spouse_has_other_income_source:
@@ -170,7 +170,7 @@ fields:
 ---
 code: |
   
-  if client.marital_status != "Yes":
+  if client.marital_status != "Married":
     client.spouse_birthdate = "N/A"
     client.spouse_name = "N/A"
     is_spouse_employed = False

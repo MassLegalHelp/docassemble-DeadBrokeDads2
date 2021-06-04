@@ -60,19 +60,19 @@ question: |
 fields: 
   - no label: client.marital_status
     choices: 
-      - Married: "Yes"
-      - Single: "No"
-      - Separated: "Separated"
+      - Married
+      - Single
+      - Separated
   - Spouse Name: client.spouse_name
     show if: 
       variable: 
         client.marital_status
       is: 
-        "Yes"
+        "Married"
   - Spouse DOB: client.spouse_birthdate
     datatype: date
     show if: 
       variable: 
         client.marital_status
       is: 
-        "Yes"
+        "Married"
