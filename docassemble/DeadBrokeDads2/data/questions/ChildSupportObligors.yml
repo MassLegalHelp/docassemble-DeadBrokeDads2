@@ -87,8 +87,9 @@ code: |
   # admin_review = True
   # equit_adjust = True
   
-  
-  # financial_statement_questions # Defines client, spouse, household, assets, incomes, vehicles, expenses,
+  if finance_statement:
+    # Defines client+spouse household, assets, incomes, vehicles, expenses
+    sofc_complete 
   form_decisions_complete
   shared_form_info_complete
   get_forms

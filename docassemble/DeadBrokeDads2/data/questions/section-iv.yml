@@ -3,43 +3,42 @@ id: have vehicles
 question: |
   Do you own or lease any vehicles?
 yesno: hasvehicles
-
 ---
 code: |
   if hasvehicles == True:
-    vehicles.there_are_any=True
+    vehicles.there_are_any = True
     vehicles.new_item_name = len(vehicles)
   else: 
-    vehicles.there_are_any=False
+    vehicles.there_are_any = False
   
   has_safe_deposit_box
   cash_on_hand
 
   if hasprop == True:
-    realprop.there_are_any=True
+    realprop.there_are_any = True
     realprop.new_item_name = len(realprop)
   else: 
-    realprop.there_are_any=False
+    realprop.there_are_any = False
     if client.address.type == 'Rent':
       foreclosure_yesno = 'N/A'
   
   if hasbank == True:
-    bankact.there_are_any=True
+    bankact.there_are_any = True
     bankact.new_item_name = len(bankact)
   else: 
-    bankact.there_are_any=False
+    bankact.there_are_any = False
   
   if hasretirement == True:
-    retirement_acts.there_are_any=True
+    retirement_acts.there_are_any = True
     retirement_acts.new_item_name = len(retirement_acts)
   else: 
-   retirement_acts.there_are_any=False
+   retirement_acts.there_are_any = False
 
   if hassecurities == True:
-    securities.there_are_any=True
+    securities.there_are_any = True
     securities.new_item_name = len(securities)
   else: 
-    securities.there_are_any=False
+    securities.there_are_any = False
 
   what_i_have
   anyone_else_hold_assets
@@ -49,6 +48,31 @@ code: |
   bankruptcy_case_pending
 
   section_iv_complete = True
+---
+comment: |
+  NOTE(brycew): new_item_name needs to be set on each new addition,
+  but we don't really care what it is. So we have one code block for each
+  DADict
+code: |
+  ind_household.new_item_name = len(ind_household)
+---
+code: |
+  vehicles.new_item_name = len(vehicles)
+---
+code: |
+  realprop.new_item_name = len(realprop)
+---
+code: |
+  bankact.new_item_name = len(bankact)
+---
+code: |
+  retirement_acts.new_item_name = len(retirement_acts)
+---
+code: |
+  securities.new_item_name = len(securities)
+---
+code: |
+  credit_cards.new_item_name = len(credit_cards)
 ---
 id: vehicle info
 question: |
@@ -109,7 +133,7 @@ fields:
   - Amount Owed on Loan: vehicles[i].amt_owed
     required: False
     datatype: currency
-
+    min: 0
 ---
 id: add vehicle
 question: |
@@ -184,6 +208,7 @@ fields:
   - Amount owed on mortgage: realprop[i].amt_owed
     required: False
     datatype: currency
+    min: 0
   - Amount of equity in property: realprop[i].equity
     required: False
     datatype: currency
@@ -218,7 +243,6 @@ subquestion: |
   Please answer yes if you have any savings, checking, certificates of deposit, or 
   money market accounts. 
 yesno: hasbank
-  
 ---
 id: bank account info
 question: |
@@ -348,6 +372,7 @@ fields:
   - Value of collectibles: collects
     required: False
     datatype: currency
+    min: 0
     show if: 
       variable: 
         what_i_have['Collectibles']
@@ -356,6 +381,7 @@ fields:
   - Furniture or Furnishings Value: furnishings
     required: False
     datatype: currency
+    min: 0
     show if: 
       variable: 
         what_i_have['Furniture or Household Furnishings']
@@ -398,8 +424,6 @@ fields:
         anyone_else_hold_assets
       is: 
         'Yes'
-
-
 ---
 id: party to lawsuit
 question: |
@@ -422,7 +446,6 @@ fields:
         party_to_lawsuit
       is: 
         'Yes'
-
 ---
 id: insurance claim
 question: |
@@ -445,7 +468,6 @@ fields:
         any_insurance_claim
       is: 
         'Yes'
-
 ---
 id: inheritance likely
 question: |
@@ -474,7 +496,6 @@ fields:
         any_inheritance_likely
       is: 
         'Yes'
-
 ---
 id: bankruptcy
 question: |

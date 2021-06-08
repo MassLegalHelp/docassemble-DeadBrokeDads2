@@ -3,7 +3,6 @@ code: |
   client.address.month
   client.marital_status
   section_i_complete = True
-
 ---
 id: client address rent or own
 question: |
@@ -64,7 +63,7 @@ fields:
       - Single
       - Separated
   - Spouse Name: client.spouse_name
-    show if: 
+    show if:
       variable: 
         client.marital_status
       is: 
@@ -72,7 +71,21 @@ fields:
   - Spouse DOB: client.spouse_birthdate
     datatype: date
     show if: 
-      variable: 
+      variable:
         client.marital_status
       is: 
         "Married"
+---
+id: client spouse dob
+question: |
+  What is ${ client.spouse_name }'s date of birth?
+fields:
+  - no label: client.spouse_birthdate
+    datatype: date
+    max: ${ today() }
+---
+code: |
+  if reconciliation['married']:
+    client.marital_status = 'Married'
+    client.spouse_name = other_parent.name
+    client.spouse_birthdate

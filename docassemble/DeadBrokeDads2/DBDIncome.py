@@ -1,4 +1,5 @@
 import docassemble.income.income
+from docassemble.base.util import defined, value
 
 
 def dbd_period_list():
@@ -23,3 +24,9 @@ def dbd_period_string(period):
       1 : 'yearly'
   }
   return period_as_string[period]
+
+def docx_x_mark(var_name, var_eq=None):
+  if defined(var_name) and value(var_name) == var_eq:
+    return 'X'
+  else:
+    return ' '

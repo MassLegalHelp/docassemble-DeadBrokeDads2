@@ -8,7 +8,9 @@ code: |
   #   admin_review = True
   #   finance_statement = True
   if problems.any_true('account', 'froze-account'):
-    if account_same and benefits_used:    
+    # TODO(brycew): makes sense to only ask if DOR took out funds from your
+    # benefits if you get benefits, right?
+    if your_past_benefits.any_true() and account_same and benefits_used:    
       admin_review = True
       levy_exempt = True
     else:

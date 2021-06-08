@@ -131,10 +131,9 @@ if: |
 question : |
   Does your spouse have a monthly income source 
   % if is_spouse_employed == True:
-  other than employment with ${spouse_employer.name}?
-  % else: 
-  ?
+  other than employment with ${spouse_employer.name}
   % endif
+  ?
 fields: 
   - no label: spouse_has_other_income_source 
     datatype: yesnoradio
@@ -155,14 +154,13 @@ if: |
 question: |
   What is your spouse's monthly income from all sources
   % if is_spouse_employed == True and spouse_has_other_income_source:
-  including employment with ${spouse_employer.name} and from ${spouse_monthly_income_source}?
+  including employment with ${spouse_employer.name} and from ${spouse_monthly_income_source}
   % elif is_spouse_employed == True:
-  including employment with ${spouse_employer.name}?
+  including employment with ${spouse_employer.name}
   % elif is_spouse_employed == True:
-  including ${spouse_monthly_income_source}?
-  % else: 
+  including ${spouse_monthly_income_source}
+  % endif 
   ?
-  % endif
 fields: 
   - Monthly Income: spouse_monthly_income
     datatype: currency

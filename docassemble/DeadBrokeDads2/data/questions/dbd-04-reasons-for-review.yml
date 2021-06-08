@@ -190,7 +190,9 @@ id: dbd 04 unprotected account
 question: |
   A joint account is not protected
 subquestion: |
-  If you share a bank account with someone else and you cannot show that you are a guardian or conservator, DOR can take money from the account. DOR can take that money even if it belongs to someone else.
+  If you share a bank account with someone else and you cannot show that you
+  are a guardian or conservator, DOR can take money from the account. DOR can
+  take that money even if it belongs to someone else.
 field: unprotected
 ---
 id: dbd 04 benefits
@@ -269,7 +271,10 @@ validation code: |
 # ---
 id: dbd 04 benefits account
 comment: |
-  TODO(CR) had asked, How can our users actually answer this question? And what if the answer is no?, Barb says 10/07/2020 Ask instead, Is most of the money in this account from your benefits? And also, Do have any income other than your benefits?
+  TODO(CR) had asked, How can our users actually answer this question? 
+    And what if the answer is no?
+  Barb says 10/07/2020 Ask instead, Is most of the money in this account
+  from your benefits? And also, Do have any income other than your benefits?
 
   TODO(brycew): this was displayed as written below the subquestion.
   Does the user need this info to fill out this question?

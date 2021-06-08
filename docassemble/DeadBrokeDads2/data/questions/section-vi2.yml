@@ -3,18 +3,16 @@ id: monthly income from employment
 if: |
   client_is_employed == True
 question: |
-  Now we're going to ask questions about your monthly income. 
-  Take the last three weekly or monthly pay stubs from your 
-  employer. 
+  Monthly Income 
 subquestion: |
-  Note: 'gross income' means the amount you receive *before* taxes or other expenses are taken out. 
-  For example if your salary is $5,000 per month *before* taxes, that would be your 
-  gross salary per month.
+  Now we're going to ask questions about your monthly income. Take the last three weekly or monthly pay stubs from your 
+  employer. 
+
 fields:
   - Are you on salary or are you paid hourly?: base_pay_sal_wage
     choices: 
-      - Salary
-      - Wages
+      - Salary: salary
+      - Wages: hourly
   - How often do you get paid?: base_pay_freq
     choices: 
       - Every month: monthly
@@ -25,12 +23,19 @@ id: first pay stub
 if: |
   client_is_employed == True
 question: |
-  Look at the first pay stub from ${ employer.name}. 
+  First pay Stub from ${ employer.name }
+subquestion: |
+  Look at the first of the three pay stubs from ${ employer.name}. 
   Fill in the amounts for each field. If your employer 
-  does not deduct for one of the fields, put '0.'
+  does not deduct for one of the fields, put '0'.
+  
+  Note: 'gross income' means the amount you receive *before* taxes or other expenses are taken out. 
+  For example if your salary is $5,000 per month *before* taxes, that would be your 
+  gross salary per month.
 fields: 
   - ${base_pay_sal_wage} (gross amount): base_pay_amt_1
     datatype: currency
+    min: 0
   - note: |
       Please complete the following amounts for what is withheld from 
       your paycheck:
@@ -96,12 +101,15 @@ id: second pay stub
 if: |
   client_is_employed == True
 question: |
-  Look at the second pay stub from ${ employer.name}. 
+  Second Pay Stub from ${ employer.name }
+subquestion: |
+  Look at the second of the three pay stubs from ${ employer.name}. 
   Fill in the amounts for each field. If your employer 
-  does not deduct for one of the fields, put '0.'
+  does not deduct for one of the fields, put '0'.
 fields: 
   - ${base_pay_sal_wage} (gross amount): base_pay_amt_2 
     datatype: currency
+    min: 0
   - note: |
       Please complete the following amounts for what is withheld from 
       your paycheck:
@@ -168,12 +176,15 @@ id: third pay stub
 if: |
   client_is_employed == True
 question: |
-  Look at the third pay stub from ${ employer.name}. 
+  Third Pay Stub from ${ employer.name }
+subquestion: |
+  Look at the third of the three pay stubs from ${ employer.name}. 
   Fill in the amounts for each field. If your employer 
-  does not deduct for one of the fields, put '0.'
+  does not deduct for one of the fields, put '0'.
 fields: 
   - ${base_pay_sal_wage} (gross amount): base_pay_amt_3
     datatype: currency
+    min: 0
   - note: |
       Please complete the following amounts for what is withheld from 
       your paycheck:    
@@ -262,7 +273,6 @@ fields:
       - Monthly: 1
       - Quarterly: 4
       - Yearly: 12
-
 ---
 id: commissions detail
 if: |
@@ -327,6 +337,7 @@ subquestion: |
 fields:
   - Total amount : ssi_ssdi_gross
     datatype: currency
+    min: 0
   - Frequency: ssi_ssdi_gross_freq
     choices:
       - Monthly
@@ -345,6 +356,7 @@ subquestion: |
 fields:
   - Total amount : ss_retirement_gross
     datatype: currency
+    min: 0
   - Frequency: ss_retirement_gross_freq
     choices:
       - Monthly
@@ -363,6 +375,7 @@ subquestion: |
 fields:
   - Total amount : disability_gross
     datatype: currency
+    min: 0
   - Frequency: disability_gross_freq
     choices:
       - Monthly
@@ -381,6 +394,7 @@ subquestion: |
 fields:
   - Total amount : work_comp_gross
     datatype: currency
+    min: 0
   - Frequency: work_comp_gross_freq
     choices:
       - Monthly
@@ -398,6 +412,7 @@ subquestion: |
 fields:
   - Total amount : royalties_gross
     datatype: currency
+    min: 0
   - Frequency: royalties_gross_freq
     choices:
       - Monthly
@@ -417,6 +432,7 @@ subquestion: |
 fields:
   - Total amount : unemployment_gross
     datatype: currency
+    min: 0
   - Frequency: unemployment_gross_freq
     choices:
       - Monthly
@@ -434,14 +450,19 @@ subquestion: |
 fields:
   - Total amount : vet_benefit_gross
     datatype: currency
+    min: 0
   - Frequency: vet_benefit_gross_freq
     choices:
       - Monthly
       - Weekly
       - Every two weeks
       - Quarterly / every three months
+  - "Are your veteran's benefits from the federal government, or a state government?": vet_state_or_fed
+    choices:
+      - Federal: federal
+      - State: state
+      - Other
   - Source : vet_benefit_source
-
 ---
 id: dividends income detail
 if: |
@@ -453,6 +474,7 @@ subquestion: |
 fields:
   - Total amount : dividends_gross
     datatype: currency
+    min: 0
   - Frequency: dividends_gross_freq
     choices:
       - Monthly
@@ -472,6 +494,7 @@ subquestion: |
 fields:
   - Total amount : interest_gross
     datatype: currency
+    min: 0
   - Frequency: interest_gross_freq
     choices:
       - Monthly
@@ -491,6 +514,7 @@ subquestion: |
 fields:
   - Total amount : trusts_gross
     datatype: currency
+    min: 0
   - Frequency: trusts_gross_freq
     choices:
       - Monthly
@@ -509,6 +533,7 @@ subquestion: |
 fields:
   - Total amount : annuities_gross
     datatype: currency
+    min: 0
   - Frequency: annuities_gross_freq
     choices:
       - Monthly
@@ -527,6 +552,7 @@ subquestion: |
 fields:
   - Total amount : pension_gross
     datatype: currency
+    min: 0
   - Frequency: pension_gross_freq
     choices:
       - Monthly
@@ -546,6 +572,7 @@ subquestion: |
 fields:
   - Total amount : public_assistance_gross
     datatype: currency
+    min: 0
   - Frequency: public_assistance_gross_freq
     choices:
       - Monthly
@@ -564,6 +591,7 @@ subquestion: |
 fields:
   - Total amount : rental_gross
     datatype: currency
+    min: 0
   - Frequency: rental_gross_freq
     choices:
       - Monthly
@@ -583,6 +611,7 @@ subquestion: |
 fields:
   - Total amount : other_gross
     datatype: currency
+    min: 0
   - Frequency: other_gross_freq
     choices:
       - Monthly
