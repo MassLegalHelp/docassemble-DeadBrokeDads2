@@ -21,6 +21,7 @@ code: |
     realprop.there_are_any = False
     if client.address.type == 'Rent':
       foreclosure_yesno = 'N/A'
+  foreclosure_yesno
   
   if hasbank == True:
     bankact.there_are_any = True
@@ -154,6 +155,7 @@ question: |
   Do you rent a safe deposit box?
 fields: 
   - no label: has_safe_deposit_box
+    datatype: radio
     choices: 
       - Yes
       - No
@@ -226,12 +228,12 @@ subquestion: |
   % endfor  
 yesno: realprop.there_is_another
 ---
-id: forclosure info
+id: foreclosure info
 question: |
   Is a foreclosure proceeding pending on any real estate that you own or 
   have an interest in?
 fields: 
-  - no label: forclosure_yesno
+  - no label: foreclosure_yesno
     choices:
       - Yes
       - No
@@ -408,6 +410,7 @@ question: |
   Is anyone holding any assets for you on your behalf?
 fields: 
   - no label: anyone_else_hold_assets
+    datatype: radio
     choices: 
       - Yes
       - No
@@ -430,6 +433,7 @@ question: |
   Are you a party to a lawsuit now pending?
 fields: 
   - no label: party_to_lawsuit
+    datatype: radio
     choices: 
       - Yes
       - No     
@@ -452,6 +456,7 @@ question: |
   Do you have any type of insurance claim pending?
 fields: 
   - no label: any_insurance_claim
+    datatype: radio
     choices: 
       - Yes
       - No
@@ -474,6 +479,7 @@ question: |
   Is there any likelihood you will receive an inheritance in the next five years?
 fields: 
   - no label: any_inheritance_likely
+    datatype: radio
     choices: 
       - Yes
       - No
@@ -502,6 +508,7 @@ question: |
   Do you have a pending bankruptcy case in U.S. Bankruptcy Court?
 fields: 
   - no label: bankruptcy_case_pending
+    datatype: radio
     choices: 
       - Yes
       - No

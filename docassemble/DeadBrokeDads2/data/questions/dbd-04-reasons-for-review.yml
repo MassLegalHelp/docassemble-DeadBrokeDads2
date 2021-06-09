@@ -110,7 +110,7 @@ code: |
     
     # not sure if end date is inclusive (it counts) or exclusive (it doesn't)
     if benefit.start_date <= dor_took_money_date <= benefit.end:
-     benefits_dor_took_money.childrens.append(item)
+      benefits_dor_took_money.childrens.append(item)
   benefits_dor_took_money.childrens.gathered = True
 ---
 code: |
@@ -119,7 +119,7 @@ code: |
     
     # not sure if end date is inclusive (it counts) or exclusive (it doesn't)
     if benefit.start_date <= cs_arrears_date <= benefit.end:
-     arrears_during_benefits.append(item)
+      arrears_during_benefits.append(item)
   arrears_during_benefits.gathered = True
 
   if len(arrears_during_benefits) > 0:

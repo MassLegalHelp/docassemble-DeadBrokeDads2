@@ -1,19 +1,12 @@
-# ---
-# objects: 
-#   - client: Individual
-# ---
-# modules:
-#   - docassemble.ssa.ssa
 ---
 code: |
   # admin_review
   client.address.address
   client.homephone
-  if equit_adjust:
+  if equit_adjust or finance_statement:
     client.email
     client.birthdate
     client.dl
-    fin_statement = True
   client.ssn
   signature_date
   if sign_on_device:
@@ -21,17 +14,6 @@ code: |
   
   shared_form_info_complete = True
 ---
-# id: pick forms
-# question: |
-#   Forms
-# subquestion: |
-#   Which forms do you need?
-# fields:
-#   - admin review: admin_review
-#     datatype: yesnowide
-#   - equit  adjust: equit_adjust
-#     datatype: yesnowide
-# ---
 id: client address
 question: |
   What is your current address?
@@ -91,11 +73,9 @@ fields:
 ---
 id: signature date
 question: |
-  Sign and date your forms
-subquestion: |
   What date will you sign these forms? 
-  
-  We automatically date all the forms with today's date. But you can change it here, or delete the date in the box below and write in the date later, after you print your forms.
+subquestion: |
+  We automatically date all the forms with today's date. You can change the date here in the box below, or delete it and write in the date later, after you print your forms.
   
 fields: 
   - I will sign these forms on: signature_date

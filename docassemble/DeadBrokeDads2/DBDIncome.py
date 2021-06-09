@@ -29,4 +29,5 @@ def docx_x_mark(var_name, var_eq=None):
   if defined(var_name) and value(var_name) == var_eq:
     return 'X'
   else:
-    return ' '
+    # two spaces is closer to the size of the X in Times New Roman. :shrug:
+    return '  '

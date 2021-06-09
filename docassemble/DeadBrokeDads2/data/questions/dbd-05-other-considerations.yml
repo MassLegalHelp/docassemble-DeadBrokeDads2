@@ -301,7 +301,7 @@ fields:
   - When did you get out?: jail_out
     datatype: date
     max: ${ today() }
-    js show if: | 
+    js show if: |
       val('incarcerated_still') == false
 validation code: |
   if not incarcerated_still and jail_out < jail_date:
@@ -332,7 +332,7 @@ fields:
 ---
 id: dbd 05 child move in
 question: |
-  Since the court ordered you to pay child support, have any of the children you pay child support for lived with you?
+  Have any of the children that you pay child support for lived with you after the court ordered you to pay child support?
 yesno: child_lives_w_obligor
 ---
 id: dbd 05 child live with you now

@@ -164,7 +164,6 @@ question: |
 fields: 
   - Monthly Income: spouse_monthly_income
     datatype: currency
-
 ---
 code: |
   
@@ -174,5 +173,11 @@ code: |
     is_spouse_employed = False
     spouse_monthly_income = "N/A"
     spouse_monthly_income_source = "N/A"
+  else:
+    client.spouse_name
+    client.spouse_birthdate
+    is_spouse_employed
+    spouse_monthly_income
+    spouse_monthly_income_source
 
   section_iii_complete = True  

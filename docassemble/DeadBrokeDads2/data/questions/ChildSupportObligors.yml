@@ -21,11 +21,13 @@ default screen parts:
 ---
 sections:
   - Introduction
+  - About you
   - Notice of Child Support Delinquency
   - Current child support order
   - Calculating arrears
   - Possible causes
   - Modified child support order
+  - Statement of Financial Condition
   - Conclusion
 ---
 features:
@@ -84,13 +86,12 @@ code: |
     possibilities_complete
   reasons_for_review_complete
   other_considerations_complete
-  # admin_review = True
-  # equit_adjust = True
   
+  form_decisions_complete
   if finance_statement:
     # Defines client+spouse household, assets, incomes, vehicles, expenses
-    sofc_complete 
-  form_decisions_complete
+    sofc_complete
+
   shared_form_info_complete
   get_forms
 ---
@@ -130,7 +131,7 @@ reconsider:
 
 code: |
   file_bundle_temp = [cover_page]
-  
+
   if admin_review:
     file_bundle_temp.append(administrative_review)  
   if equit_adjust:
@@ -142,7 +143,7 @@ code: |
   # Each attachment variable has an attribute .pdf/.docx representing
   # the pdf/docx versions of the file, respectively
   file_bundle_zip = zip_file([item.docx for item in file_bundle_temp], filename="help_for_obligor_parents.zip") 
-  
+
 ---
 id: base yml download screen
 comment: |

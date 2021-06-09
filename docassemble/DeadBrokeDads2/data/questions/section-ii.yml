@@ -62,14 +62,12 @@ edit:
 ---
 code: |
   div_amt = total_support / len(children)
-    
 ---
 id: other household members
 question: |
   Do any other people live in your house besides yourself
   and the children you already mentioned?
 yesno: hasindividual
-
 ---
 code: |
   if hasindividual == True:
@@ -113,10 +111,12 @@ subquestion: |
 yesno: ind_household.there_is_another
 ---
 code: |
+  children.gather()
   if hasindividual == True:
     ind_household_sum = 0
     for i in ind_household:
       if ind_household.item(i).month_contrib == True:
         ind_household_sum += ind_household.item(i).month_contrib_amt
-        
+  div_amt
+  
   section_ii_complete = True

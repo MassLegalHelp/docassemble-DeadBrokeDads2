@@ -45,6 +45,7 @@ subquestion: |
 fields:
   - no label: child_number
     datatype: integer
+    min: 1
 ---
 code: |
   if child_number > 1:

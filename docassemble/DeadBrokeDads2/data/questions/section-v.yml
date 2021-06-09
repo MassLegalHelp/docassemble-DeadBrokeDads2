@@ -96,6 +96,7 @@ code: |
     credit_cards.new_item_name = len(credit_cards)
   else: 
     credit_cards.there_are_any=False
+  liability_checklist
     
   section_v_complete = True
 ---

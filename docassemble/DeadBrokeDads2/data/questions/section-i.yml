@@ -85,7 +85,7 @@ fields:
     max: ${ today() }
 ---
 code: |
-  if reconciliation['married']:
+  if reconcile and reconciliation['married']:
     client.marital_status = 'Married'
     client.spouse_name = other_parent.name
     client.spouse_birthdate
