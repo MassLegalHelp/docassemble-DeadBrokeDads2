@@ -176,8 +176,8 @@ Scenario: guardian, vet benefits, kid w ssi
     | hardshipsToSentences.other |  | I cannot pay for some other basic need. |
     | hardshipsToSentences.rent |  | I cannot pay rent. |
     | hardshipsToSentences.utilities |  | I cannot pay my utilities. |
-    | help_needed | cant-afford | true |
-    | help_needed | cant-sustain | false |
+    | help_needed | cantafford | true |
+    | help_needed | cantsustain | false |
     | help_needed | disagreement | true |
     | help_needed | needplan | false |
     | help_needed |  | help_needed |

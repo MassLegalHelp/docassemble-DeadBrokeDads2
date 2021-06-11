@@ -5,15 +5,16 @@ include:
 code: |
   welcome
   important
-  if call_dor:
-    if contact_dor == 'exit':
-      command('exit')
-    elif contact_dor == 'proceed':
-      client.name.first
-  client.name.first
+  requirements
+  # if call_dor:
+  #  if contact_dor == 'exit':
+  #    command('exit')
+  #  elif contact_dor == 'proceed':
+  #    client.name.first
+  # client.name.first
   # else:
   #  kick_out
-  if help_needed.any_true('cant-afford', 'cant-sustain'):
+  if help_needed.any_true('cantafford', 'cantsustain'):
     hardships  
   # if help_needed.any_true('needplan'):
     # need_offer
@@ -83,21 +84,38 @@ action buttons:
     action:  https://masslegalhelp.org/children-and-families/child-support-enforcing2/dor
     color: danger
 ---
+comment: |
+  Move to Instructions: DOR may be able to help you with your back child support informally….
+  they have a number of ways to help before you have to send in forms.
+  Do you want to try to fix the problem informally before you fill out forms?
 id: 01 call dor cse
 question: | 
   Before we get started...
 subquestion: |
-  You will need your child support payment history. 
-  
-  If you do not have the payment history, follow the instructions on DOR/CSE's page about [getting your child support payment history](https://www.mass.gov/how-to/get-your-child-support-payment-history).
-  
-  DOR may be able to help you with your back child support informally. They have a number of ways to help before you have to send in forms.
+  You will need:
 
-  ----------
+  1. your child support payment history.
+  See [Get your child support payment history](https://www.mass.gov/how-to/get-your-child-support-payment-history) on DOR/CSE's website.
 
-  Do want to try to fix the problem informally before you fill out forms?
-  
-yesno: call_dor
+  1. Copies of {all the child support orders in this case}. You can get these from the court. Call your court service center. 
+
+  1. The most recent Notice of Child Support Delinquency that DOR/CSE sent to you.
+
+field: requirements
+help:
+  label: |
+    **All** the child support orders?
+  content: |
+     In some cases, one parent or DOR/CSE asks the court to change a child support order, but the other parent or DOR/CSE does not know the order has changed. You need to make sure:
+     
+     * You are up to date with the most recent order, and 
+     * DOR/CSE also has the most recent order, so they can calculate child support that is owed, correctly.
+terms:
+  all the child support orders in this case: |
+    In some cases, one parent or DOR/CSE asks the court to change a child support order, but the other parent or DOR/CSE does not know the order has changed. You need to make sure:
+    
+    * You are up to date with the most recent order, and 
+    * DOR/CSE also has the most recent order, so they can calculate child support that is owed, correctly.
 ---
 id: dor contact info
 question: |
@@ -158,7 +176,7 @@ fields:
   - no label: problems
     datatype: checkboxes
     choices:
-      - This Notice of Delinquency is the first I knew I was behind in child support.: knewnot
+      - I got a Notice of Child Support Delinquency from DOR/CSE.: knewnot
       - DOR took my tax refund.: refund 
       - DOR started taking money out my pay.: garnish  
       - DOR is taking more money out of my pay than they should.: garnish-increase
@@ -196,15 +214,32 @@ fields:
     datatype: checkboxes
     choices:
       - DOR is wrong about the amount of child support I owe.: disagreement
-      - I cannot pay all the back child support I owe.: cant-afford
-      - I cannot keep up with the payments that the Court ordered.: cant-sustain
+      - I cannot pay all the back child support I owe.: cantafford
+      - I cannot keep up with the payments that the Court ordered.: cantsustain
       - I need help like a payment plan to pay the back child support I owe.: needplan
+  - no label: extra_help_needed
+    datatype: checkboxes
+    none of the above: False
+    code: |
+      mylist
+---
+code: |
+  mylist = []
+  if problems.any_true('driver-license','business-license', 'professional-license', 'trade-license'):
+    mylist.append({'license': "I need my license back"})
+  if problems['driver-license']:
+    mylist.append({'registration': "I need my registration back"})
+  
+  if problems.any_true('froze-account','account', 'shared-account'):
+    mylist.append({'license': "I need to be able to use the money in my account."})
+  if problems['other']:
+    mylist.append  ({'other': "I need help with something else."})
 ---
 id: 01 hardship list
 question: |
   Explain what you cannot afford
 subquestion: |
-  We all mean different things when we say we "cannot afford" something. If you are struggling with anything in the list below, check the box to tell the DOR/CSE that you are suffering "hardship"
+  If you are struggling with anything in the list below, check the box to tell the DOR/CSE that you are suffering "hardship"
 fields:
   - no label: hardships
     datatype: checkboxes
@@ -242,7 +277,7 @@ question: |
 subquestion: |
   Explain to DOR why being unable to drive is causing you a problem.
   
-  For example, "I cannot pick up my ${ child_te }.  I cannot get to work so I cannot earn money for basic needs and child support."
+  For example, "I cannot pick up my ${ child_te }.  I cannot get to work so I cannot earn money to pay for basic needs and child support."
 fields:
     - no label: comment_car
 ---
