@@ -282,7 +282,7 @@ Scenario: guardian, vet benefits, kid w ssi
     | your_children_past_benefits['SSI'] |  | your_children_past_benefits['SSI'] |
     | your_children_past_benefits['SSI'].end_date |  | 02/27/2021 |
     | your_children_past_benefits['SSI'].start_date |  | 04/04/2004 |
-    | your_children_past_benefits['SSI].still_receiving | True | true |
+    | your_children_past_benefits['SSI'].still_receiving | True | true |
     | your_children_past_benefits |  | your_children_past_benefits |
     | your_children_past_benefits.revisit | True | true |
     | your_children_past_benefits.there_are_any | True | true |
