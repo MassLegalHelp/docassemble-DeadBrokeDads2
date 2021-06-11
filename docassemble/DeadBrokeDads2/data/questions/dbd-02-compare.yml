@@ -57,18 +57,17 @@ id: dbd 02 - notice
 question: |
   What does the Notice of Delinquent Child Support from DOR/CSE say?
 subquestion: |
-  These notices can be confusing. 
-  
-  The amount under ${other_parent.name.first}'s name,  is supposed to be your regular child support payment.
-
-  In the middle is how often you are supposed to pay child support.
-
-  The amount on the right is the amount of back child support that DOR CSE says you owe. This amount also includes any interest and penalties DOR CSE is charging you.
-  
-  What does DOR/CSE say these are?
-  The notice should look something like this:
+  These notices can be confusing. The notice should look something like this:
   
   [FILE DBD_NoticeTop.png, 100%]
+  
+  The amount under ${other_parent.name.first}'s name (3),  is supposed to be your regular child support payment.
+
+  In the middle (4) is how often you are supposed to pay child support.
+
+  The amount on the right (5) is the amount of back child support that DOR CSE says you owe. This amount also includes any interest and penalties DOR CSE is charging you.
+  
+  What does DOR/CSE say these are?
 fields:
   - 1. What is the date?: notice_date_delinquency
     datatype: date 

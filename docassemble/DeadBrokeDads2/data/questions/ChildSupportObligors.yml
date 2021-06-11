@@ -21,13 +21,16 @@ default screen parts:
 ---
 sections:
   - Introduction
-  - About you
+  - About Your Situation
   - Notice of Child Support Delinquency
-  - Current child support order
-  - Calculating arrears
-  - Possible causes
-  - Modified child support order
-  - Statement of Financial Condition
+  - Mismatched Information
+  - Financial Condition:
+    - Personal Information
+    - Household Information
+    - Employment Information
+    - Assets
+    - Liabilities
+    - Income and Expenses
   - Conclusion
 ---
 features:
@@ -40,9 +43,6 @@ modules:
   - .DBDIncome
   - docassemble.ssa.ssa
 ---
- #  features:
- #    javascript: docassemble.ssa:ssa2.js
- #  ---
 objects:
   - client: Individual
   - other_parent: Individual

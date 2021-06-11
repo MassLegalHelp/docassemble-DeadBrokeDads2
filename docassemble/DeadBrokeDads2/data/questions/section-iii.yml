@@ -166,7 +166,7 @@ fields:
     datatype: currency
 ---
 code: |
-  
+  nav.set_section('Employment Information')
   if client.marital_status != "Married":
     client.spouse_birthdate = "N/A"
     client.spouse_name = "N/A"

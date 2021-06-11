@@ -1,10 +1,6 @@
 ---
-id: have vehicles
-question: |
-  Do you own or lease any vehicles?
-yesno: hasvehicles
----
 code: |
+  nav.set_section('Assets')
   if hasvehicles == True:
     vehicles.there_are_any = True
     vehicles.new_item_name = len(vehicles)
@@ -49,6 +45,11 @@ code: |
   bankruptcy_case_pending
 
   section_iv_complete = True
+---
+id: have vehicles
+question: |
+  Do you own or lease any vehicles?
+yesno: hasvehicles
 ---
 comment: |
   NOTE(brycew): new_item_name needs to be set on each new addition,

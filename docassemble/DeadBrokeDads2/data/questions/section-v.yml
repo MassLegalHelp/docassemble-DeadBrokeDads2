@@ -88,17 +88,6 @@ question: |
 subquestion: |
   Please answer yes if you have any credit cards such as a Visa, Mastercard, or Discover card. 
 yesno: has_credit_cards
-
----
-code: |
-  if has_credit_cards == True:
-    credit_cards.there_are_any=True
-    credit_cards.new_item_name = len(credit_cards)
-  else: 
-    credit_cards.there_are_any=False
-  liability_checklist
-    
-  section_v_complete = True
 ---
 id: credit card info
 question: |
@@ -128,3 +117,13 @@ subquestion: |
   % endfor
 yesno: credit_cards.there_is_another
 ---
+code: |
+  nav.set_section('Liabilities')
+  if has_credit_cards == True:
+    credit_cards.there_are_any=True
+    credit_cards.new_item_name = len(credit_cards)
+  else: 
+    credit_cards.there_are_any=False
+  liability_checklist
+    
+  section_v_complete = True

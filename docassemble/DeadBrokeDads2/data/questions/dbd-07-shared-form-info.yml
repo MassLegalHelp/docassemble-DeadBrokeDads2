@@ -1,6 +1,7 @@
 ---
 code: |
   # admin_review
+  nav.set_section('Conclusion')
   client.address.address
   client.homephone
   if equit_adjust or finance_statement:

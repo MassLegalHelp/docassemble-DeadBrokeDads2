@@ -1,4 +1,5 @@
 code: |
+  nav.set_section('Personal Information')
   client.address.type
   client.address.month
   client.marital_status

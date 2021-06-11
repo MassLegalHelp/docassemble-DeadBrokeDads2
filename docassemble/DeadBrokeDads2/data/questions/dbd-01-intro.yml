@@ -24,8 +24,10 @@ code: |
       finance_statement = True
     else:
       twenty_five_percent = False
+      finance_statement = False
   else:
     twenty_five_percent = False
+    finance_statement = False
   
   if problems.any_true('froze-account', 'account', 'too-much', 'shared-account'):
     dor_took_money_date
@@ -146,7 +148,7 @@ fields:
     code: |
       name_suffix()
     required: False
-section: About you
+section: About Your Situation
 ---
 id: 01 what actions did DOR take?
 question: |

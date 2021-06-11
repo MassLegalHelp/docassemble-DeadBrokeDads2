@@ -111,6 +111,7 @@ subquestion: |
 yesno: ind_household.there_is_another
 ---
 code: |
+  nav.set_section('Household Information')
   children.gather()
   if hasindividual == True:
     ind_household_sum = 0

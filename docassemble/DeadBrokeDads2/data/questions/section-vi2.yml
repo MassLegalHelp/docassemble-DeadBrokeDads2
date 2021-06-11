@@ -912,6 +912,7 @@ code: |
   def det_avg_amt(amt_1, amt_2, amt_3):
     new_amt = (amt_1 + amt_2 + amt_3) / 3
     return new_amt
+    
   def det_monthly_gross(gross_amt, freq):
     if freq == 'Monthly':
       gross_monthly = gross_amt
@@ -924,13 +925,8 @@ code: |
     else:
       gross_monthly = 0
     return gross_monthly
-  def det_base_pay_freq(freq):
-    if freq == 'monthly':
-      base_pay_freq_num = 1
-    elif freq == 'bi_weekly':
-      base_pay_freq_num = 2
-    elif freq == 'weekly':
-      base_pay_freq_num = 4
+
+  nav.set_section('Income and Expenses')
   if client_is_employed == True:
     base_pay_source = employer.name
     if base_pay_freq == 'monthly':
@@ -957,7 +953,7 @@ code: |
       btc_comm = 0
     
     btc_gross_monthly = btc_tips + btc_bonuses + btc_comm
-    total_fed_tax_base = det_avg_amt(fed_tax_amt_1, fed_tax_amt_2, fed_tax_amt_1)
+    total_fed_tax_base = det_avg_amt(fed_tax_amt_1, fed_tax_amt_2, fed_tax_amt_3)
     fica_medicare_ded_base = det_avg_amt(medicare_amt_1, medicare_amt_2, medicare_amt_3)
     state_tax_ded_base = det_avg_amt(state_tax_amt_1, state_tax_amt_2, state_tax_amt_3)
     base_pay_gross_monthly = total_pay_base * base_pay_freq_num
@@ -965,30 +961,12 @@ code: |
     fica_medicare_ded_monthly = fica_medicare_ded_base * base_pay_freq_num
     state_tax_ded_monthly = state_tax_ded_base * base_pay_freq_num
   
-    if withhold_items_list_1['Union dues'] == True:
-      union_amt_one = union_amt_1
-    else: 
-      union_amt_one = 0
-    if withhold_items_list_2['Union dues'] == True:
-      union_amt_two = union_amt_2
-    else: 
-      union_amt_two = 0
-    if withhold_items_list_3['Union dues'] == True:
-      union_amt_three = union_amt_3
-    else: 
-      union_amt_three = 0
-    if withhold_items_list_1['Health insurance'] == True:
-      health_ins_amt_one = health_ins_amt_1
-    else: 
-      health_ins_amt_one = 0
-    if withhold_items_list_2['Health insurance'] == True:
-      health_ins_amt_two = health_ins_amt_2
-    else: 
-      health_ins_amt_two = 0
-    if withhold_items_list_3['Health insurance'] == True:
-      health_ins_amt_three = health_ins_amt_3
-    else: 
-      health_ins_amt_three = 0
+    union_amt_one = union_amt_1 if withhold_items_list_1['Union dues'] else 0
+    union_amt_two = union_amt_2 if withhold_items_list_2['Union dues'] else 0
+    union_amt_three = union_amt_3 if withhold_items_list_3['Union dues'] else 0
+    health_ins_amt_one = health_ins_amt_1 if withhold_items_list_1['Health insurance'] else 0
+    health_ins_amt_two = health_ins_amt_2 if withhold_items_list_2['Health insurance'] else 0
+    health_ins_amt_three = health_ins_amt_3 if withhold_items_list_3['Health insurance'] else 0
       
     if withhold_items_list_1['Life insurance'] == True:
       life_ins_amt_one = life_ins_amt_1
@@ -1207,6 +1185,11 @@ code: |
   else: 
     transpo_exp_monthly = 0
   
-  total_expenses_gross = transpo_exp_monthly + other_exp_monthly + medexp_exp_monthly + medins_exp_monthly + autoins_exp_monthly + lifeins_exp_monthly + cellphone_exp_monthly + homephone_exp_monthly + heat_exp_monthly + electric_exp_monthly + water_exp_monthly + prop_ins_exp_monthly + rent_mort_gross_monthly + grocery_exp_monthly + clothing_exp_monthly
+  total_expenses_gross = transpo_exp_monthly + other_exp_monthly + \
+      medexp_exp_monthly + medins_exp_monthly + autoins_exp_monthly + \
+      lifeins_exp_monthly + cellphone_exp_monthly + homephone_exp_monthly + \
+      heat_exp_monthly + electric_exp_monthly + water_exp_monthly + \
+      prop_ins_exp_monthly + rent_mort_gross_monthly + grocery_exp_monthly + \
+      clothing_exp_monthly
 
   section_vi2_complete = True 

@@ -13,7 +13,7 @@ code: |
   if filer != "DOR/CSE":
     if cse_copy in ['no','maybe']:
       kick_out
-    cs_order_end_date_tf
+    ask_cs_order
     if order_modified_date:
       most_recent_cs_date = order_modified_date
     else:
@@ -119,7 +119,7 @@ comment: |
     out on their own
     to live with someone who got a custody order
   Something else caused my child support problem
-section: Possible causes  
+section: Mismatched Information  
 ---
 id: dbd 03 - get notice
 question: |
@@ -135,11 +135,6 @@ fields:
       - Yes, I got a notice: yes
       - No, I never got a notice: no
       - I am not sure if I ever got a notice: maybe
----
-id: dbd 03 - unneeded question section definition
-question: |
-  Information about your child support order.
-section: Current child support order
 ---
 id: dbd 03 - beginning of order
 question: |
@@ -167,7 +162,7 @@ fields:
     choices: 
      - By wage assignment: assignment
      - Pay DOR directly: directly
-     - Pay DOR directly until wage assignment takes effect.: until
+     - Pay DOR directly until wage assignment takes effect: until
 ---
 id: dbd 03 -  court modified order
 question: |
@@ -177,6 +172,7 @@ fields:
     datatype: yesnomaybe
   - How many times has the court changed your child support order since ${cs_order_date}?: order_modified_number 
     datatype: integer
+    min: 1
     show if:
       order_modified
 ---
@@ -235,6 +231,7 @@ fields:
     datatype: yesno
     js disable if: |
       val("cs_order_end_date_tf") == true || val("cs_order_end_expl_tf") == true
+continue button field: ask_cs_order
 ---
 id: dbd 03 - has cs order end description happened
 question: |
