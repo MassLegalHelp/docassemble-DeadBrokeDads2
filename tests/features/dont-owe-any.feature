@@ -52,7 +52,7 @@ Scenario: guardian, vet benefits, kid w ssi
     | bank_levy.pdf.number |  | 9454 |
     | bank_levy.pdf.ok | True | true |
     | your_past_benefits['State Veterans Benefits'] |  | your_past_benefits['State Veterans Benefits'] |
-    | your_past_benefits['State Veterans Benefits'].end |  | 02/27/2021 |
+    | your_past_benefits['State Veterans Benefits'].end_date |  | 02/27/2021 |
     | your_past_benefits['State Veterans Benefits'].start_date |  | 11/11/1978 |
     | your_past_benefits['State Veterans Benefits'].still_receiving | True | true |
     | benefits_dor_took_money |  | benefits_dor_took_money |
@@ -280,7 +280,7 @@ Scenario: guardian, vet benefits, kid w ssi
     | your_children_benefit_list | TAFDC | false |
     | your_children_benefit_list |  | your_children_benefit_list |
     | your_children_past_benefits |  | your_children_past_benefits['SSI'] |
-    | your_children_past_benefits.end |  | 02/27/2021 |
+    | your_children_past_benefits.end_date |  | 02/27/2021 |
     | your_children_past_benefits.start_date |  | 04/04/2004 |
     | your_children_past_benefits.still_receiving | True | true |
     | your_children_past_benefits |  | your_children_past_benefits |
@@ -292,7 +292,7 @@ Scenario: guardian, vet benefits, kid w ssi
     | _sorted_items.revisit | True | true |
     | _sorted_items.there_are_any | True | true |
     | your_past_benefits |  | your_past_benefits['State Veterans Benefits'] |
-    | your_past_benefits.end |  | 02/27/2021 |
+    | your_past_benefits.end_date |  | 02/27/2021 |
     | your_past_benefits.start_date |  | 11/11/1978 |
     | your_past_benefits.still_receiving | True | true |
     | your_past_benefits |  | your_past_benefits |
