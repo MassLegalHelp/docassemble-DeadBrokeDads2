@@ -4,11 +4,6 @@ code: |
     dor_cse_notice_court = other_cs_court
   penalty = arrears_state - arrears_federal
   # {{showifdef('variable')}} or {if defined('variable') in jinja see quinten's dm in Slack 2020-02-24 for one more option
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-02-compare.yml
-  
-=======
-
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-02-compare.yml
   if dor_cse_notice_arrears_wrong or dor_cse_notice_arrears_wrong == None:
     if cs_arrears_mc =='Yes':
       cs_arrears_situation
@@ -20,10 +15,6 @@ code: |
         more_info_needed
     else:
       printout_looks_right
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-02-compare.yml
-    do_not_owe_any
-=======
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-02-compare.yml
   else:
     dor_cse_notice_arrears_true = True
     cs_arrears_date
@@ -77,24 +68,11 @@ subquestion: |
   The amount on the right (5) is the amount of back child support that DOR CSE says you owe. This amount also includes any interest and penalties DOR CSE is charging you.
   
   What does DOR/CSE say these are?
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-02-compare.yml
-  The notice should look something like this:
-  [[FILE DBD_NoticeTop.png]](/playgroundstatic/DeadBrokeDads/4/DBD_NoticeTop.png)
-=======
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-02-compare.yml
 fields:
   - ":one: What is the date?": notice_date_delinquency
     datatype: date 
   - ":two: Is the custodial parent's name **${other_parent.name}**?": other_parent_wrong
     datatype: noyesradio
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-02-compare.yml
-  - "What is custodial parent's first name?": dor_other_parent.name.first
-    show if: other_parent_wrong
-  - ":two: What is custodial parent's middle name?": dor_other_parent.name.middle
-    required: False
-    show if: other_parent_wrong
-  - ":two: What is custodial parent's last name?": dor_other_parent.name.last
-=======
   - note: "What is the custodial parent's name?"
     show if: other_parent_wrong
   - ":two: Their first name?": dor_other_parent.name.first
@@ -103,7 +81,6 @@ fields:
     required: False
     show if: other_parent_wrong
   - ":two: Their last name?": dor_other_parent.name.last
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-02-compare.yml
     show if: other_parent_wrong
   - ":two: What name does it give for the court?": dor_cse_notice_court
     datatype: dropdown
@@ -111,20 +88,12 @@ fields:
   - ":three: What does it say you 'owe' $$$?": dor_cse_notice_amount
     datatype: currency
     help: |
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-02-compare.yml
-      If there is only a blank space after $$$, or it says $0.00, DOR/CSE thinks your child support order has ended and you only owe past due child support. 
-=======
       If there is only a blank space after $$$, or it says $0.00, DOR/CSE thinks your child support order has ended and you only owe past due child support.
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-02-compare.yml
   - ":four: What does it say the frequency is?": dor_cse_notice_frequency
     datatype: number
     code: |
       period_list()
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-02-compare.yml
-  - ":five:Total past due child support?": dor_cse_notice_arrears
-=======
   - ":five: Total past due child support?": dor_cse_notice_arrears
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-02-compare.yml
     datatype: currency
     min: 0
 validation code: |
@@ -181,12 +150,8 @@ fields:
   - Do you owe ${currency(dor_cse_notice_arrears)} in back child support? : dor_cse_notice_arrears_wrong
     datatype: noyesmaybe
     help: |
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-02-compare.yml
-      Note on arrears amount. If you do owe back child support, this amount may be different from your calculation because it includes ${currency(arrears_state)} penalties and interest on top of any back child support you owe.
-=======
       Note on arrears amount. If you do owe back child support, this amount may be different from your calculation because it
       includes ${currency(arrears_state)} penalties and interest on top of any back child support you owe.
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-02-compare.yml
 ---
 id: dbd 02 - ever pay late?
 question: |
@@ -291,11 +256,7 @@ code: |
     arrears_correct = ''
   else:        
     if not cs_arrears_catch_up: 
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-02-compare.yml
-      if cs_arrears_situ == 'nothing':
-=======
       if cs_arrears_situation == 'nothing':
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-02-compare.yml
           arrears_correct = '$' + str(arrears_correct_value)
       else:
         arrears_correct = 'I am not sure'
@@ -308,9 +269,5 @@ code: |
   arrears_correct_value = round((int(date_difference(starting=cs_arrears_date, ending=today()).weeks))*(weekly_cs_amount),2) 
   # if arrears_correct_value > 0:
   #   arrears_correct = '$' + str(arrears_correct_value)
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-02-compare.yml
----
-=======
 --- 
   
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-02-compare.yml

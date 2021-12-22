@@ -5,11 +5,7 @@ code: |
       disability_mod
       ssdi_past
       
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-05-other-considerations.yml
   if other_considerations.any_true('lost_job', 'stopped_working'):
-=======
-  if other_considerations.any_true('lost_job', 'stopped_working'): 
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-05-other-considerations.yml
     if unemployed_start <= cs_arrears_date <= unemployed_end:
       unemployment_insurance
       unemploy_mod
@@ -23,7 +19,6 @@ code: |
 
   if reconcile:
     reconcile_date
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-05-other-considerations.yml
  
   other_need
 
@@ -32,14 +27,6 @@ code: |
   else:    
     is_zero
  
-=======
-  
-  if assigned_amount > 0:
-    is_not_zero
-  else:
-    is_zero
-
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-05-other-considerations.yml
   other_considerations_complete = True
 ---
 objects:
@@ -62,7 +49,6 @@ subquestion: |
 
   Under **Total Arrears** Look at the amount next to "Assigned."
   
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-05-other-considerations.yml
   Is the amount **more** than $0.00?
 
 fields:
@@ -74,11 +60,6 @@ fields:
 #     equit_adjust = True
 #   else:
 #     equit_adjust = False
-=======
-fields:
-  - What is the amount?: assigned_amount
-    datatype: currency
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-05-other-considerations.yml
 ---
 id: dbd 05 money not assigned owed to other parent.
 question: | 
@@ -171,12 +152,9 @@ fields:
     datatype: area
     js show if: 
       val('disability_mod') === false
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-05-other-considerations.yml
-=======
 validation code: |
       if not disabled_still and disabled_end < disabled_start:
         validation_error("Your disability cannot have ended before it started")
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-05-other-considerations.yml
 ---
 id: dbd 05 ssdi
 question: |
@@ -300,12 +278,9 @@ fields:
     max: ${ today() }
     js show if: |
       val('incarcerated_still') == false
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-05-other-considerations.yml
-=======
 validation code: |
   if not incarcerated_still and jail_out < jail_date:
     validation_error("You cannot have gotten out of jail before first going")
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-05-other-considerations.yml
 ---
 id: dbd 05 modify for incarceration
 question: |

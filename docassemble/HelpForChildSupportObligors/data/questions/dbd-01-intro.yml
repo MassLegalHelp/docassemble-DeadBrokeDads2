@@ -6,30 +6,10 @@ code: |
   welcome
   important
   requirements
-  # if call_dor:
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
-  #   if contact_dor == 'exit':
-  #     command('exit')
-  #   elif contact_dor == 'proceed':
-  #     client.name.first
-  # client.name.first
-  # else:
-  #  kick_out
   if problems.any_true('other'):
     prob_other
-=======
-  #  if contact_dor == 'exit':
-  #    command('exit')
-  #  elif contact_dor == 'proceed':
-  #    client.name.first
-  # client.name.first
-  # else:
-  #  kick_out
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
   if help_needed.any_true('cantafford', 'cantsustain'):
     hardships  
-  # if help_needed.any_true('needplan'):
-    # need_offer
   if problems.any_true('told-me-garnish-increase', 'told-boss-garnish-increase'): 
     if hardships.any_true():
       twenty_five_percent = True    
@@ -66,16 +46,6 @@ question: |
 subquestion: |
   We can help you fill out the forms you need if the Department of Revenue Child Support Enforcement (DOR/CSE) has done any of the following:  
   
-  * Sent you a notice that says that you are behind in child support payments. That notice is called a [Notice of Child Support Delinquency](${ notice_of_arrears_img.url_for() }). 
-  * Took your tax refund.
-  * Started taking money out of your pay or is taking more money out of your pay than they should.  
-  * Told you or your employer the amount of child support you need to pay is going up by 25%.
-  * Froze your bank account so you cannot use the money in your bank.
-  * Took money out of your bank account.
-  * Took your driver's license or suspended your car registration.
-  * Took your business license, your trade license or your professional license.
-  
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
   * The Department of Revenue Child Support Enforcement (DOR/CSE) sent you a notice that says that you are behind in child support payments. That notice is called a [Notice of Child Support Delinquency](https://drive.google.com/file/d/1eFI1jrzWLGSMA094sveue-TOFswCnMcG/view?usp=sharing). 
   * DOR/CSE  took your tax refund.
   * DOR/CSE started taking money out of your pay or is taking more money out of your pay than they should.  
@@ -85,10 +55,6 @@ subquestion: |
   * DOR/CSE took your driver's license or suspended your car registration.
   * DOR/CSE took your business license, your trade license or your professional license.
   * You have another problem with DOR/CSE related to child support. 
-=======
-  Or if you have another problem with DOR/CSE related to child support.
-
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
 ---
 id: 01 Important
 question: |
@@ -109,21 +75,14 @@ action buttons:
     color: danger
 ---
 comment: |
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
-  Move to Instructions: DOR may be able to help you with your back child support informally….they have a number of ways to help before you have to send in forms.
-  Do you want to try to fix the problem informally before you fill out forms?
-id: 01 before we start
-=======
   Move to Instructions: DOR may be able to help you with your back child support informally….
   they have a number of ways to help before you have to send in forms.
   Do you want to try to fix the problem informally before you fill out forms?
 id: 01 call dor cse
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
 question: | 
   Before we get started...
 subquestion: |
   You will need:
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
   
   1. your child support payment history.
   See [Get your child support payment history](https://www.mass.gov/how-to/get-your-child-support-payment-history) on DOR/CSE's website.
@@ -131,16 +90,6 @@ subquestion: |
   1. Copies of {all the child support orders in this case}. You can get these from the court. Call your court service center. 
   
   1. The most recent Notice of Child Support Delinquency that DOR/CSE sent to you.
-=======
-
-  1. your child support payment history.
-  See [Get your child support payment history](https://www.mass.gov/how-to/get-your-child-support-payment-history) on DOR/CSE's website.
-
-  1. Copies of {all the child support orders in this case}. You can get these from the court. Call your court service center. 
-
-  1. The most recent Notice of Child Support Delinquency that DOR/CSE sent to you.
-
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
 field: requirements
 help:
   label: |
@@ -152,17 +101,10 @@ help:
      * DOR/CSE also has the most recent order, so they can calculate child support that is owed, correctly.
 terms:
   all the child support orders in this case: |
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
     In some cases, one parent or DOR/CSE asks the court to change a child support order, but the other parent or DOR/CSE does not know the order has changed. You need to make sure:  
     * You are up to date with the most recent order, and 
     * DOR/CSE also has the most recent order, so they can calculate child support that is owed, correctly.
 
-=======
-    In some cases, one parent or DOR/CSE asks the court to change a child support order, but the other parent or DOR/CSE does not know the order has changed. You need to make sure:
-    
-    * You are up to date with the most recent order, and 
-    * DOR/CSE also has the most recent order, so they can calculate child support that is owed, correctly.
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
 ---
 id: dor contact info
 question: |
@@ -269,18 +211,11 @@ fields:
     none of the above: False
     code: |
       mylist
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
     
 ---
 code: |
-  mylist = [{'apple': word("Apples")},
-            {'orange': "Oranges"},
-           ]
-=======
----
-code: |
   mylist = []
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
+  
   if problems.any_true('driver-license','business-license', 'professional-license', 'trade-license'):
     mylist.append({'license': "I need my license back"})
   if problems['driver-license']:
@@ -289,22 +224,13 @@ code: |
   if problems.any_true('froze-account','account', 'shared-account'):
     mylist.append({'license': "I need to be able to use the money in my account."})
   if problems['other']:
-    mylist.append  ({'other': "I need help with something else."})
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
-
-    
-=======
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
+    mylist.append  ({'other': "I need help with something else."})    
 ---
 id: 01 hardship list
 question: |
   Explain what you cannot afford
 subquestion: |
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
  If you are struggling with anything in the list below, check the box to tell the DOR/CSE that you are suffering "hardship"
-=======
-  If you are struggling with anything in the list below, check the box to tell the DOR/CSE that you are suffering "hardship"
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
 fields:
   - no label: hardships
     datatype: checkboxes
@@ -345,11 +271,8 @@ subquestion: |
   For example, "I cannot pick up my ${ child_te }.  I cannot get to work so I cannot earn money to pay for basic needs and child support."
 fields:
     - no label: comment_car
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
 under: |
   For example, "I cannot pick up my children.  I cannot get to work so I cannot earn money to pay for basic needs and child support."
-=======
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
 ---
 id: 01 hardship need license
 question: |

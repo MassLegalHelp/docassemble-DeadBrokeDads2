@@ -18,21 +18,13 @@ code: |
   else:
     problemsSentences = "No problems"
   
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01a-hardships-to-sentences.yml
   if help_needed.any_true('cantafford', 'cantsustain'):
-=======
-  if help_needed.any_true('cantaffort', 'cantsustain'):
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01a-hardships-to-sentences.yml
     if hardships.any_true():
       for hardship in hardships.true_values():
         hardshipsSentences += hardshipsToSentences[hardship] + "\n"
       sentences = problemsSentences + "\n" + hardshipsSentences
     else:
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01a-hardships-to-sentences.yml
-      sentences = "No hardships"
-=======
       sentences = problemsSentences + '\n' + 'No hardships'
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01a-hardships-to-sentences.yml
   else:
     sentences = problemsSentences
 

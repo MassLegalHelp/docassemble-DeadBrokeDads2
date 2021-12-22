@@ -8,12 +8,8 @@ metadata:
   authors:
     - name: Caroline Robinson
       organization: Volunteer Lawyers Project
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/ChildSupportObligors.yml
-  revision_date: 2021-03-28
-=======
     - name: Bryce Willey
   revision_date: 2021-6-11
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/ChildSupportObligors.yml
 ---
 default screen parts:
   under: |
@@ -92,29 +88,9 @@ code: |
   intro_complete
   comparison_complete
   # if user thinks DOR/CSE is wrong, or user isn't sure if arrears amount is correct
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/ChildSupportObligors.yml
-  # if dor_cse_notice_arrears_wrong or dor_cse_notice_arrears_wrong == None:
-  # possibilities_complete duplicates many of equit adjust questions in other considerations which we could ask then turn into admin review comments if not eligible for equitable adjustment. Also this has a number of questions we could use in instructions about modifications - let's cherry pick certain questions from this list. 
-  #   possibilities_complete
   reasons_for_review_complete
-  # if cs_arrears_mc.any_true('Yes', 'I am not sure'):
   if cs_arrears_mc == "Yes" or cs_arrears_mc == 'I am not sure':
     other_considerations_complete
-  # admin_review = True
-  # equit_adjust = True
-  
-=======
-
-  # NOTE(CR): possibilities_complete duplicates many of equit adjust questions in
-  # other considerations which we could ask then turn into admin review comments if 
-  # not eligible for equitable adjustment. Also this has a number of questions we 
-  # could use in instructions about modifications - let's cherry pick certain questions from this list.
-  # if dor_cse_notice_arrears_wrong or dor_cse_notice_arrears_wrong == None:
-  #  possibilities_complete
-  reasons_for_review_complete
-  if cs_arrears_mc == "Yes" or cs_arrears_mc == "I am not sure":
-    other_considerations_complete
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/ChildSupportObligors.yml
   
   form_decisions_complete
   if finance_statement:

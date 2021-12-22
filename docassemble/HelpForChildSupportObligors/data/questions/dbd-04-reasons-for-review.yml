@@ -6,11 +6,7 @@ objects:
 ---
 code: |
   if problems['shared-account']:
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-04-reasons-for-review.yml
-    if appointed_guardian or appointed_conservator or rep_payee:
-=======
     if appointed_guardian or appointed_conservator or rep_payee: 
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-04-reasons-for-review.yml
       dor_take_ward_account
     else:
       unprotected
@@ -135,17 +131,12 @@ code: |
 id: dbd 04 first fell behind date
 question: |
   When was the first time you fell behind on child support payments?
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-04-reasons-for-review.yml
-subquestion: |
-  Barb - if obligor says they never fell behind, but DCF says they did, should we ask them to find out when DCF thinks they fell behind? This is so obligor can get the bank levy and say DCF took money out of the account or froze it while obligor was getting benefits - we need this question for equitable adjustment. 
-=======
 comment: |
   subquestion: |
   TODO(CR): Barb - if obligor says they never fell behind, but DCF says they did, should 
   we ask them to find out when DCF thinks they fell behind? This is so obligor can get the 
   bank levy and say DCF took money out of the account or froze it while obligor was 
   getting benefits - we need this question for equitable adjustment. 
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-04-reasons-for-review.yml
 fields:
   - no label: cs_arrears_date
     datatype: date
@@ -156,11 +147,6 @@ question: |
   DOR took money that is not yours
 subquestion: |
   You said DOR took money out of an account that is not your money.
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-04-reasons-for-review.yml
-  
-=======
-
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-04-reasons-for-review.yml
   Are you a: 
   
     * court-appointed Guardian,
@@ -168,29 +154,6 @@ subquestion: |
     * {Representative Payee}
   
   for someone else?
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-04-reasons-for-review.yml
-fields:
-#  - no label: guardian
-#    datatype: checkboxes
-#    choices:
-  - "I am a court appointed guardian for someone else.": appointed_guardian
-    datatype: yesno
-  - "Do you have a copy of the court order that appoints you guardian?": guardian_order
-    datatype: yesnoradio
-    show if:
-      appointed_guardian
-  - "I am a court-appointed conservator for someone else.": appointed_conservator
-    datatype: yesno
-  - "Do you have a copy of the court order that appoints you conservator?": conservator_order
-    datatype: yesnoradio
-    show if:
-      appointed_conservator
-  - "I am a Social Security designated {Representative Payee} for someone else.": rep_payee
-    datatype: yesno
-  - "Do you have a notice from SSA that shows you are the Representative Payee?": rep_payee_notice
-    datatype: yesnoradio
-    show if:
-=======
 
 fields:
   - "I am a court appointed guardian for someone else.": appointed_guardian
@@ -210,7 +173,6 @@ fields:
   - "Do you have a notice from SSA that shows you are the Representative Payee?": rep_payee_notice
     datatype: yesnoradio
     show if:
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-04-reasons-for-review.yml
       rep_payee
 terms:
   Representative Payee: |
@@ -232,13 +194,8 @@ code: |
       if not dor_take_ward_account:
         dor_take_ward_money = False
         levy_not_mine = False
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-04-reasons-for-review.yml
-      else:   
-        levy_not_mine = dor_take_ward_money  
-=======
       else:
         levy_not_mine = dor_take_ward_money
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-04-reasons-for-review.yml
     else:
       dor_take_ward_money = False
       levy_not_mine = False
@@ -279,11 +236,7 @@ question: |
 fields:
   - When did your ${ i } start?: your_past_benefits[i].start_date
     datatype: date
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-04-reasons-for-review.yml
-  - note: If you do not know when your ${ i } began, give us your best estimate. 
-=======
     note: If you do not know when your ${ i } began, give us your best estimate.
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-04-reasons-for-review.yml
   - Do you still get ${ i }?: your_past_benefits[i].still_receiving
     datatype: yesnoradio
   - When did your ${ i } end?: your_past_benefits[i].end_date
@@ -349,27 +302,17 @@ comment: |
   Barb says 10/07/2020 Ask instead, Is most of the money in this account
   from your benefits? And also, Do have any income other than your benefits?
 
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-04-reasons-for-review.yml
-  # cs_arrears_date is ${ cs_arrears_date }
-
-  {% if dor_take_ward_money %}
-  
-  * ${dor_take_ward_money}
-  
-  [X]{% else %}[  ]{% endif %}  DOR took money from my bank account 
-=======
   TODO(brycew): this was displayed as written below the subquestion.
   Does the user need this info to fill out this question?
   
   cs_arrears_date is ${ cs_arrears_date }
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-04-reasons-for-review.yml
 
   dor_took_money_date is ${ dor_took_money_date }
 
   # equit_adjust_a is ${equit_adjust_a}
 
   % for item in your_past_benefits:
-    ${ item } : ${ your_past_benefits[item].start_date } --  ${ your_past_benefits[item].end }<br>
+  ${ item } : ${ your_past_benefits[item].start_date } --  ${ your_past_benefits[item].end }<br>
   % endfor
 
   And what is the value of benefits_w_ssi_kid? ${ benefits_w_ssi_kid }
