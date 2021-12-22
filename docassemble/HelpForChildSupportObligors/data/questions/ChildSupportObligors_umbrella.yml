@@ -50,6 +50,8 @@ features:
   navigation: True
   progress bar: True
   question help button: True
+  question back button: True
+  navigation back button: False
   css: dbd-styles.css
 ---
 modules:
@@ -88,6 +90,7 @@ default screen parts:
 ---
 mandatory: True
 code: |
+  speak_text = False
   intro_complete
   comparison_complete
   # if user thinks DOR/CSE is wrong, or user isn't sure if arrears amount is correct
@@ -173,19 +176,3 @@ subquestion: |
   ${ action_button_html(al_user_bundle.as_pdf().url_for(attachment=True), label="Download your forms for DOR", icon="file-download", color="primary") }
   
   ${ al_user_bundle.send_button_html() }
----
-comment: |
-  attachment:
-    - name: Help for Child Support obligor parents
-      file name: help_for_obligor_parents
-      description: Your forms for DOR
-      content: |
-        ${ file_bundle_pdf }
-  #  docx template file: admin_review_page2_2.docx
-  #  docx template file: help_for_obligors-test4.docx
-      valid formats:
-        - pdf
-      tagged pdf: True
-  include download tab: False
-  always include editable files: False
----

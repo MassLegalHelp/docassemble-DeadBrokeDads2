@@ -20,10 +20,12 @@ question: |
   What is your current address?
 fields: 
   - Street Address: client.address.address
+    address autocomplete: True
   - City: client.address.city
   - State: client.address.state
   #  code: states_list()
   - Zip Code: client.address.zip
+    required: False
 ---
 id: client phone
 question: |
