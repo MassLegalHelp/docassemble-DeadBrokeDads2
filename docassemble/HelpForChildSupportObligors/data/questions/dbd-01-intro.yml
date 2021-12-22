@@ -1,0 +1,376 @@
+---
+include:
+  - dbd-01a-hardships-to-sentences.yml
+---
+code: |
+  welcome
+  important
+  requirements
+  # if call_dor:
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
+  #   if contact_dor == 'exit':
+  #     command('exit')
+  #   elif contact_dor == 'proceed':
+  #     client.name.first
+  # client.name.first
+  # else:
+  #  kick_out
+  if problems.any_true('other'):
+    prob_other
+=======
+  #  if contact_dor == 'exit':
+  #    command('exit')
+  #  elif contact_dor == 'proceed':
+  #    client.name.first
+  # client.name.first
+  # else:
+  #  kick_out
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
+  if help_needed.any_true('cantafford', 'cantsustain'):
+    hardships  
+  # if help_needed.any_true('needplan'):
+    # need_offer
+  if problems.any_true('told-me-garnish-increase', 'told-boss-garnish-increase'): 
+    if hardships.any_true():
+      twenty_five_percent = True    
+      admin_review = True
+      finance_statement = True
+    else:
+      twenty_five_percent = False
+      finance_statement = False
+  else:
+    twenty_five_percent = False
+    finance_statement = False
+  
+  if problems.any_true('froze-account', 'account', 'too-much', 'shared-account'):
+    dor_took_money_date
+  if problems.any_true('driver-license', 'car-reg'):
+    comment_car
+  if problems.any_true('business-license', 'professional-license', 'trade-license'):
+    comment_license
+  if problems.any_true('other'):
+    prob_other
+    other_need = True
+    other_needed_info
+  open_text_paragraph_one_complete
+  intro_complete = True
+---
+objects:
+  - notice_of_arrears_img: DAStaticFile.using(filename="Notice_of_Arrears.png")
+---
+section: Introduction
+id: 01 Welcome
+field: welcome
+question: | 
+  Welcome!
+subquestion: |
+  We can help you fill out the forms you need if the Department of Revenue Child Support Enforcement (DOR/CSE) has done any of the following:  
+  
+  * Sent you a notice that says that you are behind in child support payments. That notice is called a [Notice of Child Support Delinquency](${ notice_of_arrears_img.url_for() }). 
+  * Took your tax refund.
+  * Started taking money out of your pay or is taking more money out of your pay than they should.  
+  * Told you or your employer the amount of child support you need to pay is going up by 25%.
+  * Froze your bank account so you cannot use the money in your bank.
+  * Took money out of your bank account.
+  * Took your driver's license or suspended your car registration.
+  * Took your business license, your trade license or your professional license.
+  
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
+  * The Department of Revenue Child Support Enforcement (DOR/CSE) sent you a notice that says that you are behind in child support payments. That notice is called a [Notice of Child Support Delinquency](https://drive.google.com/file/d/1eFI1jrzWLGSMA094sveue-TOFswCnMcG/view?usp=sharing). 
+  * DOR/CSE  took your tax refund.
+  * DOR/CSE started taking money out of your pay or is taking more money out of your pay than they should.  
+  * DOR/CSE told you or your employer the amount of child support you need to pay is going up by 25%.
+  * DOR/CSE froze your bank account so you cannot use the money in your bank.
+  * DOR/CSE took money out of your bank account .
+  * DOR/CSE took your driver's license or suspended your car registration.
+  * DOR/CSE took your business license, your trade license or your professional license.
+  * You have another problem with DOR/CSE related to child support. 
+=======
+  Or if you have another problem with DOR/CSE related to child support.
+
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
+---
+id: 01 Important
+question: |
+  Important
+subquestion: |  
+  **We cannot help you change the amount of child support you owe your child’s other parent**. 
+  
+  If you need to change the amount of the child support order, you will need to go to court. See MassLegalHelp's [article on Changing a Child Support Order](https://www.masslegalhelp.org/children-and-families/child-support-changing-it) for more information.
+  
+  We can only help you with one child support order at a time. 
+  
+  If you owe back child support to more than one parent, you will need to start over with a new interview for each parent.
+  
+field: important
+action buttons:
+  - label: Exit
+    action:  https://masslegalhelp.org/children-and-families/child-support-enforcing2/dor
+    color: danger
+---
+comment: |
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
+  Move to Instructions: DOR may be able to help you with your back child support informally….they have a number of ways to help before you have to send in forms.
+  Do you want to try to fix the problem informally before you fill out forms?
+id: 01 before we start
+=======
+  Move to Instructions: DOR may be able to help you with your back child support informally….
+  they have a number of ways to help before you have to send in forms.
+  Do you want to try to fix the problem informally before you fill out forms?
+id: 01 call dor cse
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
+question: | 
+  Before we get started...
+subquestion: |
+  You will need:
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
+  
+  1. your child support payment history.
+  See [Get your child support payment history](https://www.mass.gov/how-to/get-your-child-support-payment-history) on DOR/CSE's website.
+  
+  1. Copies of {all the child support orders in this case}. You can get these from the court. Call your court service center. 
+  
+  1. The most recent Notice of Child Support Delinquency that DOR/CSE sent to you.
+=======
+
+  1. your child support payment history.
+  See [Get your child support payment history](https://www.mass.gov/how-to/get-your-child-support-payment-history) on DOR/CSE's website.
+
+  1. Copies of {all the child support orders in this case}. You can get these from the court. Call your court service center. 
+
+  1. The most recent Notice of Child Support Delinquency that DOR/CSE sent to you.
+
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
+field: requirements
+help:
+  label: |
+    **All** the child support orders?
+  content: |
+     In some cases, one parent or DOR/CSE asks the court to change a child support order, but the other parent or DOR/CSE does not know the order has changed. You need to make sure:
+     
+     * You are up to date with the most recent order, and 
+     * DOR/CSE also has the most recent order, so they can calculate child support that is owed, correctly.
+terms:
+  all the child support orders in this case: |
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
+    In some cases, one parent or DOR/CSE asks the court to change a child support order, but the other parent or DOR/CSE does not know the order has changed. You need to make sure:  
+    * You are up to date with the most recent order, and 
+    * DOR/CSE also has the most recent order, so they can calculate child support that is owed, correctly.
+
+=======
+    In some cases, one parent or DOR/CSE asks the court to change a child support order, but the other parent or DOR/CSE does not know the order has changed. You need to make sure:
+    
+    * You are up to date with the most recent order, and 
+    * DOR/CSE also has the most recent order, so they can calculate child support that is owed, correctly.
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
+---
+id: dor contact info
+question: |
+  DOR/CSE contact information
+
+subquestion: |
+  Contact DOR: 
+  
+  * Over the phone:
+       * [(800)-332-2733](tel:+1-800-332-2733), or
+       * [(617)-660-1234](tel:+1-617-600-1234) for local callers in the Boston area,
+  * Use [their online form](https://ecse.cse.state.ma.us/uwps/wps/portal/), or
+  * [Your case manager account](https://ecse.cse.state.ma.us/ECSE/Login/login.asp)
+  
+  Come back if you cannot solve your problem informally with DOR/CSE.
+field: contact_dor
+action buttons:
+  - label: Exit
+    action: https://www.mass.gov/info-details/contact-dor
+    color: danger
+---
+id: 01 modify
+question: |
+  Modify your child support order
+subquestion: |
+  If:
+    * you cannot pay the amount of child support the court ordered you to pay and
+
+    * things have changed since the court made the child support order, ask the court to change the order.
+
+  Read 
+  [Changing your child support order](https://www.masslegalhelp.org/children-and-families/child-support-changing-it) and
+  
+   [How do I change a child support order](https://www.masslegalhelp.org/children-and-families/child-support-change-how).
+event: kick_out
+---
+id: 01 your name
+question: |
+  What is your name?
+subquestion: |
+  We need to put your name on the forms you send to DOR/CSE. 
+fields:
+  - First: client.name.first
+  - Middle: client.name.middle
+    required: False
+  - Last: client.name.last
+  - Suffix: client.name.suffix
+    code: |
+      name_suffix()
+    required: False
+section: About Your Situation
+---
+id: 01 what actions did DOR take?
+question: |
+  What did DOR do that you need help with?
+fields:
+  - note: Check every box that is true.
+  - no label: problems
+    datatype: checkboxes
+    choices:
+      - I got a Notice of Child Support Delinquency from DOR/CSE.: knewnot
+      - DOR took my tax refund.: refund 
+      - DOR started taking money out my pay.: garnish  
+      - DOR is taking more money out of my pay than they should.: garnish-increase
+      - DOR told me the amount of child support I need to pay is going up by 25%.: told-me-garnish-increase
+      - DOR told **my employer** the amount of child support I need to pay is going up by 25%.: told-boss-garnish-increase
+      - DOR froze my account so I cannot use the money in my bank.: froze-account
+      - DOR took money out of my bank account.: account
+      - DOR took more money of my account than I owe.: too-much
+      - DOR took money out of an account that is not my money.: shared-account
+      - DOR took my driver's license.: driver-license
+      - DOR suspended my car registration.: car-reg
+      - DOR took my business license.: business-license
+      - DOR took my professional license.: professional-license
+      - DOR took my trade license.: trade-license
+      - I have another problem with DOR.: other
+    none of the above: False
+    
+---
+id: 01 other action DOR took
+question: |
+  What is the other problem you are having with DOR/CSE?
+subquestion: |
+  Describe the other thing DOR did. And explain the problem it is causing you. 
+fields:
+  - no label: prob_other
+    datatype: area
+---
+id: 01 what help do you need
+question: |
+  What do you need help with, ${client.name.first}? 
+subquestion: |
+  Check the box next to everything that is true.
+fields:
+  - no label: help_needed
+    datatype: checkboxes
+    choices:
+      - DOR is wrong about the amount of child support I owe.: disagreement
+      - I cannot pay all the back child support I owe.: cantafford
+      - I cannot keep up with the payments that the Court ordered.: cantsustain
+      - I need help like a payment plan to pay the back child support I owe.: needplan
+  - no label: extra_help_needed
+    datatype: checkboxes
+    none of the above: False
+    code: |
+      mylist
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
+    
+---
+code: |
+  mylist = [{'apple': word("Apples")},
+            {'orange': "Oranges"},
+           ]
+=======
+---
+code: |
+  mylist = []
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
+  if problems.any_true('driver-license','business-license', 'professional-license', 'trade-license'):
+    mylist.append({'license': "I need my license back"})
+  if problems['driver-license']:
+    mylist.append({'registration': "I need my registration back"})
+  
+  if problems.any_true('froze-account','account', 'shared-account'):
+    mylist.append({'license': "I need to be able to use the money in my account."})
+  if problems['other']:
+    mylist.append  ({'other': "I need help with something else."})
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
+
+    
+=======
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
+---
+id: 01 hardship list
+question: |
+  Explain what you cannot afford
+subquestion: |
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
+ If you are struggling with anything in the list below, check the box to tell the DOR/CSE that you are suffering "hardship"
+=======
+  If you are struggling with anything in the list below, check the box to tell the DOR/CSE that you are suffering "hardship"
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
+fields:
+  - no label: hardships
+    datatype: checkboxes
+    choices:  
+      - I cannot pay for groceries.: groceries
+      - I cannot pay for medication I need.: meds
+      - I cannot pay my utilities.: utilities
+      - My utilities will be shut off.: fear-utilities
+      - My utilities have been shut off.: lost-utilities
+      - I cannot pay rent.: rent
+      - I will be evicted.: eviction-fear
+      - I am being evicted.: eviction-facing
+      - I cannot pay my mortgage.: mortgage
+      - My house will be foreclosed on.: foreclosure-fear
+      - I am being forced to stay with an abusive partner: abuse
+      - I cannot pay for some other basic need.: other
+---
+id: dbd 01 levy date
+question: |
+  % if problems.any_true('account', 'too-much', 'shared-account'):
+  When did DOR take the money of your account?
+  % else:
+  When did DOR freeze your bank account?
+  % endif 
+fields:
+  - Date: dor_took_money_date
+    datatype: date
+validation code: |
+  if dor_took_money_date > today():
+    validation_error("This date cannot be in the future.")
+---
+id: 01 hardship cannot drive 
+question: |
+  I cannot drive!
+subquestion: |
+  Explain to DOR why being unable to drive is causing you a problem.
+  
+  For example, "I cannot pick up my ${ child_te }.  I cannot get to work so I cannot earn money to pay for basic needs and child support."
+fields:
+    - no label: comment_car
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01-intro.yml
+under: |
+  For example, "I cannot pick up my children.  I cannot get to work so I cannot earn money to pay for basic needs and child support."
+=======
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01-intro.yml
+---
+id: 01 hardship need license
+question: |
+  I need my license!
+subquestion: |
+  Explain to DOR why taking your license is causing you a problem.
+  
+  For example, "I need my license to work so I can earn money to pay for my basic needs and child support."
+fields:
+    - no label: comment_license
+---
+id: 01 offer in settlement
+question: |
+  Offer in Settlement
+subquestion: |
+  You may be able to make a “settlement” with DOR/CSE for past-due child support.  DOR/CSE will **not** make a settlement with you about past-due child support you owe ${ other_parent.name.first }. 
+  
+  See <a href="https://www.masslegalhelp.org/children-and-families/child-support-dor/pay-past-due" target="_blank">Can DOR/CSE let me pay less past-due child support than I owe?</a> to learn more.
+  
+  We cannot help you with the Offer in Settlement Application form right now, but we can help you complete the Statement of Financial Condition which you need to file along with the Offer in Settlement.
+  
+  Do you want to work on the Statement of Financial Condition?
+  
+yesno: need_offer

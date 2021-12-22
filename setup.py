@@ -42,19 +42,19 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
                 out.setdefault(package, []).append(prefix+name)
     return out
 
-setup(name='docassemble.DeadBrokeDads2',
+setup(name='docassemble.HelpForChildSupportObligors',
       version='0.0.1',
-      description=('A docassemble extension.'),
-      long_description='# docassemble.DeadBrokeDads2\r\n\r\nA docassemble extension.\r\n\r\n## Author\r\n\r\nCaroline Robinson, crobinson@mlri.org\r\n\r\n',
+      description=('A docassemble guided interview for MA Department of Revenue / Child Support Enforcement'),
+      long_description='# docassemble.HelpForChildSupportObligors\r\n\r\nA docassemble guided interview for MA Department of Revenue / Child Support Enforcement\r\n\r\n## Author\r\n\r\nCaroline Robinson, crobinson@mlri.org\r\n\r\n',
       long_description_content_type='text/markdown',
       author='Caroline Robinson',
       author_email='crobinson@mlri.org',
       license='The MIT License (MIT)',
-      url='https://docassemble.org',
+      url='https://www.mlri.org/',
       packages=find_packages(),
       namespace_packages=['docassemble'],
       install_requires=[],
       zip_safe=False,
-      package_data=find_package_data(where='docassemble/DeadBrokeDads2/', package='docassemble.DeadBrokeDads2'),
+      package_data=find_package_data(where='docassemble/HelpForChildSupportObligors/', package='docassemble.HelpForChildSupportObligors'),
      )
 

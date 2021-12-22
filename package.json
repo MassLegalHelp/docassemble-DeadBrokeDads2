@@ -1,5 +1,5 @@
 {
-  "name": "docassemble-DeadBrokeDads2",
+  "name": "docassemble-HelpForChildSupportObligors",
   "version": "0.1.0",
   "description": "",
   "main": "",
@@ -19,19 +19,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/caroRob/docassemble-DeadBrokeDads2.git"
+    "url": "git+https://github.com/MassLegalHelp/docassemble-HelpForChildSupportObligors.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/caroRob/docassemble-DeadBrokeDads2/issues"
+    "url": "https://github.com/MassLegalHelp/docassemble-HelpForChildSupportObligors/issues"
   },
-  "homepage": "https://github.com/caroRob/docassemble-DeadBrokeDads2#readme",
+  "homepage": "https://github.com/MassLegalHelp/docassemble-HelpForChildSupportObligors#readme",
   "dependencies": {
     "bufferutil": "^4.0.1",
     "chai": "^4.2.0",
     "cucumber": "^6.0.5",
-    "docassemble-cucumber": "^1.0.0",
+    "docassemble-cucumber": "^1.0.0", 
     "dotenv": "^8.2.0",
     "mocha": "^7.2.0",
     "puppeteer": "^3.3.0",

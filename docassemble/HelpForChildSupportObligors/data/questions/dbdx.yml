@@ -1,0 +1,37 @@
+---
+include:
+  - section-i.yml
+  - section-ii.yml
+  - section-iii.yml
+  - section-iv.yml
+  - section-v.yml
+  - section-vi2.yml
+---
+objects: 
+  - client: Individual
+  - children: ChildList
+  - ind_household: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='month_contrib', new_item_name=0)
+  - employer: Person
+  - spouse_employer: Person
+  - vehicles: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='current_value', new_item_name=0)
+  - realprop: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='current_value', new_item_name=0)
+  - bankact: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='act_type', new_item_name=0)
+  - retirement_acts: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='balance', new_item_name=0)
+  - securities: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='cur_val', new_item_name=0)
+  - credit_cards: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='total_amt_owed', new_item_name=0)
+---
+modules:
+  - docassemble.ssa.ssa
+---
+features:
+  javascript: docassemble.ssa:ssa2.js
+---
+code: |
+  section_i_complete
+  section_ii_complete
+  section_iii_complete
+  section_iv_complete
+  section_v_complete
+  section_vi2_complete
+  
+  sofc_complete = True

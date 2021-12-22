@@ -1,0 +1,1195 @@
+---
+id: monthly income from employment
+if: |
+  client_is_employed == True
+question: |
+  Monthly Income 
+subquestion: |
+  Now we're going to ask questions about your monthly income. Take the last three weekly or monthly pay stubs from your 
+  employer. 
+
+fields:
+  - Are you on salary or are you paid hourly?: base_pay_sal_wage
+    choices: 
+      - Salary: salary
+      - Wages: hourly
+  - How often do you get paid?: base_pay_freq
+    choices: 
+      - Every month: monthly
+      - Every two weeks: bi_weekly
+      - Every week: weekly
+---
+id: first pay stub
+if: |
+  client_is_employed == True
+question: |
+  First pay Stub from ${ employer.name }
+subquestion: |
+  Look at the first of the three pay stubs from ${ employer.name}. 
+  Fill in the amounts for each field. If your employer 
+  does not deduct for one of the fields, put '0'.
+  
+  Note: 'gross income' means the amount you receive *before* taxes or other expenses are taken out. 
+  For example if your salary is $5,000 per month *before* taxes, that would be your 
+  gross salary per month.
+fields: 
+  - ${base_pay_sal_wage} (gross amount): base_pay_amt_1
+    datatype: currency
+    min: 0
+  - note: |
+      Please complete the following amounts for what is withheld from 
+      your paycheck:
+  - Federal taxes: fed_tax_amt_1
+    datatype: currency
+  - Medicare / Medicaid: medicare_amt_1
+    datatype: currency
+  - State taxes: state_tax_amt_1
+    datatype: currency    
+  - Please select all other items that were withheld from this paycheck: withhold_items_list_1
+    datatype: checkboxes
+    choices: 
+      - Union dues
+      - Health insurance
+      - Life insurance
+      - Disability insurance
+      - Retirement (401k)
+      - Other
+  - Union Dues: union_amt_1
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_1['Union dues']
+      is: 
+        True
+  - Health Insurance: health_ins_amt_1
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_1['Health insurance']
+      is: 
+        True
+  - Life Insurance: life_ins_amt_1
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_1['Life insurance']
+      is: 
+        True
+  - Retirement or 401k: retire_amt_1
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_1['Retirement (401k)']
+      is: 
+        True
+  - Disability Insurance: dis_ins_amt_1
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_1['Disability insurance']
+      is: 
+        True
+  - Other: other_amt_1
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_1['Other']
+      is: 
+        True        
+---
+id: second pay stub
+if: |
+  client_is_employed == True
+question: |
+  Second Pay Stub from ${ employer.name }
+subquestion: |
+  Look at the second of the three pay stubs from ${ employer.name}. 
+  Fill in the amounts for each field. If your employer 
+  does not deduct for one of the fields, put '0'.
+fields: 
+  - ${base_pay_sal_wage} (gross amount): base_pay_amt_2 
+    datatype: currency
+    min: 0
+  - note: |
+      Please complete the following amounts for what is withheld from 
+      your paycheck:
+  - Federal taxes: fed_tax_amt_2
+    datatype: currency
+  - Medicare: medicare_amt_2
+    datatype: currency
+  - State taxes: state_tax_amt_2
+    datatype: currency    
+  - Please select all other items that were withheld from this paycheck: withhold_items_list_2
+    datatype: checkboxes
+    choices: 
+      - Union dues
+      - Health insurance
+      - Life insurance
+      - Disability insurance
+      - Retirement (401k)
+      - Other    
+  - Union Dues: union_amt_2
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_2['Union dues']
+      is: 
+        True    
+  - Health Insurance: health_ins_amt_2
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_2['Health insurance']
+      is: 
+        True
+  - Life Insurance: life_ins_amt_2
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_2['Life insurance']
+      is: 
+        True
+  - Retirement or 401k: retire_amt_2
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_2['Retirement (401k)']
+      is: 
+        True
+  - Disability Insurance: dis_ins_amt_2
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_2['Disability insurance']
+      is: 
+        True
+  - Other: other_amt_2
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_2['Other']
+      is: 
+        True 
+
+---
+id: third pay stub
+if: |
+  client_is_employed == True
+question: |
+  Third Pay Stub from ${ employer.name }
+subquestion: |
+  Look at the third of the three pay stubs from ${ employer.name}. 
+  Fill in the amounts for each field. If your employer 
+  does not deduct for one of the fields, put '0'.
+fields: 
+  - ${base_pay_sal_wage} (gross amount): base_pay_amt_3
+    datatype: currency
+    min: 0
+  - note: |
+      Please complete the following amounts for what is withheld from 
+      your paycheck:    
+  - Federal taxes: fed_tax_amt_3
+    datatype: currency
+  - Medicare / Medicaid: medicare_amt_3  
+    datatype: currency
+  - State taxes: state_tax_amt_3  
+    datatype: currency    
+  - Please select all other items that were withheld from this paycheck: withhold_items_list_3
+    datatype: checkboxes
+    choices: 
+      - Union dues
+      - Health insurance
+      - Life insurance
+      - Disability insurance
+      - Retirement (401k)
+      - Other    
+  - Union Dues: union_amt_3
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_3['Union dues']
+      is: 
+        True    
+  - Health Insurance: health_ins_amt_3
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_3['Health insurance']
+      is: 
+        True
+  - Life Insurance: life_ins_amt_3
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_3['Life insurance']
+      is: 
+        True
+  - Retirement or 401k: retire_amt_3
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_3['Retirement (401k)']
+      is: 
+        True
+  - Disability Insurance: dis_ins_amt_3
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_3['Disability insurance']
+      is: 
+        True
+  - Other: other_amt_3
+    datatype: currency
+    show if: 
+      variable: 
+        withhold_items_list_3['Other']
+      is: 
+        True 
+---
+id: bonuses tips or commissions
+if: |
+  client_is_employed == True
+question: |
+  Do you receive any commissions, bonuses or tips as part of your compensation?
+  If so select all that you receive:
+fields: 
+  - no label: btc_type
+    datatype: checkboxes
+    choices:
+      - Bonuses
+      - Tips
+      - Commissions
+---
+id: bonuses detail
+if: |
+  btc_type['Bonuses'] == True
+question: |
+  How much did you receive as your last bonus?
+fields:
+  - no label: bonus_amt_base
+    datatype: currency
+  - How frequently are your bonuses paid?: bonus_amt_freq
+    choices: 
+      - Monthly: 1
+      - Quarterly: 4
+      - Yearly: 12
+---
+id: commissions detail
+if: |
+  btc_type['Commissions'] == True
+question: |
+  How much did you receive as your commission total?
+fields:
+  - no label: comm_amt_base
+    datatype: currency
+  - How frequently are your commissions paid?: comm_amt_freq
+    choices: 
+      - Monthly: 1
+      - Quarterly: 4
+      - Yearly: 12
+
+---
+id: tips detail
+if: |
+  btc_type['Tips'] == True
+question: |
+  Please list the last three amounts you received as tips.
+fields:
+  - Amount 1: tips_amt_1
+    datatype: currency
+  - Amount 2: tips_amt_2
+    datatype: currency
+  - Amount 3: tips_amt_3
+    datatype: currency
+---
+id: income type select list
+question: |
+  Please select all the types of income that you receive:
+fields:
+  - no label : income_items_list
+    datatype: checkboxes
+    choices:
+      - Social Security
+      - Social Security Retirement
+      - Disability Benefits
+      - "Worker's Compensation": work_comp
+      - Unemployment Benefits
+      - Pension / Retirement Funds
+      - Rental Income
+      - Public Assistance
+      - Annuities
+      - Trusts
+      - Dividends
+      - Interest
+      - Contributions from household members
+      - "Veteran's Benefits": vet_benefits
+      - Royalties
+      - Something not listed here
+
+---
+id: social security income detail
+if: |
+  income_items_list['Social Security'] == True
+question: |
+  How much do you receive from Social Security monthly?
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : ssi_ssdi_gross
+    datatype: currency
+    min: 0
+  - Frequency: ssi_ssdi_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+
+---
+id: social security retirement income detail
+if: |
+  income_items_list['Social Security Retirement'] == True
+question: |
+  How much do you receive from Social Security Retirement and how often?
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : ss_retirement_gross
+    datatype: currency
+    min: 0
+  - Frequency: ss_retirement_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+      
+---
+id: disability income detail
+if: |
+  income_items_list['Disability Benefits'] == True
+question: |
+  How much do you receive in disability benefits and how often?
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : disability_gross
+    datatype: currency
+    min: 0
+  - Frequency: disability_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+
+---
+id: work comp income detail
+if: |
+  income_items_list['work_comp'] == True
+question: |
+  How much do you receive from Worker's Compensation and how often?
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : work_comp_gross
+    datatype: currency
+    min: 0
+  - Frequency: work_comp_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+---
+id: royalties income detail
+if: |
+  income_items_list['Royalties'] == True
+question: |
+  How much do you receive from royalties and how often?
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : royalties_gross
+    datatype: currency
+    min: 0
+  - Frequency: royalties_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+  - Source : royalties_source
+
+---
+id: unemployment income detail
+if: |
+  income_items_list['Unemployment Benefits'] == True
+question: |
+  How much do you receive from unemployment benefits and how often?
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : unemployment_gross
+    datatype: currency
+    min: 0
+  - Frequency: unemployment_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+---
+id: veteran benefits income detail
+if: |
+  income_items_list['vet_benefits'] == True
+question: |
+  How much do you receive from veteran's benefits and how often?
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : vet_benefit_gross
+    datatype: currency
+    min: 0
+  - Frequency: vet_benefit_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+  - "Are your veteran's benefits from the federal government, or a state government?": vet_state_or_fed
+    choices:
+      - Federal: federal
+      - State: state
+      - Other
+  - Source : vet_benefit_source
+---
+id: dividends income detail
+if: |
+  income_items_list['Dividends'] == True
+question: |
+  How much do you receive from dividends and how often?
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : dividends_gross
+    datatype: currency
+    min: 0
+  - Frequency: dividends_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+  - Source : dividends_source
+  
+---
+id: interest income detail
+if: |
+  income_items_list['Interest'] == True
+question: |
+  How much do you receive from interest and how often?
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : interest_gross
+    datatype: currency
+    min: 0
+  - Frequency: interest_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+  - Source : interest_source
+
+---
+id: trusts income detail
+if: |
+  income_items_list['Trusts'] == True
+question: |
+  How much do you receive from trusts and how often?
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : trusts_gross
+    datatype: currency
+    min: 0
+  - Frequency: trusts_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+  - Source : trusts_source
+---
+id: annuities income detail
+if: |
+  income_items_list['Annuities'] == True
+question: |
+  How much do you receive from annuities and how often?
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : annuities_gross
+    datatype: currency
+    min: 0
+  - Frequency: annuities_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+  - Source : annuities_source
+---
+id: pensions retirement income detail
+if: |
+  income_items_list['Pension / Retirement Funds'] == True
+question: |
+  How much do you receive from your pension or retirement benefits and how often?
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : pension_gross
+    datatype: currency
+    min: 0
+  - Frequency: pension_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+  - Source : pension_retire_source
+
+---
+id: public assistance income detail
+if: |
+  income_items_list['Public Assistance'] == True
+question: |
+  How much do you receive from public assistance and how often?
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : public_assistance_gross
+    datatype: currency
+    min: 0
+  - Frequency: public_assistance_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+  - Source : public_assistance_source
+---
+id: rental income income detail
+if: |
+  income_items_list['Rental Income'] == True
+question: |
+  How much do you receive from income on rental properties and how often?
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : rental_gross
+    datatype: currency
+    min: 0
+  - Frequency: rental_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+  - Source : rental_income_source
+
+---
+id: other income detail
+if: |
+  income_items_list['Something not listed here'] == True
+question: |
+  Please answer the following about your other income source:
+subquestion: |
+  Please put the total amount before taxes or anything else is taken out.
+fields:
+  - Total amount : other_gross
+    datatype: currency
+    min: 0
+  - Frequency: other_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+  - Source : other_source
+
+---
+id: expense items select
+question: |
+  Please select all the regular expenses you have:
+fields:
+  - no label: expense_items_list
+    datatype: checkboxes
+    choices:
+      - Rent or mortgage: rent_mort_exp
+      - Homeowner's or rental insurance: prop_ins_exp
+      - Water utility payments: water_exp
+      - Electricity utility payments: electric_exp
+      - Heating: heat_exp
+      - Home telephone: homephone_exp
+      - Cell telephone: cellphone_exp
+      - Life insurance: lifeins_exp
+      - Auto insurance: autoins_exp
+      - Medical insurance (any portion deducted from gross pay or that you pay): medins_exp
+      - Medical expenses not covered by insurance: medexp_exp
+      - Other transportation costs: transpo_exp
+      - Something not listed here: other_exp
+
+---
+id: rent or mortgage expense info
+if: |
+  expense_items_list['rent_mort_exp'] == True
+question: |
+  How much is your rent or mortgage payment and how often do you pay?
+fields:
+  - Total payment : rent_mort_exp_gross
+    datatype: currency
+  - Frequency: rent_mort_exp_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+
+---
+id: property insurance expense info
+if: |
+  expense_items_list["prop_ins_exp"] == True
+question: |
+  What is your homeowner's or rental insurance payment and how often do you pay?
+fields:
+  - Total payment : prop_ins_exp_gross
+    datatype: currency
+  - Frequency: prop_ins_exp_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+
+---
+id: water utility expense info
+if: |
+  expense_items_list['water_exp'] == True
+question: |
+  What is your water utility payment and how often do you pay?
+fields:
+  - Total payment : water_exp_gross
+    datatype: currency
+  - Frequency: water_exp_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+
+
+
+---
+id: electric expense info
+if: |
+  expense_items_list['electric_exp'] == True
+question: |
+  What is your electric bill payment and how often do you pay?
+fields:
+  - Total payment : electric_exp_gross
+    datatype: currency
+  - Frequency: electric_exp_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+---
+id: heat expense info
+if: |
+  expense_items_list['heat_exp'] == True
+question: |
+  What is your heating payment and how often do you pay?
+fields:
+  - Total payment : heat_exp_gross
+    datatype: currency
+  - Frequency: heat_exp_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+---
+id: phone expense info
+if: |
+  expense_items_list['homephone_exp'] == True
+question: |
+  What is your home phone payment and how often do you pay?
+fields:
+  - Total payment : homephone_exp_gross
+    datatype: currency
+  - Frequency: homephone_exp_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+---
+id: cellphone expense info
+if: |
+  expense_items_list['cellphone_exp'] == True
+question: |
+  What is your cell phone payment and how often do you pay it?
+fields:
+  - Total payment : cellphone_exp_gross
+    datatype: currency
+  - Frequency: cellphone_exp_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+
+---
+id: life ins expense info
+if: |
+  expense_items_list['lifeins_exp'] == True
+question: |
+  What is your normal life insurance payment and how often do you pay?
+fields:
+  - Total payment : lifeins_exp_gross
+    datatype: currency
+  - Frequency: lifeins_exp_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+
+---
+id: auto ins expense info
+if: |
+  expense_items_list['autoins_exp'] == True
+question: |
+  What is your automobile insurance payment and how often do you pay?
+fields:
+  - Total payment : autoins_exp_gross
+    datatype: currency
+  - Frequency: autoins_exp_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+
+---
+id: med insurance expense info
+if: |
+  expense_items_list['medins_exp'] == True
+question: |
+  What is your medical insurance payment and how often do you pay?
+fields:
+  - Total payment : medins_exp_gross
+    datatype: currency
+  - Frequency: medins_exp_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+
+---
+id: med expenses expense info
+if: |
+  expense_items_list['medexp_exp'] == True
+question: |
+  What is your medical expenses not covered by insurance payment and how often do you pay?
+fields:
+  - Total payment : medexp_exp_gross
+    datatype: currency
+  - Frequency: medexp_exp_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+
+---
+id: other expense info
+if: |
+  expense_items_list['other_exp'] == True
+question: |
+  What are your other expenses?
+fields:
+  - Total payment : other_exp_gross
+    datatype: currency
+  - Frequency: other_exp_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+
+---
+id: transportation expense info
+if: |
+  expense_items_list['transpo_exp'] == True
+question: |
+  What are your additional transportation expenses?
+fields:
+  - Total payment : transpo_exp_gross
+    datatype: currency
+  - Frequency: transpo_exp_gross_freq
+    choices:
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+
+---
+id: household member income info
+if: |
+  income_items_list['Contributions from household members'] == True
+question: |
+  Please complete the following about your monthly income from members of your household. 
+subquestion: |
+  % if hasindividual == True: 
+  You previously added the following members of your household and contributions: 
+    Name   |Do they contribute to household expenses?   |How much?
+  -------|---------------|--------------------------------------------|-----------
+  % for ind in ind_household:
+  % if ind_household.item(ind).month_contrib == True:
+  ${ ind_household.item(ind).name } | Yes | ${ ind_household.item(ind).month_contrib_amt }
+  % else: 
+  ${ ind_household.item(ind).name } | No | N/A
+  % endif
+  % endfor
+  % endif
+fields:
+  - Amount you receive monthly in household member contributions in addition to what you've already listed above: hh_member_contrib_gross_monthly
+    required: False
+    datatype: currency
+
+---
+id: grocery monthly expenses
+question: |
+  Grocery expenses
+subquestion: |
+  To add your grocery expenses to the form, please put in the following 
+  information: 
+fields: 
+  - What is the normal amount you spend on groceries?: grocery_exp_base
+    datatype: currency
+  - How often do you shop for groceries?: groceries_exp_gross_freq
+    choices: 
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+---
+id: clothing monthly expenses
+question: |
+  Clothing expenses
+subquestion: |
+  To add your clothing expenses to the form, please put in the following 
+  information: 
+fields: 
+  - What is the normal amount you spend on clothing when you shop?: clothing_exp_base
+    datatype: currency
+  - How often do you shop for clothing?: clothing_exp_freq
+    choices: 
+      - Monthly
+      - Weekly
+      - Every two weeks
+      - Quarterly / every three months
+
+
+---
+code: |
+  def det_avg_amt(amt_1, amt_2, amt_3):
+    new_amt = (amt_1 + amt_2 + amt_3) / 3
+    return new_amt
+    
+  def det_monthly_gross(gross_amt, freq):
+    if freq == 'Monthly':
+      gross_monthly = gross_amt
+    elif freq == 'Weekly':
+      gross_monthly = gross_amt * 4
+    elif freq == 'Every two weeks':
+      gross_monthly = gross_amt * 2
+    elif freq == 'Quarterly / every three months':
+      gross_monthly = gross_amt / 3
+    else:
+      gross_monthly = 0
+    return gross_monthly
+
+  nav.set_section('Income and Expenses')
+  if client_is_employed == True:
+    base_pay_source = employer.name
+    if base_pay_freq == 'monthly':
+      base_pay_freq_num = 1
+    elif base_pay_freq == 'bi_weekly':
+      base_pay_freq_num = 2
+    elif base_pay_freq == 'weekly':
+      base_pay_freq_num = 4
+    total_pay_base = det_avg_amt(base_pay_amt_1, base_pay_amt_2, base_pay_amt_3)
+    bonus_tips_yn = True
+    if btc_type['Tips'] == True :
+      btc_tips = det_avg_amt(tips_amt_1, tips_amt_2, tips_amt_3) * base_pay_freq_num
+    else:
+      btc_tips = 0
+    
+    if btc_type['Bonuses'] == True:
+      btc_bonuses = bonus_amt_base / int(bonus_amt_freq)
+    else: 
+      btc_bonuses = 0
+    
+    if btc_type['Commissions'] == True:
+      btc_comm = comm_amt_base / int(comm_amt_freq)
+    else: 
+      btc_comm = 0
+    
+    btc_gross_monthly = btc_tips + btc_bonuses + btc_comm
+    total_fed_tax_base = det_avg_amt(fed_tax_amt_1, fed_tax_amt_2, fed_tax_amt_3)
+    fica_medicare_ded_base = det_avg_amt(medicare_amt_1, medicare_amt_2, medicare_amt_3)
+    state_tax_ded_base = det_avg_amt(state_tax_amt_1, state_tax_amt_2, state_tax_amt_3)
+    base_pay_gross_monthly = total_pay_base * base_pay_freq_num
+    fed_tax_ded_monthly = total_fed_tax_base * base_pay_freq_num
+    fica_medicare_ded_monthly = fica_medicare_ded_base * base_pay_freq_num
+    state_tax_ded_monthly = state_tax_ded_base * base_pay_freq_num
+  
+    union_amt_one = union_amt_1 if withhold_items_list_1['Union dues'] else 0
+    union_amt_two = union_amt_2 if withhold_items_list_2['Union dues'] else 0
+    union_amt_three = union_amt_3 if withhold_items_list_3['Union dues'] else 0
+    health_ins_amt_one = health_ins_amt_1 if withhold_items_list_1['Health insurance'] else 0
+    health_ins_amt_two = health_ins_amt_2 if withhold_items_list_2['Health insurance'] else 0
+    health_ins_amt_three = health_ins_amt_3 if withhold_items_list_3['Health insurance'] else 0
+      
+    if withhold_items_list_1['Life insurance'] == True:
+      life_ins_amt_one = life_ins_amt_1
+    else: 
+      life_ins_amt_one = 0
+    if withhold_items_list_2['Life insurance'] == True:
+      life_ins_amt_two = life_ins_amt_2
+    else: 
+      life_ins_amt_two = 0
+    if withhold_items_list_3['Life insurance'] == True:
+      life_ins_amt_three = life_ins_amt_3
+    else: 
+      life_ins_amt_three = 0
+    if withhold_items_list_1['Retirement (401k)'] == True:
+      retire_amt_one = retire_amt_1
+    else: 
+      retire_amt_one = 0
+    if withhold_items_list_2['Retirement (401k)'] == True:
+      retire_amt_two = retire_amt_2
+    else: 
+      retire_amt_two = 0
+    if withhold_items_list_3['Retirement (401k)'] == True:
+      retire_amt_three = retire_amt_3
+    else: 
+      retire_amt_three = 0
+    if withhold_items_list_1['Disability insurance'] == True:
+      dis_ins_amt_one = dis_ins_amt_1
+    else: 
+      dis_ins_amt_one = 0
+    if withhold_items_list_2['Disability insurance'] == True:
+      dis_ins_amt_two = dis_ins_amt_2
+    else: 
+      dis_ins_amt_two = 0
+    if withhold_items_list_3['Disability insurance'] == True:
+      dis_ins_amt_three = dis_ins_amt_3
+    else: 
+      dis_ins_amt_three = 0
+    if withhold_items_list_1['Other'] == True:
+      other_amt_one = other_amt_1
+    else: 
+      other_amt_one = 0
+    if withhold_items_list_2['Other'] == True:
+      other_amt_two = other_amt_2
+    else: 
+      other_amt_two = 0
+    if withhold_items_list_3['Other'] == True:
+      other_amt_three = other_amt_3
+    else: 
+      other_amt_three = 0  
+      
+    union_dues_ded_monthly = det_avg_amt(union_amt_one, union_amt_two, union_amt_three) * base_pay_freq_num
+    med_ins_ded_monthly = det_avg_amt(health_ins_amt_one, health_ins_amt_two, health_ins_amt_three) * base_pay_freq_num
+    life_ins_ded_monthly = det_avg_amt(life_ins_amt_one, life_ins_amt_two, life_ins_amt_three) * base_pay_freq_num
+    retirement_ded_monthly = det_avg_amt(retire_amt_one, retire_amt_two, retire_amt_three) * base_pay_freq_num
+    disability_ins_ded_monthly = det_avg_amt(dis_ins_amt_one, dis_ins_amt_two, dis_ins_amt_three) * base_pay_freq_num
+    other_ded_monthly = det_avg_amt(other_amt_one, other_amt_two, other_amt_three) * base_pay_freq_num
+    other_ded_monthly_name = ''
+  elif client_is_employed == False:
+    fed_tax_ded_monthly = 0
+    fica_medicare_ded_monthly = 0
+    disability_ins_ded_monthly = 0
+    state_tax_ded_monthly = 0
+    union_dues_ded_monthly = 0
+    retirement_ded_monthly = 0
+    med_ins_ded_monthly = 0
+    life_ins_ded_monthly = 0
+    other_ded_monthly = 0
+    base_pay_source = 'N/A'
+    base_pay_gross_monthly = 0
+    other_ded_monthly_name = ''
+    bonus_tips_yn = False
+    btc_gross_monthly = 0
+  if income_items_list['Social Security'] == True:
+    ssi_ssdi_gross_monthly = ssi_ssdi_gross
+  else: 
+    ssi_ssdi_gross_monthly = 0
+  if income_items_list['Social Security Retirement'] == True:
+    ss_retirement_gross_monthly = det_monthly_gross(ss_retirement_gross, ss_retirement_gross_freq)
+  else: 
+    ss_retirement_gross_monthly = 0
+    
+  if income_items_list['Disability Benefits'] == True:
+    disability_gross_monthly = det_monthly_gross(disability_gross, disability_gross_freq)
+  else: 
+    disability_gross_monthly = 0
+    
+  if income_items_list['work_comp'] == True:
+    workers_comp_gross_monthly = det_monthly_gross(work_comp_gross, work_comp_gross_freq)
+  else: 
+    workers_comp_gross_monthly = 0
+    
+  if income_items_list['Unemployment Benefits'] == True:
+    unemployment_gross_monthly = det_monthly_gross(unemployment_gross, unemployment_gross_freq)
+  else: 
+    unemployment_gross_monthly = 0
+    
+  if income_items_list['Royalties'] == True:
+    royalties_gross_monthly = det_monthly_gross(royalties_gross, royalties_gross_freq)
+  else: 
+    royalties_gross_monthly = 0
+    
+  if income_items_list['vet_benefits'] == True:
+    vet_benefit_gross_monthly = det_monthly_gross(vet_benefit_gross, vet_benefit_gross_freq)
+  else: 
+    vet_benefit_gross_monthly = 0
+    
+  if income_items_list['Dividends'] == True:
+    dividends_gross_monthly = det_monthly_gross(dividends_gross, dividends_gross_freq)
+  else: 
+    dividends_gross_monthly = 0
+    
+  if income_items_list['Interest'] == True:
+    interest_gross_monthly = det_monthly_gross(interest_gross, interest_gross_freq)
+  else: 
+    interest_gross_monthly = 0
+    
+  if income_items_list['Trusts'] == True:
+    trusts_gross_monthly = det_monthly_gross(trusts_gross, trusts_gross_freq)
+  else: 
+    trusts_gross_monthly = 0
+    
+  if income_items_list['Something not listed here'] == True:
+    other_gross_monthly = det_monthly_gross(other_gross, other_gross_freq)
+  else: 
+    other_gross_monthly = 0
+    
+  if income_items_list['Rental Income'] == True:
+    rental_income_gross_monthly = det_monthly_gross(rental_gross, rental_gross_freq)
+  else: 
+    rental_income_gross_monthly = 0
+    
+  if income_items_list['Public Assistance'] == True:
+    public_assistance_gross_monthly = det_monthly_gross(public_assistance_gross, public_assistance_gross_freq)
+  else: 
+    public_assistance_gross_monthly = 0
+    
+  if income_items_list['Pension / Retirement Funds'] == True:
+    pension_retire_gross_monthly = det_monthly_gross(pension_gross, pension_gross_freq)
+  else: 
+    pension_retire_gross_monthly = 0
+    
+  if income_items_list['Annuities'] == True:
+    annuities_gross_monthly = det_monthly_gross(annuities_gross, annuities_gross_freq)
+  else: 
+    annuities_gross_monthly = 0
+  total_income_gross = annuities_gross_monthly + pension_retire_gross_monthly + public_assistance_gross_monthly + rental_income_gross_monthly + other_gross_monthly + trusts_gross_monthly + interest_gross_monthly + dividends_gross_monthly + vet_benefit_gross_monthly + royalties_gross_monthly + unemployment_gross_monthly + workers_comp_gross_monthly + disability_gross_monthly + ss_retirement_gross_monthly + ssi_ssdi_gross_monthly + base_pay_gross_monthly + btc_gross_monthly 
+                        
+                        
+  ################
+  ##  EXPENSES  ##
+  grocery_exp_monthly = det_monthly_gross(grocery_exp_base, groceries_exp_gross_freq)
+  clothing_exp_monthly = det_monthly_gross(clothing_exp_base, clothing_exp_freq)
+    
+  if expense_items_list['rent_mort_exp'] == True:
+    rent_mort_gross_monthly = det_monthly_gross(rent_mort_exp_gross, rent_mort_exp_gross_freq)
+  else: 
+    rent_mort_gross_monthly = 0
+  
+  if expense_items_list['prop_ins_exp'] == True:
+    prop_ins_exp_monthly = det_monthly_gross(prop_ins_exp_gross, prop_ins_exp_gross_freq)
+  else: 
+    prop_ins_exp_monthly = 0
+    
+  if expense_items_list['water_exp'] == True:
+    water_exp_monthly = det_monthly_gross(water_exp_gross, water_exp_gross_freq)
+  else: 
+    water_exp_monthly = 0
+    
+  if expense_items_list['electric_exp'] == True:
+    electric_exp_monthly = det_monthly_gross(electric_exp_gross, electric_exp_gross_freq)
+  else: 
+    electric_exp_monthly = 0
+    
+  if expense_items_list['heat_exp'] == True:
+    heat_exp_monthly = det_monthly_gross(heat_exp_gross, heat_exp_gross_freq)
+  else: 
+    heat_exp_monthly = 0
+    
+  if expense_items_list['homephone_exp'] == True:
+    homephone_exp_monthly = det_monthly_gross(homephone_exp_gross, homephone_exp_gross_freq)
+  else: 
+    homephone_exp_monthly = 0
+    
+  if expense_items_list['cellphone_exp'] == True:
+    cellphone_exp_monthly = det_monthly_gross(cellphone_exp_gross, cellphone_exp_gross_freq)
+  else: 
+    cellphone_exp_monthly = 0
+    
+  if expense_items_list['lifeins_exp'] == True:
+    lifeins_exp_monthly = det_monthly_gross(lifeins_exp_gross, lifeins_exp_gross_freq)
+  else: 
+    lifeins_exp_monthly = 0
+    
+  if expense_items_list['autoins_exp'] == True:
+    autoins_exp_monthly = det_monthly_gross(autoins_exp_gross, autoins_exp_gross_freq)
+  else: 
+    autoins_exp_monthly = 0
+    
+  if expense_items_list['medins_exp'] == True:
+    medins_exp_monthly = det_monthly_gross(medins_exp_gross, medins_exp_gross_freq)
+  else: 
+    medins_exp_monthly = 0
+    
+  if expense_items_list['medexp_exp'] == True:
+    medexp_exp_monthly = det_monthly_gross(medexp_exp_gross, medexp_exp_gross_freq)
+  else: 
+    medexp_exp_monthly = 0
+    
+  if expense_items_list['other_exp'] == True:
+    other_exp_monthly = det_monthly_gross(other_exp_gross, other_exp_gross_freq)
+  else: 
+    other_exp_monthly = 0
+    
+  if expense_items_list['transpo_exp'] == True:
+    transpo_exp_monthly = det_monthly_gross(transpo_exp_gross, transpo_exp_gross_freq)
+  else: 
+    transpo_exp_monthly = 0
+  
+  total_expenses_gross = transpo_exp_monthly + other_exp_monthly + \
+      medexp_exp_monthly + medins_exp_monthly + autoins_exp_monthly + \
+      lifeins_exp_monthly + cellphone_exp_monthly + homephone_exp_monthly + \
+      heat_exp_monthly + electric_exp_monthly + water_exp_monthly + \
+      prop_ins_exp_monthly + rent_mort_gross_monthly + grocery_exp_monthly + \
+      clothing_exp_monthly
+
+  section_vi2_complete = True 

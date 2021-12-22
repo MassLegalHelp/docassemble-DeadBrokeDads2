@@ -1,0 +1,57 @@
+code: |  
+  hardshipsToSentences = {
+    "groceries": "I cannot pay for groceries.",  "meds": "I cannot pay for medication I need.", "utilities": "I cannot pay my utilities.", "fear-utilities": "My utilities will be shut off.", "lost-utilities": "My utilities have been shut off.", "rent": "I cannot pay rent.", "eviction-fear": "I will be evicted.", "eviction-facing": "I am being evicted.", "mortgage": "I cannot pay my mortgage.", "foreclosure-fear": "My house will be foreclosed on.", "other": "I cannot pay for some other basic need.", "abuse": "I cannot afford to leave an abusive relationship."
+  }
+---
+code: |
+  problemsToSentences = {
+    "knewnot": "This Notice of Delinquency is the first I knew I was behind in child support.", "refund": "DOR took my tax refund.", "garnish": "DOR started taking money out my pay.", "garnish-increase": "DOR is taking more money out of my pay than they should.", "told-me-garnish-increase": "DOR told me the amount of child support I need to pay is going up by 25%.", "told-boss-garnish-increase": "DOR told **my employer** the amount of child support I need to pay is going up by 25%.", "froze-account": "DOR froze my account so I cannot use the money in my bank.", "account": "DOR took money out of my bank account.", "too-much": "DOR took more money out of my bank account than they should have.", "shared-account": "DOR took money out of an account that is not my money.", "driver-license": "DOR took my driver's license.", "car-reg": "DOR suspended my car registration.", "business-license": "DOR took my business license.", "professional-license": "DOR took my professional license.", "trade-license": "DOR took my trade license", "other": "I have another problem with DOR." }
+---
+code: |
+  hardshipsSentences = ""
+  problemsSentences = ""
+  sentences = ""
+  
+  if problems.any_true():
+    for problem in problems.true_values():
+      problemsSentences += problemsToSentences[problem] + "\n"
+  else:
+    problemsSentences = "No problems"
+  
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01a-hardships-to-sentences.yml
+  if help_needed.any_true('cantafford', 'cantsustain'):
+=======
+  if help_needed.any_true('cantaffort', 'cantsustain'):
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01a-hardships-to-sentences.yml
+    if hardships.any_true():
+      for hardship in hardships.true_values():
+        hardshipsSentences += hardshipsToSentences[hardship] + "\n"
+      sentences = problemsSentences + "\n" + hardshipsSentences
+    else:
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-01a-hardships-to-sentences.yml
+      sentences = "No hardships"
+=======
+      sentences = problemsSentences + '\n' + 'No hardships'
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-01a-hardships-to-sentences.yml
+  else:
+    sentences = problemsSentences
+
+  if problems.any_true('driver-license', 'car-reg'):
+    sentences = ', '.join([sentences, comment_car])
+  if problems.any_true('business-license', 'professional-license', 'trade-license'):
+    sentences = ', '.join([sentences, comment_license])
+  
+  # admin_review_comments
+  open_text_paragraph_one_complete = True
+
+---
+id: dbd-01a review and allow to edit actions and hardships comments
+question: |
+  Actions DOR has taken and consequences
+subquestion: |
+  Edit this paragraph to explain how DOR's actions have affected you.
+fields:
+  - no label: admin_review_comments
+    input type: area
+    default: ${ sentences }
+---

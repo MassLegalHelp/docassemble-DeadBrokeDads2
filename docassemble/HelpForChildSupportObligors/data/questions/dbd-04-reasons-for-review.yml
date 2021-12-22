@@ -1,0 +1,403 @@
+objects:
+  - arrears_during_benefits: DAList.using(there_are_any = False)
+  - benefits_dor_took_money: DAObject
+  - your_past_benefits: DADict.using(object_type=DAObject)
+  - your_children_past_benefits: DADict.using(object_type=DAObject)
+---
+code: |
+  if problems['shared-account']:
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-04-reasons-for-review.yml
+    if appointed_guardian or appointed_conservator or rep_payee:
+=======
+    if appointed_guardian or appointed_conservator or rep_payee: 
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-04-reasons-for-review.yml
+      dor_take_ward_account
+    else:
+      unprotected
+
+  benefits_dor_took_money.initializeAttribute("yours", DAList.using(there_are_any=False))
+  benefits_dor_took_money.initializeAttribute("childrens", DAList.using(there_are_any=False))
+    
+  # get a static income list
+  your_true_benefits = your_benefit_list.true_values()
+
+  # only ask about benefits if any listed
+  your_past_benefits.there_are_any = len(your_true_benefits) > 0
+
+  # Set variable to pull out of For loop to find out if client is still getting benefits
+  still_receiving_benefits = False
+
+  # force the start date before asking about children
+  if your_past_benefits.there_are_any:
+    for item in your_true_benefits:
+      benefit = your_past_benefits[item]
+      if benefit.still_receiving:
+        still_receiving_benefits = True
+        # this should not be visible;
+        benefit.end = today()
+      else:
+        benefit.end = benefit.end_date 
+
+  # same as above
+  your_children_true_benefits = your_children_benefit_list.true_values()
+  your_children_past_benefits.there_are_any = len(your_children_true_benefits) > 0
+    
+  if your_children_past_benefits.there_are_any:
+    for item in your_children_true_benefits:
+      benefit = your_children_past_benefits[item]
+      if benefit.still_receiving:
+        # this should not be visible;
+        benefit.end = today()
+      else:
+        benefit.end = benefit.end_date
+        
+    # these parts have to be separate code blocks, otherwise docassemble does some weird stuff (such as duplicating the first list)
+    # benefits_dor_took_money.yours.gathered
+    # benefits_dor_took_money.childrens.gathered
+
+  if len(benefits_dor_took_money.yours) > 0:
+    # if still_receiving_benefits:
+    if problems['account']:
+      dor_took_money_date
+      if not account_same:
+        unexempt_account
+      else:
+        if not benefits_used:
+          unexempt_money
+          
+  reasons_for_review_complete = True
+---
+code: |
+  # ask for every value in true_benefits in a pseudo-loop.
+  # every time this code executes, we add one item to your_past_benefits
+  # from your_true_benefits
+
+  if len(your_past_benefits) < len(your_true_benefits):
+    your_past_benefits.new_item_name = your_true_benefits[len(your_past_benefits)]
+    
+    # say that we expect another field (will ask for necessary fields)
+    your_past_benefits.there_is_another = True      
+  else:
+    # say that no more fields are needed
+    your_past_benefits.there_is_another = False
+---
+code: |
+  if len(your_children_past_benefits) < len(your_children_true_benefits):
+    your_children_past_benefits.new_item_name = your_children_true_benefits[len(your_children_past_benefits)]
+    
+    your_children_past_benefits.there_is_another = True
+  else:
+    your_children_past_benefits.there_is_another = False
+---
+# Admin review: reason 4
+code: |
+  benefits_w_ssi_kid = False
+  if len(your_past_benefits) > 0:
+    if still_receiving_benefits:
+      if len(your_children_past_benefits) > 0:    
+        if your_children_benefit_list['SSI']:
+          if your_children_past_benefits['SSI'].still_receiving:
+            benefits_w_ssi_kid = True
+---
+code: |
+  for item in your_past_benefits:
+    benefit = your_past_benefits[item]
+    
+    # not sure if end date is inclusive (it counts) or exclusive (it doesn't)
+    if benefit.start_date <= dor_took_money_date <= benefit.end:
+     benefits_dor_took_money.yours.append(item)
+  benefits_dor_took_money.yours.gathered = True
+---
+code: |
+  for item in your_children_past_benefits:
+    benefit = your_children_past_benefits[item]
+    
+    # not sure if end date is inclusive (it counts) or exclusive (it doesn't)
+    if benefit.start_date <= dor_took_money_date <= benefit.end:
+      benefits_dor_took_money.childrens.append(item)
+  benefits_dor_took_money.childrens.gathered = True
+---
+code: |
+  for item in your_past_benefits:
+    benefit = your_past_benefits[item]
+    
+    # not sure if end date is inclusive (it counts) or exclusive (it doesn't)
+    if benefit.start_date <= cs_arrears_date <= benefit.end:
+      arrears_during_benefits.append(item)
+  arrears_during_benefits.gathered = True
+
+  # move to 06-form-decisions?
+  if len(arrears_during_benefits) > 0:
+    equit_adjust_a = True
+  else:
+    equit_adjust_a = False
+---
+id: dbd 04 first fell behind date
+question: |
+  When was the first time you fell behind on child support payments?
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-04-reasons-for-review.yml
+subquestion: |
+  Barb - if obligor says they never fell behind, but DCF says they did, should we ask them to find out when DCF thinks they fell behind? This is so obligor can get the bank levy and say DCF took money out of the account or froze it while obligor was getting benefits - we need this question for equitable adjustment. 
+=======
+comment: |
+  subquestion: |
+  TODO(CR): Barb - if obligor says they never fell behind, but DCF says they did, should 
+  we ask them to find out when DCF thinks they fell behind? This is so obligor can get the 
+  bank levy and say DCF took money out of the account or froze it while obligor was 
+  getting benefits - we need this question for equitable adjustment. 
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-04-reasons-for-review.yml
+fields:
+  - no label: cs_arrears_date
+    datatype: date
+    max: ${ today() }
+---
+id: dbd 04 levy shared account
+question: |
+  DOR took money that is not yours
+subquestion: |
+  You said DOR took money out of an account that is not your money.
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-04-reasons-for-review.yml
+  
+=======
+
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-04-reasons-for-review.yml
+  Are you a: 
+  
+    * court-appointed Guardian,
+    * court-appointed Conservator, or 
+    * {Representative Payee}
+  
+  for someone else?
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-04-reasons-for-review.yml
+fields:
+#  - no label: guardian
+#    datatype: checkboxes
+#    choices:
+  - "I am a court appointed guardian for someone else.": appointed_guardian
+    datatype: yesno
+  - "Do you have a copy of the court order that appoints you guardian?": guardian_order
+    datatype: yesnoradio
+    show if:
+      appointed_guardian
+  - "I am a court-appointed conservator for someone else.": appointed_conservator
+    datatype: yesno
+  - "Do you have a copy of the court order that appoints you conservator?": conservator_order
+    datatype: yesnoradio
+    show if:
+      appointed_conservator
+  - "I am a Social Security designated {Representative Payee} for someone else.": rep_payee
+    datatype: yesno
+  - "Do you have a notice from SSA that shows you are the Representative Payee?": rep_payee_notice
+    datatype: yesnoradio
+    show if:
+=======
+
+fields:
+  - "I am a court appointed guardian for someone else.": appointed_guardian
+    datatype: yesno
+  - "Do you have a copy of the court order that appoints you guardian?": guardian_order
+    datatype: yesnoradio
+    show if:
+      appointed_guardian
+  - "I am a court-appointed conservator for someone else.": appointed_conservator
+    datatype: yesno
+  - "Do you have a copy of the court order that appoints you conservator?": conservator_order
+    datatype: yesnoradio
+    show if:
+      appointed_conservator
+  - "I am a Social Security designated {Representative Payee} for someone else.": rep_payee
+    datatype: yesno
+  - "Do you have a notice from SSA that shows you are the Representative Payee?": rep_payee_notice
+    datatype: yesnoradio
+    show if:
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-04-reasons-for-review.yml
+      rep_payee
+terms:
+  Representative Payee: |
+    Sometimes a person who gets money from Social Security needs help managing their money.  The person who helps is called a Representative Payee.  The Social Security Administration (SSA) gives the beneficiary's money to the Rep Payee so the payee can spend it to pay for the beneficiary's needs. The payee keeps the money in a bank account for or with the beneficiary. The money is not kept in the payee's own account.
+---
+id: dbd 04 proof of guardianship 
+question: |
+  Did DOR take money from the bank account you use to keep this other person's money?
+fields:
+  - no label: dor_take_ward_account
+    datatype: yesnoradio
+  - Did the money DOR take belong to this other person?: dor_take_ward_money
+    datatype: yesnoradio
+    show if: dor_take_ward_account
+---
+code: |
+  if problems['shared-account']:
+    if appointed_guardian or appointed_conservator or rep_payee:
+      if not dor_take_ward_account:
+        dor_take_ward_money = False
+        levy_not_mine = False
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-04-reasons-for-review.yml
+      else:   
+        levy_not_mine = dor_take_ward_money  
+=======
+      else:
+        levy_not_mine = dor_take_ward_money
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-04-reasons-for-review.yml
+    else:
+      dor_take_ward_money = False
+      levy_not_mine = False
+  else:
+    dor_take_ward_money = False
+    levy_not_mine = False
+# depends on:
+#   - problems
+#   - guardian
+#   - keep_ward_money
+#   - dor_take_ward_account
+#   - dor_take_ward_money
+---
+id: dbd 04 unprotected account
+question: |
+  A joint account is not protected
+subquestion: |
+  If you share a bank account with someone else and you cannot show that you
+  are a guardian or conservator, DOR can take money from the account. DOR can
+  take that money even if it belongs to someone else.
+field: unprotected
+---
+id: dbd 04 benefits
+question: |
+  Did you ever get any of these benefits?
+fields:
+  - no label: your_benefit_list
+    datatype: checkboxes
+    choices:
+      - SSI
+      - TAFDC
+      - EAEDC
+      - State Veterans Benefits
+---
+id: dbd 04 benefits dates
+question: |
+  When did you get ${ i }?
+fields:
+  - When did your ${ i } start?: your_past_benefits[i].start_date
+    datatype: date
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-04-reasons-for-review.yml
+  - note: If you do not know when your ${ i } began, give us your best estimate. 
+=======
+    note: If you do not know when your ${ i } began, give us your best estimate.
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-04-reasons-for-review.yml
+  - Do you still get ${ i }?: your_past_benefits[i].still_receiving
+    datatype: yesnoradio
+  - When did your ${ i } end?: your_past_benefits[i].end_date
+    datatype: date
+    max: ${ today() }
+    js show if: |
+      val("your_past_benefits[i].still_receiving") === false
+validation code: |
+  if your_past_benefits[i].start_date > today():
+    validation_error("Start date cannot be in the future")
+    
+  if not your_past_benefits[i].still_receiving and your_past_benefits[i].start_date > your_past_benefits[i].end_date:
+    validation_error("Benefit end date should be after start date")
+---
+id: dbd 04 child benefits
+question: |
+  Did your ${child_te} ever get any of these benefits?
+fields:
+  - no label: your_children_benefit_list
+    datatype: checkboxes
+    choices:
+      - SSI
+      - TAFDC
+      - EAEDC
+---
+id: dbd 04 child benefits dates
+question: |
+  When did your ${child_te} get ${ i }?
+fields:
+  - When did your ${child_te}'s ${ i } start?: your_children_past_benefits[i].start_date
+    datatype: date
+  - note: "If you do not know when your ${child_te}'s ${ i } began, give us your best estimate." 
+  - Do they still get ${ i }?: your_children_past_benefits[i].still_receiving
+    datatype: yesnoradio
+  - When did their ${ i } end?: your_children_past_benefits[i].end_date
+    datatype: date
+    js show if: |
+      val("your_children_past_benefits[i].still_receiving") === false
+validation code: |
+  if your_children_past_benefits[i].start_date > today():
+    validation_error("Start date cannot be in the future")
+
+  if not your_children_past_benefits[i].still_receiving and your_children_past_benefits[i].start_date > your_children_past_benefits[i].end_date:
+    validation_error("Benefit end date should be after start date")
+
+---
+# id: dbd 04 levy date
+# question: |
+#   When did they take it?
+# subquestion: |
+#   When did DOR take the money of your account?
+# fields:
+#   - Date: dor_took_money_date
+#     datatype: date
+# validation code: |
+#   if dor_took_money_date > today():
+#     validation_error("This date cannot be in the future.")
+# ---
+id: dbd 04 benefits account
+comment: |
+  TODO(CR) had asked, How can our users actually answer this question? 
+    And what if the answer is no?
+  Barb says 10/07/2020 Ask instead, Is most of the money in this account
+  from your benefits? And also, Do have any income other than your benefits?
+
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-04-reasons-for-review.yml
+  # cs_arrears_date is ${ cs_arrears_date }
+
+  {% if dor_take_ward_money %}
+  
+  * ${dor_take_ward_money}
+  
+  [X]{% else %}[  ]{% endif %}  DOR took money from my bank account 
+=======
+  TODO(brycew): this was displayed as written below the subquestion.
+  Does the user need this info to fill out this question?
+  
+  cs_arrears_date is ${ cs_arrears_date }
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-04-reasons-for-review.yml
+
+  dor_took_money_date is ${ dor_took_money_date }
+
+  # equit_adjust_a is ${equit_adjust_a}
+
+  % for item in your_past_benefits:
+    ${ item } : ${ your_past_benefits[item].start_date } --  ${ your_past_benefits[item].end }<br>
+  % endfor
+
+  And what is the value of benefits_w_ssi_kid? ${ benefits_w_ssi_kid }
+question: |
+  DOR is taking money from your bank account
+subquestion: |
+  Did DOR take money from the **same account** your ${ your_past_benefits } benefits are deposited into?
+fields:
+  - no label: account_same
+    datatype: radio
+    choices:
+      - Yes: True
+      - No: False
+  - Did most of the money in this account come from your benefits?: benefits_used
+    show if: account_same
+    datatype: yesnoradio
+---
+id: dbd 04 unexempt account
+question: |
+  DOR took money out of a different bank account
+subquestion: |
+  What if DOR took money out of my account and it's neither a guardian/conservator account, nor the account I put my benefits into?
+field: unexempt_account
+---
+id: dbd 04 unexempt money
+question: |
+  DOR took non-benefit money out of my bank account
+subquestion: |
+  What if DOR took money out of the account my benefits go into, but it wasn't my benefit money?
+field: unexempt_money
+---

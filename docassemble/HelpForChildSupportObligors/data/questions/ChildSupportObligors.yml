@@ -1,0 +1,197 @@
+metadata:
+  title: |
+    Help with DOR collecting back child support
+  short title: |
+    Help with Child Support Arrears
+  description: |
+    An interview to help parents when DOR/CSE is collecting past due child support 
+  authors:
+    - name: Caroline Robinson
+      organization: Volunteer Lawyers Project
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/ChildSupportObligors.yml
+  revision_date: 2021-03-28
+=======
+    - name: Bryce Willey
+  revision_date: 2021-6-11
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/ChildSupportObligors.yml
+---
+default screen parts:
+  under: |
+    Feedback, suggestions, or comments? [Complete this survey](${ interview_url(i=user_info().package + ":feedback.yml", github_repo="docassemble-deadbrokedads", github_user='carorob', variable=user_info().variable, question_id=user_info().question_id, local=False,reset=1)} ){:target="_blank"}.
+  pre: |
+    % if get_config('debug'):
+    `Page id: ${ user_info().question_id }`
+    % endif
+---
+sections:
+  - Introduction
+  - About Your Situation
+  - Notice of Child Support Delinquency
+  - Mismatched Information
+  - Financial Condition:
+    - Personal Information
+    - Household Information
+    - Employment Information
+    - Assets
+    - Liabilities
+    - Income and Expenses
+  - Conclusion
+---
+features:
+  navigation: True
+  progress bar: True
+  question help button: True
+  css: dbd-styles.css
+---
+modules:
+  - docassemble.income
+  - .DBDIncome
+  - docassemble.ssa.ssa
+---
+objects:
+  - client: Individual
+  - other_parent: Individual
+  - dor_other_parent: Individual
+  - macourts: MACourtList.using(courts=['probate_and_family_courts'])
+  - benefits_dor_took_money: DAObject
+  - your_past_benefits: DADict.using(object_type=DAObject)
+  - your_children_past_benefits: DADict.using(object_type=DAObject)
+---
+images:
+  notice: Notice of Arrears.png
+  noticetop: DBD_NoticeTop.png
+  one: one.png
+  two: two.png
+  three: three.png
+  four: four.png
+  five: five.png
+---
+terms:
+  notice: |
+     [FILE Notice_of_Arrears.png]
+  noticetop: |
+      [FILE DBD_NoticeTop.png]
+---
+default screen parts:
+  continue button label: |
+    Next
+---
+include:
+  - dbd-01-intro.yml
+  - dbd-01a-hardships-to-sentences.yml
+  - dbd-02-compare.yml
+  - dbd-03-reasons-for-error.yml
+  - dbd-04-reasons-for-review.yml
+  - dbd-05-other-considerations.yml
+  - dbd-06-form-decisions.yml
+  - dbd-07-shared-form-info.yml
+  - dbdx.yml
+---
+mandatory: True
+code: |
+  intro_complete
+  comparison_complete
+  # if user thinks DOR/CSE is wrong, or user isn't sure if arrears amount is correct
+<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/ChildSupportObligors.yml
+  # if dor_cse_notice_arrears_wrong or dor_cse_notice_arrears_wrong == None:
+  # possibilities_complete duplicates many of equit adjust questions in other considerations which we could ask then turn into admin review comments if not eligible for equitable adjustment. Also this has a number of questions we could use in instructions about modifications - let's cherry pick certain questions from this list. 
+  #   possibilities_complete
+  reasons_for_review_complete
+  # if cs_arrears_mc.any_true('Yes', 'I am not sure'):
+  if cs_arrears_mc == "Yes" or cs_arrears_mc == 'I am not sure':
+    other_considerations_complete
+  # admin_review = True
+  # equit_adjust = True
+  
+=======
+
+  # NOTE(CR): possibilities_complete duplicates many of equit adjust questions in
+  # other considerations which we could ask then turn into admin review comments if 
+  # not eligible for equitable adjustment. Also this has a number of questions we 
+  # could use in instructions about modifications - let's cherry pick certain questions from this list.
+  # if dor_cse_notice_arrears_wrong or dor_cse_notice_arrears_wrong == None:
+  #  possibilities_complete
+  reasons_for_review_complete
+  if cs_arrears_mc == "Yes" or cs_arrears_mc == "I am not sure":
+    other_considerations_complete
+>>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/ChildSupportObligors.yml
+  
+  form_decisions_complete
+  if finance_statement:
+    # Defines client+spouse household, assets, incomes, vehicles, expenses
+    sofc_complete
+
+  shared_form_info_complete
+  get_forms
+---
+attachment:
+  name: Help for Obligors
+  docx template file: help-for-obligors.docx
+  variable name: cover_page
+  filename: help-for-parents
+---
+attachment:
+  name: Administrative Review
+  docx template file: administrative_review.docx
+  variable name: administrative_review
+  filename: administrative_review
+---
+attachment:
+  name: Equitable Adjustment
+  docx template file: equitable-adjustment.docx
+  variable name: equitable_adjustment
+  filename: equitable-adjustment
+---
+attachment:
+  name: Statement of Financial Condition
+  docx template file: sofc8.docx
+  variable name: sofc
+  filename: statement-of-financial-condition
+---
+# Maybe need to switch to reconsider
+# if this triggers unneeded screens. Experiment
+reconsider:
+#   - cover_page
+#   - administrative_review
+#   - equitable_adjustment
+  - admin_review
+  - equit_adjust
+  - finance_statement
+
+code: |
+  file_bundle_temp = [cover_page]
+
+  if admin_review:
+    file_bundle_temp.append(administrative_review)  
+  if equit_adjust:
+    file_bundle_temp.append(equitable_adjustment)
+  if finance_statement:
+    file_bundle_temp.append(sofc)
+
+  file_bundle_pdf = pdf_concatenate( file_bundle_temp, filename="help_for_obligor_parents.pdf")
+  # Each attachment variable has an attribute .pdf/.docx representing
+  # the pdf/docx versions of the file, respectively
+  file_bundle_zip = zip_file([item.docx for item in file_bundle_temp], filename="help_for_obligor_parents.zip") 
+
+---
+id: base yml download screen
+comment: |
+  get as zip file  
+  [:file-archive: Download as zip](${ file_bundle_zip.url_for()} )
+question: |
+  Your forms are ready!
+attachment:
+  - name: Help for Child Support obligor parents
+    file name: help_for_obligor_parents
+    description: Your forms for DOR
+    content: |
+      ${ file_bundle_pdf }
+#  docx template file: admin_review_page2_2.docx
+#  docx template file: help_for_obligors-test4.docx
+    valid formats:
+      - pdf
+    tagged pdf: True
+include download tab: False
+always include editable files: False
+event: get_forms
+---

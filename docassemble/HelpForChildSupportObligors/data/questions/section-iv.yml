@@ -1,0 +1,531 @@
+---
+code: |
+  nav.set_section('Assets')
+  if hasvehicles == True:
+    vehicles.there_are_any = True
+    vehicles.new_item_name = len(vehicles)
+  else: 
+    vehicles.there_are_any = False
+  
+  has_safe_deposit_box
+  cash_on_hand
+
+  if hasprop == True:
+    realprop.there_are_any = True
+    realprop.new_item_name = len(realprop)
+  else: 
+    realprop.there_are_any = False
+    if client.address.type == 'Rent':
+      foreclosure_yesno = 'N/A'
+  foreclosure_yesno
+  
+  if hasbank == True:
+    bankact.there_are_any = True
+    bankact.new_item_name = len(bankact)
+  else: 
+    bankact.there_are_any = False
+  
+  if hasretirement == True:
+    retirement_acts.there_are_any = True
+    retirement_acts.new_item_name = len(retirement_acts)
+  else: 
+   retirement_acts.there_are_any = False
+
+  if hassecurities == True:
+    securities.there_are_any = True
+    securities.new_item_name = len(securities)
+  else: 
+    securities.there_are_any = False
+
+  what_i_have
+  anyone_else_hold_assets
+  party_to_lawsuit
+  any_insurance_claim
+  any_inheritance_likely
+  bankruptcy_case_pending
+
+  section_iv_complete = True
+---
+id: have vehicles
+question: |
+  Do you own or lease any vehicles?
+yesno: hasvehicles
+---
+comment: |
+  NOTE(brycew): new_item_name needs to be set on each new addition,
+  but we don't really care what it is. So we have one code block for each
+  DADict
+code: |
+  ind_household.new_item_name = len(ind_household)
+---
+code: |
+  vehicles.new_item_name = len(vehicles)
+---
+code: |
+  realprop.new_item_name = len(realprop)
+---
+code: |
+  bankact.new_item_name = len(bankact)
+---
+code: |
+  retirement_acts.new_item_name = len(retirement_acts)
+---
+code: |
+  securities.new_item_name = len(securities)
+---
+code: |
+  credit_cards.new_item_name = len(credit_cards)
+---
+id: vehicle info
+question: |
+  Please complete the following about the ${ ordinal(i) } vehicle:
+fields:
+  - Description: vehicles[i].description
+    choices: 
+      - Automobile
+      - Motorcycle
+      - Motorhome
+      - Camper
+      - Boat / Watercraft
+      - Trailer
+      - Snowmobile / ATV
+      - Golf Cart
+  - Make: vehicles[i].make
+    hide if: 
+      variable: 
+        vehicles[i].description
+      is:
+        'Automobile'   
+  - Make: vehicles[i].make
+    show if: 
+      variable: 
+        vehicles[i].description
+      is:
+        'Automobile'
+    choices: 
+      - Acura
+      - Audi
+      - BMW
+      - Chevrolet
+      - Chrysler
+      - Dodge
+      - Ford
+      - GM
+      - Honda
+      - Hyundai
+      - Izuzu
+      - Mercedes
+      - Nissan
+      - Subaru
+      - Tesla
+      - Toyota
+      - Volkswagon
+      - Other: 'Other:'
+  - Model: vehicles[i].model
+  - Year: vehicles[i].year
+  - Own or Lease?: vehicles[i].own_lease
+    choices: 
+      - Own
+      - Lease
+  - License Plate Number: vehicles[i].license_plate
+    required: False
+  - Current Value: vehicles[i].current_value
+    datatype: currency
+    required: False 
+  - Amount Owed on Loan: vehicles[i].amt_owed
+    required: False
+    datatype: currency
+    min: 0
+---
+id: add vehicle
+question: |
+  Would you like to add another vehicle?
+subquestion: |
+  So far you have added these vehicles: 
+  
+  Description   |Make   |Model  |Year  |Own or Lease  |Plate Number  |Current Value  |Amount Owed
+  --------------|-------|-------|------|--------------|--------------|---------------|-------------
+  % for veh in vehicles:
+  ${ vehicles.item(veh).description } | ${ vehicles.item(veh).make } | ${ vehicles.item(veh).model } | ${ vehicles.item(veh).year } | ${ vehicles.item(veh).own_lease } | ${ vehicles.item(veh).license_plate } | ${ vehicles.item(veh).current_value } | ${ vehicles.item(veh).amt_owed }
+  % endfor  
+  
+yesno: vehicles.there_is_another
+---
+id: has safedeposit
+question: |
+  Do you rent a safe deposit box?
+fields: 
+  - no label: has_safe_deposit_box
+    datatype: radio
+    choices: 
+      - Yes
+      - No
+  - Location of safe deposit box: safe_deposit_location
+    required: false
+    show if: 
+      variable: 
+        has_safe_deposit_box
+      is: 
+        'Yes'
+  - Safe deposit box number: safe_deposit_number
+    required: false
+    show if: 
+      variable: 
+        has_safe_deposit_box
+      is: 
+        'Yes'
+  - Contents of safe deposit box: safe_deposit_contents
+    required: false
+    show if: 
+      variable: 
+        has_safe_deposit_box
+      is: 
+        'Yes'  
+---
+id: cash on hand
+question: |
+  How much cash do you currently have on-hand?
+fields:
+  - no label: cash_on_hand
+    datatype: currency
+---
+id: real property
+question: |
+  Do you own or have any interest in any real property?
+yesno: hasprop
+---
+id: real property info
+question: |
+  Please complete the following about the ${ ordinal(i) } piece of real property:
+fields:
+  - Description: realprop[i].description
+    required: False
+  - Street address: realprop[i].address
+  - City: realprop[i].city
+  - State: realprop[i].state
+    code: 
+      states_list()
+  - Zip code: realprop[i].zip
+  - Current market value: realprop[i].current_value
+    datatype: currency
+  - Amount owed on mortgage: realprop[i].amt_owed
+    required: False
+    datatype: currency
+    min: 0
+  - Amount of equity in property: realprop[i].equity
+    required: False
+    datatype: currency
+---
+id: add real property
+question: |
+  Would you like to add another piece of real property?
+subquestion: |
+  So far you have added these properties: 
+  
+  Description   |Address   |City  |State  |Zip  |Current Value |Amount Owed  |Equity
+  --------------|----------|------|-------|-----|--------------|-------------|-------
+  % for pro in realprop:
+  ${ realprop.item(pro).description } | ${ realprop.item(pro).address } | ${ realprop.item(pro).city } | ${ realprop.item(pro).state } | ${ realprop.item(pro).zip } | ${ realprop.item(pro).current_value } | ${ realprop.item(pro).amt_owed } | ${ realprop.item(pro).equity }
+  % endfor  
+yesno: realprop.there_is_another
+---
+id: foreclosure info
+question: |
+  Is a foreclosure proceeding pending on any real estate that you own or 
+  have an interest in?
+fields: 
+  - no label: foreclosure_yesno
+    choices:
+      - Yes
+      - No
+---
+id: bank accounts
+question: |
+  Do you have any bank accounts?
+subquestion: |
+  Please answer yes if you have any savings, checking, certificates of deposit, or 
+  money market accounts. 
+yesno: hasbank
+---
+id: bank account info
+question: |
+  Please complete the following about the ${ ordinal(i) } bank account:
+fields:
+  - Name of Institution: bankact[i].bank_name
+  - Account Number: bankact[i].act_number
+  - Type of Account: bankact[i].act_type
+  - Current Balance: bankact[i].balance
+    datatype: currency
+   
+---
+id: add bank account
+question: |
+  Would you like to add another bank account?
+subquestion: |
+  So far you have added these bank accounts: 
+  
+  Institution   |Account Number   |Type   |Balance  
+  --------------|-----------------|-------|-------
+  % for ba in bankact:
+  ${ bankact.item(ba).bank_name } | ${ bankact.item(ba).act_number } | ${ bankact.item(ba).act_type } | ${ bankact.item(ba).balance } 
+  % endfor  
+yesno: bankact.there_is_another
+---
+id: retirement accounts
+question: |
+  Do you have any retirement accounts?
+subquestion: |
+  This includes any 401k's, IRA's, Roth IRA's, pensions, or Keogh accounts. 
+yesno: hasretirement
+
+---
+id: retirement account info
+question: |
+  Please complete the following about the ${ ordinal(i) } retirement account:
+fields:
+  - Name of Institution: retirement_acts[i].name
+  - Account Number: retirement_acts[i].act_number
+  - Type of Account: retirement_acts[i].act_type
+  - Current Balance: retirement_acts[i].balance
+    datatype: currency
+   
+---
+id: add retirement account
+question: |
+  Would you like to add another retirement account?
+subquestion: |
+  So far you have added these retirement accounts: 
+  
+  Institution   |Account Number   |Type   |Balance  
+  --------------|-----------------|-------|-------
+  % for ba in retirement_acts:
+  ${ retirement_acts.item(ba).name } | ${ retirement_acts.item(ba).act_number } | ${ retirement_acts.item(ba).act_type } | ${ retirement_acts.item(ba).balance } 
+  % endfor  
+yesno: retirement_acts.there_is_another
+---
+id: securities
+question: |
+  Do you have any securities such as mutual funds, stocks, or shares in companies?
+yesno: hassecurities
+ 
+---
+id: security info
+question: |
+  Please complete the following about the ${ ordinal(i) } security:
+fields:
+  - Type: securities[i].type
+  - Issuer: securities[i].issuer
+  - Quantity: securities[i].quant
+  - Current Value: securities[i].cur_val
+    datatype: currency
+   
+---
+id: add security
+question: |
+  Would you like to add another security?
+subquestion: |
+  So far you have added these securities: 
+  
+  Type   |Issuer   |Quantity   |Current Value
+  -------|---------|-----------|-------
+  % for se in securities:
+  ${ securities.item(se).type } | ${ securities.item(se).issuer } | ${ securities.item(se).quant } | ${ securities.item(se).cur_val } 
+  % endfor    
+yesno: securities.there_is_another
+---
+id: assets amounts
+question: |
+  If you have any of the types of assets listed below please fill 
+  in the current amount or value: 
+fields: 
+  - no label: what_i_have
+    datatype: checkboxes 
+    none of the above: none
+    choices: 
+      - Notes Receivable
+      - Judgments or Settlements
+      - Life Insurance Cash Value
+      - Collectibles
+      - Furniture or Household Furnishings
+      - Something not listed
+  - Notes receivable: notes_receivable
+    required: False
+    datatype: currency
+    show if: 
+      variable: 
+        what_i_have['Notes Receivable']
+      is: 
+        True
+  - Value of all judgements or settlements: judg_settle
+    required: False
+    datatype: currency
+    show if: 
+      variable: 
+        what_i_have['Judgments or Settlements']
+      is: 
+        True    
+  - Life insurance cash value: life_ins
+    required: False
+    datatype: currency
+    show if: 
+      variable: 
+        what_i_have['Life Insurance Cash Value']
+      is: 
+        True  
+  - Value of collectibles: collects
+    required: False
+    datatype: currency
+    min: 0
+    show if: 
+      variable: 
+        what_i_have['Collectibles']
+      is: 
+        True  
+  - Furniture or Furnishings Value: furnishings
+    required: False
+    datatype: currency
+    min: 0
+    show if: 
+      variable: 
+        what_i_have['Furniture or Household Furnishings']
+      is: 
+        True 
+  - What type of asset do you have?: other_specify
+    required: False
+    show if: 
+      variable: 
+        what_i_have['Something not listed']
+      is: 
+        True
+  - The asset's value: other_value
+    required: False
+    datatype: currency
+    show if: 
+      variable: 
+        what_i_have['Something not listed']
+      is: 
+        True
+---
+id: anyone holding assets
+question: |
+  Is anyone holding any assets for you on your behalf?
+fields: 
+  - no label: anyone_else_hold_assets
+    datatype: radio
+    choices: 
+      - Yes
+      - No
+  - no label: anyone_else_hold_assets_describe
+    datatype: area
+    show if: 
+      variable: 
+        anyone_else_hold_assets
+      is: 
+        'Yes'      
+  - note: Please describe as much as you can about these assets, including their estimated values. 
+    show if: 
+      variable: 
+        anyone_else_hold_assets
+      is: 
+        'Yes'
+---
+id: party to lawsuit
+question: |
+  Are you a party to a lawsuit now pending?
+fields: 
+  - no label: party_to_lawsuit
+    datatype: radio
+    choices: 
+      - Yes
+      - No     
+  - no label: party_to_lawsuit_describe
+    datatype: area
+    show if: 
+      variable: 
+        party_to_lawsuit
+      is: 
+        'Yes'
+  - note: Please describe as much as you can about the lawsuit, including what kind of case it is (divorce, auto accident, etc.) and whether you expect to receive any money as a result of the lawsuit.
+    show if: 
+      variable: 
+        party_to_lawsuit
+      is: 
+        'Yes'
+---
+id: insurance claim
+question: |
+  Do you have any type of insurance claim pending?
+fields: 
+  - no label: any_insurance_claim
+    datatype: radio
+    choices: 
+      - Yes
+      - No
+  - no label: any_insurance_claim_describe
+    datatype: area
+    show if: 
+      variable: 
+        any_insurance_claim
+      is: 
+        'Yes'
+  - note: Please describe as much as you can about the insurance claim, including what amount of money you expect to receive.
+    show if: 
+      variable: 
+        any_insurance_claim
+      is: 
+        'Yes'
+---
+id: inheritance likely
+question: |
+  Is there any likelihood you will receive an inheritance in the next five years?
+fields: 
+  - no label: any_inheritance_likely
+    datatype: radio
+    choices: 
+      - Yes
+      - No
+  - From whom do you expect to receive this inheritance?: any_inheritance_likely_from_who
+    show if: 
+      variable: 
+        any_inheritance_likely
+      is: 
+        'Yes'
+  - no label: any_inheritance_likely_describe
+    datatype: area
+    show if: 
+      variable: 
+        any_inheritance_likely
+      is: 
+        'Yes'        
+  - note: Please describe this inheritance, including any amounts you expect to receive. 
+    show if: 
+      variable: 
+        any_inheritance_likely
+      is: 
+        'Yes'
+---
+id: bankruptcy
+question: |
+  Do you have a pending bankruptcy case in U.S. Bankruptcy Court?
+fields: 
+  - no label: bankruptcy_case_pending
+    datatype: radio
+    choices: 
+      - Yes
+      - No
+  - What type of bankruptcy?: bankruptcy_type
+    show if: 
+      variable: 
+        bankruptcy_case_pending
+      is: 
+        "Yes"
+    choices: 
+      - Chapter 13
+      - Chapter 7
+  - What is the case number: bankruptcy_case_no
+    show if: 
+      variable: 
+        bankruptcy_case_pending
+      is: 
+        "Yes"
+---
