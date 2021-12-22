@@ -88,16 +88,6 @@ question: |
 subquestion: |
   Please answer yes if you have any credit cards such as a Visa, Mastercard, or Discover card. 
 yesno: has_credit_cards
-
----
-code: |
-  if has_credit_cards == True:
-    credit_cards.there_are_any=True
-    credit_cards.new_item_name = len(credit_cards)
-  else: 
-    credit_cards.there_are_any=False
-    
-  section_v_complete = True
 ---
 id: credit card info
 question: |
@@ -109,11 +99,31 @@ fields:
     datatype: currency
   - Credit limit: credit_cards[i].credit_limit
     datatype: currency
+    min: 0
   - Total amount owed: credit_cards[i].total_amt_owed
-    datatype: currency   
+    datatype: currency
+    min: 0
 ---
 id: add credit card
 question: |
   Would you like to add another credit card?
+subquestion: |
+  So far you have added these credit cards:
+  
+  Institution | Account Number | Monthly Payment | Credit Limit | Total Amount Owed
+  ------------|----------------|-----------------|--------------|----
+  % for c in credit_cards.values():
+  ${ c.issuer } | ${ c.account_no } | ${ c.monthly_payment } | ${ c.credit_limit } | ${ c.total_amt_owed}
+  % endfor
 yesno: credit_cards.there_is_another
 ---
+code: |
+  nav.set_section('Liabilities')
+  if has_credit_cards == True:
+    credit_cards.there_are_any=True
+    credit_cards.new_item_name = len(credit_cards)
+  else: 
+    credit_cards.there_are_any=False
+  liability_checklist
+    
+  section_v_complete = True

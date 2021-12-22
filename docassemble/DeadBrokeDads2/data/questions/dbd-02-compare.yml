@@ -4,21 +4,22 @@ code: |
     dor_cse_notice_court = other_cs_court
   penalty = arrears_state - arrears_federal
   # {{showifdef('variable')}} or {if defined('variable') in jinja see quinten's dm in Slack 2020-02-24 for one more option
-  do_not_owe_any = False
+
   if dor_cse_notice_arrears_wrong or dor_cse_notice_arrears_wrong == None:
     if cs_arrears_mc =='Yes':
-      cs_arrears_situ
+      cs_arrears_situation
       cs_arrears_date
       cs_arrears_catch_up
       court_ordered_cs
     elif cs_arrears_mc == 'No':
-      if documentation:
-        do_not_owe_any = True
-      else:
+      if not documentation:
         more_info_needed
+    else:
+      printout_looks_right
   else:
     dor_cse_notice_arrears_true = True
     cs_arrears_date
+  do_not_owe_any
     
   comparison_complete = True
 ---
@@ -45,6 +46,7 @@ subquestion: |
 fields:
   - no label: child_number
     datatype: integer
+    min: 1
 ---
 code: |
   if child_number > 1:
@@ -56,39 +58,43 @@ id: dbd 02 - notice
 question: |
   What does the Notice of Delinquent Child Support from DOR/CSE say?
 subquestion: |
-  These notices can be confusing. 
+  These notices can be confusing. The notice should look something like this:
   
-  The amount under ${other_parent.name.first}'s name,  is supposed to be your regular child support payment.
+  [FILE DBD_NoticeTop.png, 100%]
+  
+  The amount under ${other_parent.name.first}'s name (3),  is supposed to be your regular child support payment.
 
-  In the middle is how often you are supposed to pay child support.
+  In the middle (4) is how often you are supposed to pay child support.
 
-  The amount on the right is the amount of back child support that DOR CSE says you owe. This amount also includes any interest and penalties DOR CSE is charging you.
+  The amount on the right (5) is the amount of back child support that DOR CSE says you owe. This amount also includes any interest and penalties DOR CSE is charging you.
   
   What does DOR/CSE say these are?
-  The notice should look something like this:
-  [FILE DBD_NoticeTop.png]
 fields:
-  - 1. What is the date?: notice_date_delinquency
+  - ":one: What is the date?": notice_date_delinquency
     datatype: date 
-  - 2. Is the custodial parent's name **${other_parent.name}**?: other_parent_wrong
+  - ":two: Is the custodial parent's name **${other_parent.name}**?": other_parent_wrong
     datatype: noyesradio
-  - 2. What is custodial parent's first name?: dor_other_parent.name.first
+  - note: "What is the custodial parent's name?"
     show if: other_parent_wrong
-  - 2. What is custodial parent's middle name?: dor_other_parent.name.middle
+  - ":two: Their first name?": dor_other_parent.name.first
+    show if: other_parent_wrong
+  - ":two: Their middle name?": dor_other_parent.name.middle
     required: False
     show if: other_parent_wrong
-  - 2. What is custodial parent's last name?: dor_other_parent.name.last
+  - ":two: Their last name?": dor_other_parent.name.last
     show if: other_parent_wrong
-  - What name does it give for the court?: dor_cse_notice_court
+  - ":two: What name does it give for the court?": dor_cse_notice_court
     datatype: dropdown
     code: pf_courts 
-  - 3. What does it say you "owe" $$$?: dor_cse_notice_amount
+  - ":three: What does it say you 'owe' $$$?": dor_cse_notice_amount
     datatype: currency
-  - 4. What does it say the frequency is?: dor_cse_notice_frequency
+    help: |
+      If there is only a blank space after $$$, or it says $0.00, DOR/CSE thinks your child support order has ended and you only owe past due child support.
+  - ":four: What does it say the frequency is?": dor_cse_notice_frequency
     datatype: number
     code: |
       period_list()
-  - 5. Total past due child support?: dor_cse_notice_arrears
+  - ":five: Total past due child support?": dor_cse_notice_arrears
     datatype: currency
     min: 0
 validation code: |
@@ -114,8 +120,10 @@ subquestion: |
 fields:
   - What is the State Amount?: arrears_state
     datatype: currency 
+    min: 0
   - What is the Federal Amount?: arrears_federal
     datatype: currency 
+    min: 0
 ---
 id: dbd 02 - is notice right
 question: |
@@ -137,19 +145,20 @@ fields:
   - Does the court order say you must pay  ${dbd_period_string(dor_cse_notice_frequency)} : dor_cse_notice_frequency_wrong
     datatype: noyesradio   
   - How often does your order say you must pay child support?: cs_frequency
-    datatype: number
     code: |
       period_list()
     show if: dor_cse_notice_frequency_wrong
   - Do you owe ${currency(dor_cse_notice_arrears)} in back child support? : dor_cse_notice_arrears_wrong
     datatype: noyesmaybe
-  - note: Note on arrears amount. If you do owe back child support, this amount may be different from your calculation because it includes ${currency(arrears_state)} penalties and interest on top of any back child support you owe.
+    help: |
+      Note on arrears amount. If you do owe back child support, this amount may be different from your calculation because it
+      includes ${currency(arrears_state)} penalties and interest on top of any back child support you owe.
 ---
 id: dbd 02 - ever pay late?
 question: |
   Did you ever pay late?
 subquestion: |
-  Have you ever fallen behind on child support payments?
+  Did you ever fall behind on child support payments?
 field: cs_arrears_mc
 choices:
   - Yes
@@ -183,7 +192,8 @@ subquestion: |
   
   If you think there is something wrong with the Court order(s) itself, and not DOR, you may need to file something with the Court instead of talking to DOR.
   
-  CR: Should we send people to MassLegalHelp Changing a child support order?
+comment: |
+  TODO(CR) Should we send people to MassLegalHelp Changing a child support order?
 ---
 id: dbd 02 - your situation
 question: |
@@ -191,7 +201,7 @@ question: |
 subquestion: |
   I fell behind because ...
 fields:
-  - no label: cs_arrears_situ
+  - no label: cs_arrears_situation
     input type: radio
     choices:
       - I only made partial payments: partial
@@ -204,6 +214,7 @@ question: |
 fields:
   - no label: cs_arrears_date
     datatype: date
+    max: ${ today() }
 ---
 id: dbd 02 - catch up
 question: |
@@ -229,16 +240,35 @@ fields:
       period_list() 
 ---
 code: |
-  if not cs_arrears_catch_up:
-    if cs_arrears_situ == 'nothing':
-    
-    # calculate the number of weeks between date client fell behind and today. Then multiply their weekly child support order by the number of weeks they are behind.
-      weekly_cs_amount = (court_ordered_cs * court_ordered_frequency)/52
-      arrears_correct_value = round((int(date_difference(starting=cs_arrears_date, ending=today()).weeks))*(weekly_cs_amount),2)
-
-  if arrears_correct_value > 0:
-    arrears_correct = '$' + str(arrears_correct_value)
-  else:
-    arrears_correct = 'I am not sure'
+  if cs_arrears_mc == 'No':
+    do_not_owe_any = True
+  elif cs_arrears_mc == 'I am not sure':        
+    do_not_owe_any = False
+  else:        
+    if not cs_arrears_catch_up:        
+      do_not_owe_any = False
+    else:
+      do_not_owe_any = True
 ---
+code: |
+  if cs_arrears_mc == 'No':
+    arrears_correct = '0.00'
+  elif cs_arrears_mc == 'I am not sure':        
+    arrears_correct = ''
+  else:        
+    if not cs_arrears_catch_up: 
+      if cs_arrears_situation == 'nothing':
+          arrears_correct = '$' + str(arrears_correct_value)
+      else:
+        arrears_correct = 'I am not sure'
+    else:
+      arrears_correct = '0.00'
+---
+code: |
+  # calculate the number of weeks between date client fell behind and today. Then multiply their weekly child support order by the number of weeks they are behind.
+  weekly_cs_amount = (court_ordered_cs * court_ordered_frequency)/52
+  arrears_correct_value = round((int(date_difference(starting=cs_arrears_date, ending=today()).weeks))*(weekly_cs_amount),2) 
+  # if arrears_correct_value > 0:
+  #   arrears_correct = '$' + str(arrears_correct_value)
+--- 
   

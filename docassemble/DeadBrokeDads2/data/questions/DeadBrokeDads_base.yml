@@ -11,6 +11,14 @@ metadata:
       organization: Volunteer Lawyers Project
   revision_date: 2020-09-28
 ---
+default screen parts:
+  under: |
+    Feedback, suggestions, or comments? [Complete this survey](${ interview_url(i=user_info().package + ":feedback.yml", github_repo="docassemble-deadbrokedads", github_user='carorob', variable=user_info().variable, question_id=user_info().question_id, local=False,reset=1)} ){:target="_blank"}.
+  pre: |
+    % if get_config('debug'):
+    `Page id: ${ user_info().question_id }`
+    % endif
+---
 sections:
   - Introduction
   - Notice of Child Support Delinquency
@@ -96,12 +104,6 @@ attachment:
   filename: administrative_review
 ---
 attachment:
-  name: Bank Levy
-  docx template file: bank-levy.docx
-  variable name: bank_levy
-  filename: bank_levy
----
-attachment:
   name: Equitable Adjustment
   docx template file: equitable-adjustment.docx
   variable name: equitable_adjustment
@@ -113,9 +115,7 @@ reconsider:
 #   - cover_page
 #   - administrative_review
 #   - equitable_adjustment
-#   - bank_levy
   - admin_review
-  - bank_levy
   - equit_adjust
 
 code: |
@@ -123,8 +123,6 @@ code: |
   
   if admin_review:
     file_bundle_temp.append(administrative_review)  
-  if bank_levy:
-    file_bundle_temp.append(bank_levy)
   if equit_adjust:
     file_bundle_temp.append(equitable_adjustment)
 

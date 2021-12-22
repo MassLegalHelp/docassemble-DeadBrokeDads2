@@ -1,20 +1,13 @@
-# ---
-# objects: 
-#   - client: Individual
-# ---
-# modules:
-#   - docassemble.ssa.ssa
 ---
-# mandatory: True
 code: |
   # admin_review
+  nav.set_section('Conclusion')
   client.address.address
   client.homephone
-  if equit_adjust:
+  if equit_adjust or finance_statement:
     client.email
     client.birthdate
     client.dl
-    fin_statement = True
   client.ssn
   signature_date
   if sign_on_device:
@@ -22,19 +15,6 @@ code: |
   
   shared_form_info_complete = True
 ---
-# id: pick forms
-# question: |
-#   Forms
-# subquestion: |
-#   Which forms do you need?
-# fields:
-#   - admin review: admin_review
-#     datatype: yesnowide
-#   - bank levy: bank_levy
-#     datatype: yesnowide
-#   - equit  adjust: equit_adjust
-#     datatype: yesnowide
-# ---
 id: client address
 question: |
   What is your current address?
@@ -56,7 +36,6 @@ fields:
     # show if: equit_adjust
   - Work Phone: client.workphone
     required: False
-    # show if: bank_levy
 ---
 id: client email
 question: |
@@ -74,8 +53,9 @@ subquestion: |
 fields: 
   - SSN: client.ssn
     datatype: ssn
-    validate: is_valid_ssn
     required: False
+    validate: |
+      lambda y: len(y) == 0 or is_valid_ssn(y)
 ---
 id: client birthdate
 question: |
@@ -83,24 +63,23 @@ question: |
 fields: 
   - Date of Birth: client.birthdate
     datatype: date
+    max: ${ today() }
 ---
 id: client drivers license
 question: |
   What is your Drivers license number?
-fields: 
+fields:
   - Drivers license number: client.dl
     required: false
 ---
 id: signature date
 question: |
-  Sign and date your forms
-subquestion: |
   What date will you sign these forms? 
-  
-  We automatically date all the forms with today's date. But you can change it here, or delete the date in the box below and write in the date later, after you print your forms.
+subquestion: |
+  We automatically date all the forms with today's date. You can change the date here in the box below, or delete it and write in the date later, after you print your forms.
   
 fields: 
-  - date: signature_date
+  - I will sign these forms on: signature_date
     datatype: date
     default: ${today().format("yyyy-MM-dd")}
     required: False

@@ -8,7 +8,6 @@ code: |
     "knewnot": "This Notice of Delinquency is the first I knew I was behind in child support.", "refund": "DOR took my tax refund.", "garnish": "DOR started taking money out my pay.", "garnish-increase": "DOR is taking more money out of my pay than they should.", "told-me-garnish-increase": "DOR told me the amount of child support I need to pay is going up by 25%.", "told-boss-garnish-increase": "DOR told **my employer** the amount of child support I need to pay is going up by 25%.", "froze-account": "DOR froze my account so I cannot use the money in my bank.", "account": "DOR took money out of my bank account.", "too-much": "DOR took more money out of my bank account than they should have.", "shared-account": "DOR took money out of an account that is not my money.", "driver-license": "DOR took my driver's license.", "car-reg": "DOR suspended my car registration.", "business-license": "DOR took my business license.", "professional-license": "DOR took my professional license.", "trade-license": "DOR took my trade license", "other": "I have another problem with DOR." }
 ---
 code: |
-  
   hardshipsSentences = ""
   problemsSentences = ""
   sentences = ""
@@ -19,19 +18,22 @@ code: |
   else:
     problemsSentences = "No problems"
   
-  if hardships.any_true():
-    for hardship in hardships.true_values():
-      hardshipsSentences += hardshipsToSentences[hardship] + "\n"
-    sentences = problemsSentences + "\n" + hardshipsSentences
+  if help_needed.any_true('cantaffort', 'cantsustain'):
+    if hardships.any_true():
+      for hardship in hardships.true_values():
+        hardshipsSentences += hardshipsToSentences[hardship] + "\n"
+      sentences = problemsSentences + "\n" + hardshipsSentences
+    else:
+      sentences = problemsSentences + '\n' + 'No hardships'
   else:
-    sentences = "No hardships"
+    sentences = problemsSentences
 
   if problems.any_true('driver-license', 'car-reg'):
-    sentences += comment_car
+    sentences = ', '.join([sentences, comment_car])
   if problems.any_true('business-license', 'professional-license', 'trade-license'):
-    sentences += comment_license
+    sentences = ', '.join([sentences, comment_license])
   
-  admin_review_comments
+  # admin_review_comments
   open_text_paragraph_one_complete = True
 
 ---
@@ -39,9 +41,9 @@ id: dbd-01a review and allow to edit actions and hardships comments
 question: |
   Actions DOR has taken and consequences
 subquestion: |
-  ${ sentences }
+  Edit this paragraph to explain how DOR's actions have affected you.
 fields:
-  - Edit this paragraph: admin_review_comments
+  - no label: admin_review_comments
     input type: area
     default: ${ sentences }
 ---

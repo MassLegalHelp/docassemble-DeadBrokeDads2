@@ -85,7 +85,7 @@ fields:
 ---
 id: spouse employment
 if: |
-  client.marital_status == "Yes"
+  client.marital_status == "Married"
 question: |
   Is your spouse employed?
 fields: 
@@ -127,14 +127,13 @@ fields:
 ---
 id: spouse other income
 if: |
-  client.marital_status == "Yes"
+  client.marital_status == "Married"
 question : |
   Does your spouse have a monthly income source 
   % if is_spouse_employed == True:
-  other than employment with ${spouse_employer.name}?
-  % else: 
-  ?
+  other than employment with ${spouse_employer.name}
   % endif
+  ?
 fields: 
   - no label: spouse_has_other_income_source 
     datatype: yesnoradio
@@ -151,30 +150,34 @@ code: |
 ---
 id: spouse income total
 if: |
-  client.marital_status == "Yes"
+  client.marital_status == "Married"
 question: |
   What is your spouse's monthly income from all sources
   % if is_spouse_employed == True and spouse_has_other_income_source:
-  including employment with ${spouse_employer.name} and from ${spouse_monthly_income_source}?
+  including employment with ${spouse_employer.name} and from ${spouse_monthly_income_source}
   % elif is_spouse_employed == True:
-  including employment with ${spouse_employer.name}?
+  including employment with ${spouse_employer.name}
   % elif is_spouse_employed == True:
-  including ${spouse_monthly_income_source}?
-  % else: 
+  including ${spouse_monthly_income_source}
+  % endif 
   ?
-  % endif
 fields: 
   - Monthly Income: spouse_monthly_income
     datatype: currency
-
 ---
 code: |
-  
-  if client.marital_status != "Yes":
+  nav.set_section('Employment Information')
+  if client.marital_status != "Married":
     client.spouse_birthdate = "N/A"
     client.spouse_name = "N/A"
     is_spouse_employed = False
     spouse_monthly_income = "N/A"
     spouse_monthly_income_source = "N/A"
+  else:
+    client.spouse_name
+    client.spouse_birthdate
+    is_spouse_employed
+    spouse_monthly_income
+    spouse_monthly_income_source
 
   section_iii_complete = True  

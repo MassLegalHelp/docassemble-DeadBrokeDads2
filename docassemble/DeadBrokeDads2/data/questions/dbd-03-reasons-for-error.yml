@@ -1,4 +1,5 @@
 code: |
+  printout_looks_right
   if cause_missed_hearing:
     missed_hearing_text = 'missed'
     missed_hearing_notice
@@ -13,7 +14,7 @@ code: |
   if filer != "DOR/CSE":
     if cse_copy in ['no','maybe']:
       kick_out
-    cs_order_end_date_tf
+    ask_cs_order
     if order_modified_date:
       most_recent_cs_date = order_modified_date
     else:
@@ -23,6 +24,19 @@ code: |
   pay_parent
 
   possibilities_complete = True
+---
+question: |
+  Look at the printout you got from DOR
+subquestion: |
+  Look at the printout you got from DOR/CSE.
+  
+  Does this look right to you? 
+  
+  One of the most common reasons for people to fall behind in child support is that the order changed and either:	
+  
+  * You did not know the order changed,  or 
+  * DOR/CSE did not know the order changed.
+yesnomaybe: printout_looks_right
 ---
 id: dbd 03 - possible causes
 question: |
@@ -119,7 +133,7 @@ comment: |
     out on their own
     to live with someone who got a custody order
   Something else caused my child support problem
-section: Possible causes  
+section: Mismatched Information  
 ---
 id: dbd 03 - get notice
 question: |
@@ -136,17 +150,15 @@ fields:
       - No, I never got a notice: no
       - I am not sure if I ever got a notice: maybe
 ---
-id: dbd 03 - unneeded question section definition
-question: |
-  Information about your child support order.
-section: Current child support order
----
 id: dbd 03 - beginning of order
 question: |
-  When did the court **first** order you to pay child support to ${other_parent.name.first}? What is the date on that order?
+  When did the court **first** order you to pay child support to ${other_parent.name.first}? 
+subquestion: |
+  What is the date on that order?
 fields:
-  - date on 1st child support order: cs_order_date
+  - Date on 1st child support order: cs_order_date
     datatype: date
+    max: ${ today() }
 ---
 id: dbd 03 - court order direct pay?
 question: |
@@ -164,16 +176,21 @@ fields:
     choices: 
      - By wage assignment: assignment
      - Pay DOR directly: directly
-     - Pay DOR directly until wage assignment takes effect.: until
+     - Pay DOR directly until wage assignment takes effect: until
 ---
-id: dbd 03 -  court modified order
+id: dbd 03 - court modified order
 question: |
   Has the court changed your child support order since ${cs_order_date}? 
+subquestion: |
+  Look at the copies of the child support orders you got from the court. 
+  
+  Is the date on any of these orders **after** ${cs_order_date}?
 fields:
   - no label: order_modified
-    datatype: yesnomaybe
+    datatype: yesnoradio
   - How many times has the court changed your child support order since ${cs_order_date}?: order_modified_number 
     datatype: integer
+    min: 1
     show if:
       order_modified
 ---
@@ -232,6 +249,7 @@ fields:
     datatype: yesno
     js disable if: |
       val("cs_order_end_date_tf") == true || val("cs_order_end_expl_tf") == true
+continue button field: ask_cs_order
 ---
 id: dbd 03 - has cs order end description happened
 question: |

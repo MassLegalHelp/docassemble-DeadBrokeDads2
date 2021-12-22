@@ -1,9 +1,9 @@
 code: |
+  nav.set_section('Personal Information')
   client.address.type
   client.address.month
-  client marital status
+  client.marital_status
   section_i_complete = True
-
 ---
 id: client address rent or own
 question: |
@@ -60,19 +60,33 @@ question: |
 fields: 
   - no label: client.marital_status
     choices: 
-      - Married: "Yes"
-      - Single: "No"
-      - Separated: "Separated"
+      - Married
+      - Single
+      - Separated
   - Spouse Name: client.spouse_name
-    show if: 
+    show if:
       variable: 
         client.marital_status
       is: 
-        "Yes"
+        "Married"
   - Spouse DOB: client.spouse_birthdate
     datatype: date
     show if: 
-      variable: 
+      variable:
         client.marital_status
       is: 
-        "Yes"
+        "Married"
+---
+id: client spouse dob
+question: |
+  What is ${ client.spouse_name }'s date of birth?
+fields:
+  - no label: client.spouse_birthdate
+    datatype: date
+    max: ${ today() }
+---
+code: |
+  if reconcile and reconciliation['married']:
+    client.marital_status = 'Married'
+    client.spouse_name = other_parent.name
+    client.spouse_birthdate

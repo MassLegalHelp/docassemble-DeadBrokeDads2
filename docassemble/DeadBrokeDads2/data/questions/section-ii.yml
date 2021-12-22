@@ -3,19 +3,18 @@
   # total_support = dor_cse_notice_amount
   # total_support_freq = dbd_period_string(dor_cse_notice_frequency)
 ---
-# id: notice of arrears info
-# question: |
-  # Take out the Notice of Arrears that you received from the DOR.
-# subquestion: |
-  # It looks like this: 
-  # What is the total amount you should be paying according to the Notice of Arrears, and how often should you be paying it?
-# fields: 
-  # - Total amount: total_support
-    # datatype: currency
-  # - Every: total_support_freq
-    # choices: 
-    #  - Week: Weekly
-    #  - Month: Monthly
+# TODO(brycew): changed the wording to ask what they're paying, not what the
+# notice says. Is that okay?
+id: notice of arrears info
+question: |
+  How much child support have you been paying, and how often have you been paying it?
+fields: 
+  - Total amount: total_support
+    datatype: currency
+  - Every: total_support_freq
+    choices: 
+     - Week: Weekly
+     - Month: Monthly
 ---
 code: |
   haschildren = True
@@ -45,12 +44,11 @@ fields:
   - Last Name: children[i].name.last
   - Date of Birth: children[i].birthdate
     datatype: date
+    max: ${ today() }
   - Does this child live with you?: children[i].live_in
     choices: 
       - Yes
       - No
-
-
 ---
 table: children.table
 rows: children
@@ -64,14 +62,12 @@ edit:
 ---
 code: |
   div_amt = total_support / len(children)
-    
 ---
 id: other household members
 question: |
   Do any other people live in your house besides yourself
   and the children you already mentioned?
 yesno: hasindividual
-
 ---
 code: |
   if hasindividual == True:
@@ -115,10 +111,13 @@ subquestion: |
 yesno: ind_household.there_is_another
 ---
 code: |
+  nav.set_section('Household Information')
+  children.gather()
   if hasindividual == True:
     ind_household_sum = 0
     for i in ind_household:
       if ind_household.item(i).month_contrib == True:
         ind_household_sum += ind_household.item(i).month_contrib_amt
-        
+  div_amt
+  
   section_ii_complete = True

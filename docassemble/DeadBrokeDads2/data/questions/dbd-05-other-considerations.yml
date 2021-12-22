@@ -1,87 +1,34 @@
 ---
 code: |
-  equit_adjust_b = False
-  past_disabled = False
-  past_unemployed = False
-  unemployed_te = ''
-  no_ui = False
-  past_incarcerated = False
-  modification = False
-  modification_explanation = ''
   if other_considerations['disabled']:
-    past_disabled = True
-    if disabled_still:
-      disabled_end = today()
     if disabled_start <= cs_arrears_date <= disabled_end:
-      equit_adjust_b = True
-      admin_review_disability = 'I was disabled'
-      if disability_mod:
-        modification = True
-      modification_explanation += mod_dis_reason
+      disability_mod
       ssdi_past
       
-      
-      
-  if other_considerations['lost_job']:
-    unemployed_te = 'lose your job'
-    past_unemployed = True
-    if unemployed_still:
-      unemployed_end = today()
+  if other_considerations.any_true('lost_job', 'stopped_working'): 
     if unemployed_start <= cs_arrears_date <= unemployed_end:
-      admin_review_unemployment = 'I was unemployed'
-      if not unemployment_insurance:
-        no_ui = True
-        equit_adjust_b = True
-    if unemploy_mod:
-      modification = True
-      modification_explanation += mod_unemploy_reason
-    else:
-      modification_explanation += mod_unemploy_reason
-  
-  if other_considerations['stopped_working']:
-    unemployed_te = 'stop working '
-    past_unemployed = True
-    if unemployed_still:
-      unemployed_end = today()
-    if unemployed_start <= cs_arrears_date <= unemployed_end:
-      admin_review_unemployment = 'I stopped working because' 
-      if not unemployment_insurance:
-        no_ui = True
-        equit_adjust_b = True
-    if unemploy_mod:
-      modification = True
-    modification_explanation += mod_unemploy_reason
+      unemployment_insurance
+      unemploy_mod
 
   if other_considerations['incarcerated']:
-    past_incarcerated = True
-    if incarcerated_still:
-      jail_out = today()
-      if jail_date <= cs_arrears_date <= jail_out:
-        jail_house
-        if jail_mod:
-          modification = True
-        modification_explanation += mod_jail_reason
-        admin_review_incarceration = 'I was incarcerated'
-        equit_adjust_b = True
+    incarcerated_still
+    jail_mod
   
   if child_lives_w_obligor:
     child_with_obligor_order
 
   if reconcile:
-    if reconciliation['together']:
-      reconciliation_action = 'move back in together'
-    if reconciliation['married']:
-      reconciliation_action = 'get married'
     reconcile_date
   
-  if assigned_is_zero:
-    is_zero
-    equit_adjust = False
-  else:
+  if assigned_amount > 0:
     is_not_zero
-    equit_adjust = True
-    
+  else:
+    is_zero
+
   other_considerations_complete = True
+---
+objects:
+  - account_summary_orig: DAStaticFile.using(filename='account_summary_orig.png')
 ---
 comment: |
   if any arrears are assigned = owed to DOR/CSE, user can ask for equitable adjustment. Money that is not assigned is owed to custodial parent.
@@ -96,22 +43,21 @@ subquestion: |
 
   Look at the Child Support Enforcement System Financial Summary Report.
   
-  [[FILE DBD_AccountSummary.png]](https://da-dev.masslegalhelp.org/playgroundstatic/DeadBrokeDads/4/account_summary_orig.png)
+  [[FILE DBD_AccountSummary.png, 100%]](${ account_summary_orig.url_for() })
 
   Under **Total Arrears** Look at the amount next to "Assigned."
   
-  Is the amount **more** than $0.00?
- 
-  Note to CR: why not ask how much is written next to the word assigned? - duh, we can evaluate if it's greater than zero! double duh.
-  
-  
-yesno: assigned_is_zero
+fields:
+  - What is the amount?: assigned_amount
+    datatype: currency
 ---
 id: dbd 05 money not assigned owed to other parent.
 question: | 
   You still owe ${other_parent.name.first}
 subquestion: |
-  But you can ask DOR for help to restore your license, unfreeze your bank account, set up a payment plan etc. dictionary values from problem keys.
+  But you can ask DOR for help to restore your license, unfreeze your bank account, set up a payment plan etc. 
+comment: |
+  dictionary values from problem keys.
 field: is_zero
 ---
 id: dbd 05 equitable adjustment
@@ -179,10 +125,12 @@ fields:
     datatype: area
   - When did your disability start?: disabled_start
     datatype: date
+    max: ${ today() }
   - Are you still disabled?: disabled_still
     datatype: yesnoradio
   - When did your disability end?: disabled_end
     datatype: date
+    max: ${ today() }
     js show if: 
       val('disabled_still') === false
   - While you were disabled, did you ask the court to change the child support order?: disability_mod
@@ -194,17 +142,13 @@ fields:
     datatype: area
     js show if: 
       val('disability_mod') === false
----
-code: |
-  disabled_start_te = format_date(disabled_start, format='short')
-  if disabled_still:
-    disabled_end_te = 'present'
-  else:
-    disabled_end_te = format_date(disabled_end, format='short')
+validation code: |
+      if not disabled_still and disabled_end < disabled_start:
+        validation_error("Your disability cannot have ended before it started")
 ---
 id: dbd 05 ssdi
 question: |
-  SSDI
+  Social Security Disability Insurance (SSDI)
 fields: 
   - Did you get SSDI?: ssdi_past
     datatype: yesnoradio
@@ -224,12 +168,31 @@ fields:
     input type: area
   - When did you ${ unemployed_te }?: unemployed_start
     datatype: date
+    max: ${ today() }
   - Are you still unemployed?: unemployed_still
     datatype: yesnoradio
   - When did you go back to work?: unemployed_end
     datatype: date
+    max: ${ today() }
     js show if: 
       val('unemployed_still') === false
+validation code: |
+      if not unemployed_still and unemployed_end < unemployed_start:
+        validation_error("Your unemployment cannot have ended before it started")
+---
+code: |
+  if other_considerations['lost_job']:
+    unemployed_te = 'lose your job'
+  if other_considerations['stopped_working']:
+    unemployed_te = 'stop working '
+---
+code: |
+  if other_considerations.any_true('lost_job','stopped_working'):
+    past_unemployed = True
+    if unemployed_still:
+      unemployed_end = today()
+  else: 
+    past_unemployed = False
 ---
 code: |
   unemployed_start_te = format_date(unemployed_start, format='short')
@@ -247,7 +210,7 @@ id: dbd 05 modify for unemployment
 question: |
   Did you ask the court to change the child support order?
 subquestion: |
- Did you ask the court to change your child support order because you stopped working or lost your job?: 
+ Did you ask the court to change your child support order because you stopped working or lost your job?
 fields: 
   - no label: unemploy_mod
     datatype: yesnoradio
@@ -267,7 +230,9 @@ subquestion: |
   
   When was that and where were you incarcerated? 
 
-  CR: if our user is incarcerated right now would they be able to do this? Or would someone else possibly be taking this interview for them and then getting them to sign? 
+comment: |
+  TODO(CR): if our user is incarcerated right now would they be able to do this? Or would someone else possibly be taking this interview for them and then getting them to sign?
+  TODO(CR): if user checks more than one of the above, (for correctional facilities) - which name do we want them to give?
 fields: 
   - note: "Check all that apply:"
   - House of Corrections: jail_house
@@ -279,22 +244,19 @@ fields:
   - What type of correctional facility was it?: jail_type
     show if: jail_other
   - What is the name of the correctional facility where you are or were incarcerated?: jail_name
-  - note: "CR: if user checks more than one of the above - which name do we want them to give?"
   - After the court ordered child support, when did you first go to jail or prison?: jail_date
     datatype: date
+    max: ${ today() }
   - Are you still in jail or prison?: incarcerated_still
     datatype: yesnoradio
   - When did you get out?: jail_out
     datatype: date
-    js show if: | 
+    max: ${ today() }
+    js show if: |
       val('incarcerated_still') == false
----
-code: |
-  jail_date_te = format_date(jail_date, format='short')
-  if incarcerated_still:
-    jail_out_te = 'present'
-  else:
-    jail_out_te = format_date(jail_out, format='short')
+validation code: |
+  if not incarcerated_still and jail_out < jail_date:
+    validation_error("You cannot have gotten out of jail before first going")
 ---
 id: dbd 05 modify for incarceration
 question: |
@@ -314,14 +276,14 @@ fields:
 ---
 id: dbd 05 child move in
 question: |
-  Did any of the children you pay child support for live with you since the court ordered you to pay child support?
+  Have any of the children that you pay child support for lived with you after the court ordered you to pay child support?
 yesno: child_lives_w_obligor
 ---
 id: dbd 05 child live with you now
 question: |
-  My ${ child_te } live or lives with me now
+  My ${ child_te } ${ verb_present('live', 'pl' if child_number > 1 else '3sg') } with me now
 subquestion: |
-   Do you have an order from the Court that says the ${ child_te } lives with you now?
+   Do you have an order from the Court that says the ${ child_te } ${ verb_present('live', 'pl' if child_number > 1 else '3sg') } with you now?
 fields: 
   - no label: child_with_obligor_order
     datatype: yesnoradio
@@ -356,14 +318,21 @@ fields:
       - We are married now.: married
     none of the above: False
 ---
+code: |
+  if reconciliation['together']:
+    reconciliation_action = 'move back in together'
+  if reconciliation['married']:
+    reconciliation_action = 'get married'
+---
 id: dbd 05 reconcile date
 question: |
   Getting back together with ${other_parent.name.first}
 subquestion: |
-  When did you you ${ reconciliation_action }?
+  When did you ${ reconciliation_action }?
 fields:
   - no label: reconcile_date
     datatype: date
+    max: ${ today() }
   - Do you have a court order that ends child support?: reconcile_end_orderdate
     datatype: yesnoradio
 ---
