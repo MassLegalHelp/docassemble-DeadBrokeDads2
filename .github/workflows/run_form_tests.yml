@@ -8,7 +8,7 @@ on:
         description: 'Optional. A list of comma separated language names visible on buttons or links that change the language of the interview. Overrides the EXTRA_LANGUAGES repo secret.'
         default: ''
       tags:
-        description: 'Optional. Use a "tag expression" to specific which tagged tests to run (https://cucumber.io/docs/cucumber/api/#tag-expressions)'
+        description: 'Optional. Use a "tag expression" specify which tagged tests to run (https://cucumber.io/docs/cucumber/api/#tag-expressions)'
         default: ''
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
         node-version: [12.x]
 
     env:
-      BASE_URL: https://interviews.lemmalegal.com
+      BASE_URL: ${{ secrets.SERVER_URL }}
       PLAYGROUND_EMAIL: ${{ secrets.PLAYGROUND_EMAIL }}
       PLAYGROUND_PASSWORD: ${{ secrets.PLAYGROUND_PASSWORD }}
       PLAYGROUND_ID: ${{ secrets.PLAYGROUND_ID }}
@@ -74,4 +74,3 @@ jobs:
       - name: Cleanup
         if: ${{ always() }}
         run: npm run takedown
-
