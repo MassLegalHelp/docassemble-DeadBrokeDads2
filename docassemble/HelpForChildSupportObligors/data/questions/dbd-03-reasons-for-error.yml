@@ -184,11 +184,7 @@ question: |
 subquestion: |
   Look at the copies of the child support orders you got from the court. 
   
-<<<<<<< HEAD:docassemble/DeadBrokeDads2/data/questions/dbd-03-reasons-for-error.yml
-  Is the date on any of these orders **after** ${cs_order_date}? 
-=======
   Is the date on any of these orders **after** ${cs_order_date}?
->>>>>>> main:docassemble/HelpForChildSupportObligors/data/questions/dbd-03-reasons-for-error.yml
 fields:
   - no label: order_modified
     datatype: yesnoradio
