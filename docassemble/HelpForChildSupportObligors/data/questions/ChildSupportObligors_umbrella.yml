@@ -1,4 +1,16 @@
 ---
+include:
+  - docassemble.AssemblyLine:al_package_unstyled.yml
+  - dbd-01-intro.yml
+  - dbd-01a-hardships-to-sentences.yml
+  - dbd-02-compare.yml
+  - dbd-03-reasons-for-error.yml
+  - dbd-04-reasons-for-review.yml
+  - dbd-05-other-considerations.yml
+  - dbd-06-form-decisions.yml
+  - dbd-07-shared-form-info.yml
+  - dbdx.yml
+---
 metadata:
   title: |
     Help with DOR collecting back child support
@@ -7,9 +19,9 @@ metadata:
   description: |
     An interview to help parents when DOR/CSE is collecting past due child support 
   authors:
-    - name: Caroline Robinson
-      organization: Volunteer Lawyers Project
-    - name: Bryce Willey
+    - Caroline Robinson
+    - Bryce Willey
+    - Quinten Steenhuis
   revision_date: 2021-6-11
 ---
 default screen parts:
@@ -72,17 +84,7 @@ terms:
 default screen parts:
   continue button label: |
     Next
----
-include:
-  - dbd-01-intro.yml
-  - dbd-01a-hardships-to-sentences.yml
-  - dbd-02-compare.yml
-  - dbd-03-reasons-for-error.yml
-  - dbd-04-reasons-for-review.yml
-  - dbd-05-other-considerations.yml
-  - dbd-06-form-decisions.yml
-  - dbd-07-shared-form-info.yml
-  - dbdx.yml
+
 ---
 mandatory: True
 code: |
@@ -107,75 +109,83 @@ code: |
 
   shared_form_info_complete
   get_forms
+
+---
+objects:
+  - cover_page: ALDocument.using(title="Instructions", filename="cover_page", has_addendum=False, enabled=True)
+  - administrative_review: ALDocument.using(title="Administrative Review", filename="administrative_review", has_addendum=False)
+  - equitable_adjustment: ALDocument.using(title="Equitable Adjustment", filename="equitable_adjustment", has_addendum=False)
+  - sofc: ALDocument.using(title="Statement of Financial Condition", filename="sofc", has_addendum=False)
+---
+depends on: admin_review
+code: |
+  administrative_review.enabled = admin_review
+---
+depends on: equit_adjust
+code: |
+  equitable_adjustment.enabled = equit_adjust
+---
+depends on: finance_statement
+code: |
+  sofc.enabled = finance_statement
+---
+objects:
+  - al_user_bundle: ALDocumentBundle.using(title="Your forms for DOR", enabled=True, filename="help_for_obligor_parents", elements=[
+        cover_page,
+        administrative_review,
+        equitable_adjustment,
+        sofc,
+      ])
 ---
 attachment:
   name: Help for Obligors
+  skip undefined: True
   docx template file: help-for-obligors.docx
-  variable name: cover_page
+  variable name: cover_page[i]
   filename: help-for-parents
 ---
 attachment:
   name: Administrative Review
   docx template file: administrative_review.docx
-  variable name: administrative_review
+  skip undefined: True  
+  variable name: administrative_review[i]
   filename: administrative_review
 ---
 attachment:
   name: Equitable Adjustment
   docx template file: equitable-adjustment.docx
-  variable name: equitable_adjustment
+  skip undefined: True  
+  variable name: equitable_adjustment[i]
   filename: equitable-adjustment
 ---
 attachment:
   name: Statement of Financial Condition
   docx template file: sofc8.docx
-  variable name: sofc
+  skip undefined: True  
+  variable name: sofc[i]
   filename: statement-of-financial-condition
 ---
-# Maybe need to switch to reconsider
-# if this triggers unneeded screens. Experiment
-reconsider:
-#   - cover_page
-#   - administrative_review
-#   - equitable_adjustment
-  - admin_review
-  - equit_adjust
-  - finance_statement
-
-code: |
-  file_bundle_temp = [cover_page]
-
-  if admin_review:
-    file_bundle_temp.append(administrative_review)  
-  if equit_adjust:
-    file_bundle_temp.append(equitable_adjustment)
-  if finance_statement:
-    file_bundle_temp.append(sofc)
-
-  file_bundle_pdf = pdf_concatenate( file_bundle_temp, filename="help_for_obligor_parents.pdf")
-  # Each attachment variable has an attribute .pdf/.docx representing
-  # the pdf/docx versions of the file, respectively
-  file_bundle_zip = zip_file([item.docx for item in file_bundle_temp], filename="help_for_obligor_parents.zip") 
-
----
+event: get_forms
 id: base yml download screen
-comment: |
-  get as zip file  
-  [:file-archive: Download as zip](${ file_bundle_zip.url_for()} )
 question: |
   Your forms are ready!
-attachment:
-  - name: Help for Child Support obligor parents
-    file name: help_for_obligor_parents
-    description: Your forms for DOR
-    content: |
-      ${ file_bundle_pdf }
-#  docx template file: admin_review_page2_2.docx
-#  docx template file: help_for_obligors-test4.docx
-    valid formats:
-      - pdf
-    tagged pdf: True
-include download tab: False
-always include editable files: False
-event: get_forms
+subquestion: |
+  ${ action_button_html(al_user_bundle.as_pdf().url_for(attachment=True), label="Download your forms for DOR", icon="file-download", color="primary") }
+  
+  ${ al_user_bundle.send_button_html() }
+---
+comment: |
+  attachment:
+    - name: Help for Child Support obligor parents
+      file name: help_for_obligor_parents
+      description: Your forms for DOR
+      content: |
+        ${ file_bundle_pdf }
+  #  docx template file: admin_review_page2_2.docx
+  #  docx template file: help_for_obligors-test4.docx
+      valid formats:
+        - pdf
+      tagged pdf: True
+  include download tab: False
+  always include editable files: False
 ---

@@ -43,7 +43,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
     return out
 
 setup(name='docassemble.HelpForChildSupportObligors',
-      version='0.0.1',
+      version='0.2.0',
       description=('A docassemble guided interview for MA Department of Revenue / Child Support Enforcement'),
       long_description='# docassemble.HelpForChildSupportObligors\r\n\r\nA docassemble guided interview for MA Department of Revenue / Child Support Enforcement\r\n\r\n## Author\r\n\r\nCaroline Robinson, crobinson@mlri.org\r\n\r\n',
       long_description_content_type='text/markdown',
@@ -53,7 +53,7 @@ setup(name='docassemble.HelpForChildSupportObligors',
       url='https://www.mlri.org/',
       packages=find_packages(),
       namespace_packages=['docassemble'],
-      install_requires=[],
+      install_requires=['docassemble.AssemblyLine>=2.7.1'],
       zip_safe=False,
       package_data=find_package_data(where='docassemble/HelpForChildSupportObligors/', package='docassemble.HelpForChildSupportObligors'),
      )

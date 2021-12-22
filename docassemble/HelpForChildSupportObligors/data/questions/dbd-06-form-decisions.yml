@@ -1,46 +1,37 @@
+---
+code: |
+  admin_review = (
+    (do_not_owe_any or 
+    (dor_cse_notice_arrears_wrong and defined('arrears_correct_value') and (arrears_correct_value != 0 or arrears_correct_value != ''))) or
+    benefits_w_ssi_kid or appointed_guardian or appointed_conservator or rep_payee) or (
+    problems.any_true('account', 'froze-account') and your_past_benefits.any_true() and account_same and benefits_used
+    ) or (
+      problems['shared-account'] and levy_not_mine
+    )    
+---
+code: |
+  levy_exempt = problems.any_true('account', 'froze-account') and your_past_benefits.any_true() and account_same and benefits_used
+---
+code: |
+  levy_too_much = problems['too-much']
+---
+code: |
+  levy_not_mine = problems['shared-account'] and (appointed_guardian or appointed_conservator or rep_payee) and dor_take_ward_account
+---
+code: |
+  levy_hardship = hardships.any_true()
+---
 code: |
   # TODO(brycew): what should we do if correct value isn't defined (because of partial payments)?
-  if do_not_owe_any or \
-      (dor_cse_notice_arrears_wrong and defined('arrears_correct_value') and (arrears_correct_value != 0 or arrears_correct_value != '')) or \
-      benefits_w_ssi_kid or appointed_guardian or appointed_conservator or rep_payee: 
-    admin_review = True
-  # if twenty_five_percent:    
-  #   admin_review = True
-  #   finance_statement = True
-  if problems.any_true('account', 'froze-account'):
-    # TODO(brycew): makes sense to only ask if DOR took out funds from your
-    # benefits if you get benefits, right?
-    if your_past_benefits.any_true() and account_same and benefits_used:    
-      admin_review = True
-      levy_exempt = True
-    else:
-      levy_exempt = False
-  else:
-    levy_exempt = False
-
-  if problems['shared-account']:
-    if levy_not_mine:
-      admin_review
-  else:
-    levy_not_mine = False
-
-  if problems['too-much']:
-    levy_too_much = True
-  else:
-    levy_too_much = False
+  admin_review
+  levy_exempt
+  levy_not_mine
 
   if problems.any_true('froze-account', 'account', 'too-much', 'shared-account'):
     if levy_hardship:
       levy_comments 
-  else:
-    levy_hardship = False
-      
-
+    
   form_decisions_complete = True  
-
----
-code: |
-  levy_hardship = hardships.any_true()
 ---
 code: |
     levy_comments = hardshipsSentences
