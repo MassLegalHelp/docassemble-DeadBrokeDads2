@@ -53,7 +53,7 @@ setup(name='docassemble.HelpForChildSupportObligors',
       url='https://www.mlri.org/',
       packages=find_packages(),
       namespace_packages=['docassemble'],
-      install_requires=['docassemble.AssemblyLine>=2.7.1'],
+      install_requires=['docassemble.AssemblyLine>=2.6.2'],
       zip_safe=False,
       package_data=find_package_data(where='docassemble/HelpForChildSupportObligors/', package='docassemble.HelpForChildSupportObligors'),
      )

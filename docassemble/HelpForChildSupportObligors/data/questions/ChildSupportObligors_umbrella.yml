@@ -31,6 +31,11 @@ default screen parts:
     % if get_config('debug'):
     `Page id: ${ user_info().question_id }`
     % endif
+  # Alkiln needs this html to work, specifically on the signature screen.
+  # We've found that `post:` is the reliable way to do that. It is
+  # invisible.
+  post: |
+    <div data-variable="${ encode_name(str( user_info().variable )) }" id="trigger" aria-hidden="true" style="display: none;"></div>
 ---
 sections:
   - Introduction
