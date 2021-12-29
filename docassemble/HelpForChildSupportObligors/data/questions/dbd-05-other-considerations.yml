@@ -96,6 +96,15 @@ fields:
   - "Please explain": other_needed_info
     show if: other_need 
 ---
+if: problems.any_true('other')
+id: dbd 05-b anything else DOR should know?
+question: |
+  What else should DOR know about your situation?
+fields:
+  - "Please explain": other_needed_info
+    datatype: area
+    rows: 2
+---
 id: dbd 05 what DOR should know
 question: | 
   If you checked anything not listed...

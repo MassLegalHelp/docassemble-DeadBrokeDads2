@@ -2,7 +2,7 @@ code: |
   other_parent.name.first
   if dor_cse_notice_court == 'A court that is not in Massachusetts':
     dor_cse_notice_court = other_cs_court
-  penalty = arrears_state - arrears_federal
+  # penalty = arrears_state - arrears_federal
   # {{showifdef('variable')}} or {if defined('variable') in jinja see quinten's dm in Slack 2020-02-24 for one more option
 
   if dor_cse_notice_arrears_wrong or dor_cse_notice_arrears_wrong == None:
@@ -28,7 +28,7 @@ code: |
 ---
 id: dbd 02- other parent
 question: |
-  Who does your child support go to?
+  What is the name of the person you owe child support to?
 # subquestion: |
 #  Who does your child support go to?
 fields:
@@ -70,7 +70,7 @@ subquestion: |
   
   What does DOR/CSE say these are?
 fields:
-  - ":one: What is the date?": notice_date_delinquency
+  - ":one: What is the date on the notice?": notice_date_delinquency
     datatype: date 
   - ":two: Is the custodial parent's name **${other_parent.name}**?": other_parent_wrong
     datatype: noyesradio
@@ -110,20 +110,20 @@ subquestion: |
 fields:
   - no label: other_cs_court
 ---
-id: dbd 02 - penalty
-question: |
-  Is DOR/CSE charging you a penalty?
-subquestion: |
-  On page 6, the notice talks about the Special Tax Refund Rule,
-
-  They say, "Here are the amounts we will tell the tax agency you owe now:"
-fields:
-  - What is the State Amount?: arrears_state
-    datatype: currency 
-    min: 0
-  - What is the Federal Amount?: arrears_federal
-    datatype: currency 
-    min: 0
+#id: dbd 02 - penalty
+#question: |
+#  Is DOR/CSE charging you a penalty?
+#subquestion: |
+#  On page 6, the notice talks about the Special Tax Refund Rule,
+#
+#  They say, "Here are the amounts we will tell the tax agency you owe now:"
+#fields:
+#  - What is the State Amount?: arrears_state
+#    datatype: currency 
+#    min: 0
+#  - What is the Federal Amount?: arrears_federal
+#    datatype: currency 
+#    min: 0
 ---
 id: dbd 02 - is notice right
 question: |
@@ -132,18 +132,18 @@ subquestion: |
   Compare your latest child support order with the Notice.
 fields:
   - Is ${dor_cse_notice_court} at the top of the child support order?: dor_cse_notice_court_wrong
-    datatype: noyesradio   
+    datatype: noyesmaybe
   - What is the name of the court at the top of your latest child support order?: cs_court
     datatype: dropdown
     code: pf_courts   
     show if: dor_cse_notice_court_wrong
   - Does the court order say you must pay  ${ currency(dor_cse_notice_amount) }: dor_cse_notice_amount_wrong
-    datatype: noyesradio   
+    datatype: noyesmaybe   
   - What does your latest order say you must pay?: cs_amount
     datatype: currency
     show if: dor_cse_notice_amount_wrong
   - Does the court order say you must pay  ${dbd_period_string(dor_cse_notice_frequency)} : dor_cse_notice_frequency_wrong
-    datatype: noyesradio   
+    datatype: noyesmaybe   
   - How often does your order say you must pay child support?: cs_frequency
     code: |
       period_list()
@@ -152,7 +152,7 @@ fields:
     datatype: noyesmaybe
     help: |
       Note on arrears amount. If you do owe back child support, this amount may be different from your calculation because it
-      includes ${currency(arrears_state)} penalties and interest on top of any back child support you owe.
+      includes penalties and interest on top of any back child support you owe.
 ---
 id: dbd 02 - ever pay late?
 question: |
