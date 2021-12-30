@@ -1,5 +1,5 @@
 code: |
-  printout_looks_right
+  # printout_looks_right
   if cause_missed_hearing:
     missed_hearing_text = 'missed'
     missed_hearing_notice
@@ -24,19 +24,6 @@ code: |
   pay_parent
 
   possibilities_complete = True
----
-question: |
-  Look at the printout you got from DOR
-subquestion: |
-  Look at the printout you got from DOR/CSE.
-  
-  Does this look right to you? 
-  
-  One of the most common reasons for people to fall behind in child support is that the order changed and either:	
-  
-  * You did not know the order changed,  or 
-  * DOR/CSE did not know the order changed.
-yesnomaybe: printout_looks_right
 ---
 id: dbd 03 - possible causes
 question: |

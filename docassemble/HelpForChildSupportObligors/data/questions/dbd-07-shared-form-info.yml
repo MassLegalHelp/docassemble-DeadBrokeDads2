@@ -18,6 +18,8 @@ code: |
 id: client address
 question: |
   What is your current address?
+subquestion: |
+  Use the address where you get mail.  
 fields: 
   - Street Address: client.address.address
     address autocomplete: True
@@ -38,6 +40,9 @@ fields:
     # show if: equit_adjust
   - Work Phone: client.workphone
     required: False
+  - I don't have a phone: client.has_no_phone
+    datatype: yesno
+    uncheck others: True    
 ---
 id: client email
 question: |
