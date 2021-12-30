@@ -34,7 +34,7 @@ comment: |
   if any arrears are assigned = owed to DOR/CSE, user can ask for equitable adjustment. Money that is not assigned is owed to custodial parent.
 id: dbd 05 assigned
 question: |
-  Who do you owe?
+  How much of the child support do you owe DOR?
 subquestion: |
   As you know, 
   
@@ -45,7 +45,9 @@ subquestion: |
   
   [[FILE DBD_AccountSummary.png, 100%]](${ account_summary_orig.url_for() })
 
-  Under **Total Arrears** Look at the amount next to "Assigned."
+  Your report may use different words.
+  Under either **Total Arrears** or **Past Due** look at the amount next to the word "Assigned" 
+  or "Support Owed to Commonwealth".
   
 fields:
   - What is the amount?: assigned_amount
@@ -95,6 +97,15 @@ fields:
       - No: False
   - "Please explain": other_needed_info
     show if: other_need 
+---
+if: problems.any_true('other')
+id: dbd 05-b anything else DOR should know?
+question: |
+  What else should DOR know about your situation?
+fields:
+  - "Please explain": other_needed_info
+    datatype: area
+    rows: 2
 ---
 id: dbd 05 what DOR should know
 question: | 

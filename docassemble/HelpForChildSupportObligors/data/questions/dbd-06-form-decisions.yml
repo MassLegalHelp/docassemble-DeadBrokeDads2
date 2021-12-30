@@ -69,12 +69,6 @@ code: |
       past_disabled = False
   else:
     past_disabled = False
----
-#code: |
-#  if disabled_start <= cs_arrears_date <= disabled_end:
-#    admin_review_disability = 'I was disabled'
-#  else:
-#    admin_review_disability = 'TODO: What should this equal?'
 --- 
 code: |
   disabled_start_te = format_date(disabled_start, format='short')
@@ -84,12 +78,6 @@ code: |
   else:
     disabled_end_te = format_date(disabled_end, format='short')
 ---
-# comment: |
-#   Code to complete Equity Adjustment section B unemployment   
-# code: |
-#   if unemployed_start <= cs_arrears_date <= unemployed_end:
-#     admin_review_unemployment = 'I was unemployed'
-# ---
 code: |
   if past_unemployed and not unemployment_insurance:
     no_ui = True
@@ -113,12 +101,6 @@ code: |
   else:
     jail_out_te = format_date(jail_out, format='short')
 ---
-# code: |
-#   if jail_date <= cs_arrears_date <= jail_out:
-#     admin_review_incarceration = 'I was incarcerated'
-#   else: 
-#     admin_review_incarceration = ''
-# ---
 depends on:
   - mod_dis_reason
   - mod_jail_reason

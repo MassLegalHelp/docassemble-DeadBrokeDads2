@@ -8,8 +8,8 @@ include:
   - section-vi2.yml
 ---
 objects: 
-  - client: Individual
-  - children: ChildList
+  - client: ALIndividual
+  - children: ALPeopleList
   - ind_household: DADict.using(there_are_any=True, object_type=DAObject, complete_attribute='month_contrib', new_item_name=0)
   - employer: Person
   - spouse_employer: Person

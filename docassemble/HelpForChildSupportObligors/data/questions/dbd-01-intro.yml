@@ -39,21 +39,32 @@ section: Introduction
 id: 01 Welcome
 field: welcome
 question: | 
-  Welcome!
+  Help for people who pay child support
 subquestion: |
-  We can help you fill out the forms you need if the Department of Revenue Child Support Enforcement (DOR/CSE) has done any of the following:  
+  We can help you ask for relief from the Department of Revenue Child Support Enforcement (DOR/CSE) if they have done any of these things because they say you owe child support: 
   
-  * Sent you a notice that says that you are behind in child support payments. That notice is called a [Notice of Child Support Delinquency](${ notice_of_arrears_img.url_for() }). 
-  * Took your tax refund.
-  * Started taking money out of your pay or is taking more money out of your pay than they should.  
-  * Told you or your employer the amount of child support you need to pay is going up by 25%.
-  * Froze your bank account so you cannot use the money in your bank.
-  * Took money out of your bank account.
-  * Took your driver's license or suspended your car registration.
-  * Took your business license, your trade license or your professional license.
+  - Sent you a notice that says you are behind in child support payments. That notice is called a Notice of Child Support Delinquency.
+  - Froze your bank account so you cannot use the money in your bank.
+  - Raised the amount taken out of your paycheck for child support.
+  - Suspended your driver’s license or motor vehicle registration.
+  - Suspended your business, trade or professional license.
+  - Took money out of your bank account.
+  - Took your tax refund, Worker’s Compensation or Unemployment payments.
+  - Asked the State Department to deny your passport. 
+  - Put a lien on your house. 
   
-  Or if you have another problem with DOR/CSE related to child support.
-
+  Or if you have another problem with DOR/CSE related to child support. 
+fields: 
+  - To continue you must accept the [terms of use](https://vlpnet.org/tos-for-guided-interviews/): intro_screen
+    datatype: checkboxes
+    minlength: 1
+    validation messages:
+      minlength: |
+        You must accept the terms of use to continue.
+    choices:
+      - I accept the terms of use: i_accept
+under: |
+  _This website is not giving you legal advice. If you need legal advice, consult a lawyer._
 ---
 id: 01 Important
 question: |
@@ -68,10 +79,6 @@ subquestion: |
   If you owe back child support to more than one parent, you will need to start over with a new interview for each parent.
   
 field: important
-action buttons:
-  - label: Exit
-    action:  https://masslegalhelp.org/children-and-families/child-support-enforcing2/dor
-    color: danger
 ---
 comment: |
   Move to Instructions: DOR may be able to help you with your back child support informally….
@@ -86,7 +93,7 @@ subquestion: |
   1. your child support payment history.
   See [Get your child support payment history](https://www.mass.gov/how-to/get-your-child-support-payment-history) on DOR/CSE's website.
 
-  1. Copies of {all the child support orders in this case}. You can get these from the court. Call your court service center. 
+  1. Copies of {all the child support orders in this case}. You can get these from the court. Call your [Court Service Center](https://www.mass.gov/info-details/learn-about-court-service-centers#court-service-center-locations-).
 
   1. The most recent Notice of Child Support Delinquency that DOR/CSE sent to you.
 
@@ -175,7 +182,7 @@ fields:
       - DOR took money out of my bank account.: account
       - DOR took more money of my account than I owe.: too-much
       - DOR took money out of an account that is not my money.: shared-account
-      - DOR took my driver's license.: driver-license
+      - DOR suspended my driver's license.: driver-license
       - DOR suspended my car registration.: car-reg
       - DOR took my business license.: business-license
       - DOR took my professional license.: professional-license

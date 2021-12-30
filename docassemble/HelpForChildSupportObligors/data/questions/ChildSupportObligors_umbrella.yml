@@ -14,9 +14,9 @@ include:
 ---
 metadata:
   title: |
-    Help with DOR collecting back child support
+    Help for people who pay child support
   short title: |
-    Help with Child Support Arrears
+    Help for people who pay child support
   description: |
     An interview to help parents when DOR/CSE is collecting past due child support 
   authors:
@@ -103,14 +103,6 @@ code: |
   speak_text = False
   intro_complete
   comparison_complete
-  # if user thinks DOR/CSE is wrong, or user isn't sure if arrears amount is correct
-
-  # NOTE(CR): possibilities_complete duplicates many of equit adjust questions in
-  # other considerations which we could ask then turn into admin review comments if 
-  # not eligible for equitable adjustment. Also this has a number of questions we 
-  # could use in instructions about modifications - let's cherry pick certain questions from this list.
-  # if dor_cse_notice_arrears_wrong or dor_cse_notice_arrears_wrong == None:
-  #  possibilities_complete
   reasons_for_review_complete
   if cs_arrears_mc == "Yes" or cs_arrears_mc == "I am not sure":
     other_considerations_complete
