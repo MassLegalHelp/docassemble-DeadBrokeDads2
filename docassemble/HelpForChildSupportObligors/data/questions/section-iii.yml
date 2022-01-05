@@ -5,6 +5,7 @@ fields:
   - no label: client_is_employed
     datatype: yesnoradio
   - Are you self-employed?: employer.self
+    datatype: radio
     choices: 
       - Yes
       - No
@@ -176,8 +177,11 @@ code: |
   else:
     client.spouse_name
     client.spouse_birthdate
-    is_spouse_employed
-    spouse_monthly_income
-    spouse_monthly_income_source
+    if is_spouse_employed:
+      spouse_monthly_income
+      spouse_monthly_income_source
+    else:
+      spouse_monthly_income = "N/A"
+      spouse_monthly_income_source = "N/A"
 
   section_iii_complete = True  

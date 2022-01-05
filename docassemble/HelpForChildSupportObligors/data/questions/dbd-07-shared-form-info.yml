@@ -42,7 +42,7 @@ fields:
     required: False
   - I don't have a phone: client.has_no_phone
     datatype: yesno
-    uncheck others: True    
+    disable others: True    
 ---
 id: client email
 question: |

@@ -10,6 +10,7 @@ question: |
   Do you rent or own ${ client.address.address }?
 fields: 
   - no label: client.address.type
+    datatype: radio
     choices: 
       - Rent
       - Own
@@ -59,6 +60,7 @@ question: |
   What is your current marital status?
 fields: 
   - no label: client.marital_status
+    datatype: radio
     choices: 
       - Married
       - Single

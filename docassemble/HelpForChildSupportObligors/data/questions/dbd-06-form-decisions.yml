@@ -22,6 +22,14 @@ code: |
   levy_hardship = hardships.any_true()
 ---
 code: |
+  finance_statement = (
+    (problems.any_true('account', 'froze-account') and (account_same and benefits_used)) or
+    (problems['shared-account'] and levy_not_mine) or
+    (problems['too-much']) or
+    problems.any_true('froze-account', 'account', 'too-much', 'shared-account') and levy_hardship
+    )  
+---
+code: |
   # TODO(brycew): what should we do if correct value isn't defined (because of partial payments)?
   admin_review
   levy_exempt

@@ -132,7 +132,7 @@ code: |
 ---
 depends on: finance_statement
 code: |
-  sofc.enabled = finance_statement
+  sofc.enabled = finance_statement or equit_adjust
 ---
 objects:
   - al_user_bundle: ALDocumentBundle.using(title="Your forms for DOR", enabled=True, filename="help_for_obligor_parents", elements=[

@@ -132,24 +132,24 @@ subquestion: |
   Compare your latest child support order with the Notice.
 fields:
   - Is ${dor_cse_notice_court} at the top of the child support order?: dor_cse_notice_court_wrong
-    datatype: noyes
+    datatype: noyesradio
   - What is the name of the court at the top of your latest child support order?: cs_court
     datatype: dropdown
     code: pf_courts   
     show if: dor_cse_notice_court_wrong
   - Does the court order say you must pay  ${ currency(dor_cse_notice_amount) }: dor_cse_notice_amount_wrong
-    datatype: noyes
+    datatype: noyesradio
   - What does your latest order say you must pay?: cs_amount
     datatype: currency
     show if: dor_cse_notice_amount_wrong
   - Does the court order say you must pay  ${dbd_period_string(dor_cse_notice_frequency)} : dor_cse_notice_frequency_wrong
-    datatype: noyes  
+    datatype: noyesradio  
   - How often does your order say you must pay child support?: cs_frequency
     code: |
       period_list()
     show if: dor_cse_notice_frequency_wrong
   - Do you owe ${currency(dor_cse_notice_arrears)} in back child support? : dor_cse_notice_arrears_wrong
-    datatype: noyes
+    datatype: noyesmaybe
     help: |
       Note on arrears amount. If you do owe back child support, this amount may be different from your calculation because it
       includes penalties and interest on top of any back child support you owe.
