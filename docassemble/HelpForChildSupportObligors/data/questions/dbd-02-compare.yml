@@ -248,7 +248,7 @@ code: |
   # TODO: will this break any logic?
   from docassemble.base.util import DADateTime
   if cs_arrears_date_unknown:
-    cs_arrears_date = DADateTime(int(cs_arrears_year), int(cs_arrears_month), 1)
+    cs_arrears_date = as_datetime(DADateTime(int(cs_arrears_year), int(cs_arrears_month), 1))
 ---
 id: dbd 02 - catch up
 question: |
