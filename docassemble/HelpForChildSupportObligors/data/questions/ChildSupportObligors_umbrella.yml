@@ -18,7 +18,34 @@ metadata:
   short title: |
     Help for people who pay child support
   description: |
-    An interview to help parents when DOR/CSE is collecting past due child support 
+    If you are having trouble paying child support, this interview can help you understand your rights and options. 
+    It will also help you gather the information you need to ask the Massachusetts Department of Revenue (DOR) 
+    or the Child Support Enforcement (CSE) office to review your case.
+  can_I_use_this_form: |
+    You can use this interview if you are having trouble paying child support and want to ask the Department of Revenue (DOR) or the Child Support Enforcement (CSE) office to review your case.
+  before_you_start: |
+    Before you start, you should have:
+    - Your child support order
+    - Any notices you have received from DOR or CSE
+    - Information about your income, expenses, and assets
+  maturity: production
+  estimated_completion_minutes: 60
+  estimated_completion_delta: 30
+  LIST_topics:
+    - FA-05-01-00-00
+  tags:
+    - FA-05-01-00-00
+  languages:
+    - en
+  help_page_url: https://www.masslegalhelp.org/children-families-divorce/child-support/getting-help-child-support-dor
+  help_page_title: Getting help with child support from DOR
+  jurisdiction: NAM-US-US+MA
+  original_form: https://www.mass.gov/doc/child-support-intake-form-application-for-full-child-support-services-paper-application/download
+  original_form_published_on: 2016-12-01
+  form_titles:
+    - Child Support Intake Form & Application for Full Child Support Services
+  form_numbers:
+    - F30031-5 (12/16)
   authors:
     - Caroline Robinson
     - Bryce Willey

@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [20.x]
 
     env:
       BASE_URL: ${{ secrets.SERVER_URL }}
@@ -36,36 +36,36 @@ jobs:
       - run: echo "REPO_URL=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" >> $GITHUB_ENV
       - run: echo "Repo address is $REPO_URL"
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup environment
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
       - run: npm run setup
       - run: npm run test -- ${{ github.event.inputs.tags && format('"--tags" "{0}"', github.event.inputs.tags) }}
       - name: upload error artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ failure() }}
         with:
           name: errors
           path: ./**/error*.jpg
       - name: upload screenshot steps
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         # They will upload even if a previosu step has failed
         if: ${{ always() }}
         with:
           name: screenshots
           path: ./**/screenshot*.jpg
       - name: upload downloads
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         # They will upload even if a previous step has failed
         if: ${{ always() }}
         with:
           name: downloads
           path: ./**/downloads_*
       - name: upload report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         # They will upload even if a previous step has failed
         if: ${{ always() }}
         with:
