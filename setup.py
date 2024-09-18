@@ -43,7 +43,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
     return out
 
 setup(name='docassemble.HelpForChildSupportObligors',
-      version='0.3.0',
+      version='0.3.1',
       description=('A docassemble guided interview for MA Department of Revenue / Child Support Enforcement'),
       long_description='# docassemble.HelpForChildSupportObligors\r\n\r\nA docassemble guided interview for MA Department of Revenue / Child Support Enforcement\r\n\r\n## Author\r\n\r\nCaroline Robinson, crobinson@mlri.org\r\n\r\n',
       long_description_content_type='text/markdown',
